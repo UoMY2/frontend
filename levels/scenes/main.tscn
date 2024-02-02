@@ -1,0 +1,258 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4d2b147r80pa"]
+
+[ext_resource type="Script" path="res://scripts/scenemanage.gd" id="1_onk0a"]
+[ext_resource type="PackedScene" uid="uid://cf5ivhgfhhatw" path="res://scenes/character_body_2d.tscn" id="1_t1nat"]
+[ext_resource type="PackedScene" uid="uid://o72ygepqt4h6" path="res://scenes/wall.tscn" id="3_lasn4"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_onk0a")
+PlayerScene = ExtResource("1_t1nat")
+
+[node name="RigidBody2D" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(106, 63)
+
+[node name="RigidBody2D2" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(106, 144)
+
+[node name="RigidBody2D35" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(232, 504)
+
+[node name="RigidBody2D48" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(229, 147)
+
+[node name="RigidBody2D49" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(357, 266)
+
+[node name="RigidBody2D50" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1025, 248)
+
+[node name="RigidBody2D55" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(902, 500)
+
+[node name="RigidBody2D56" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(776, 251)
+
+[node name="RigidBody2D57" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(776, 370)
+
+[node name="RigidBody2D60" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(648, 496)
+
+[node name="RigidBody2D61" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(482, 272)
+
+[node name="RigidBody2D62" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(359, 502)
+
+[node name="RigidBody2D63" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(643, 248)
+
+[node name="RigidBody2D68" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(643, 145)
+
+[node name="RigidBody2D43" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1027, 590)
+
+[node name="RigidBody2D44" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1027, 498)
+
+[node name="RigidBody2D36" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(106, 500)
+
+[node name="RigidBody2D39" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(106, 386)
+
+[node name="RigidBody2D40" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(106, 386)
+
+[node name="RigidBody2D3" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(2, 61)
+
+[node name="RigidBody2D29" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1155, 61)
+
+[node name="RigidBody2D30" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1155, 180)
+
+[node name="RigidBody2D31" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1155, 280)
+
+[node name="RigidBody2D32" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1155, 380)
+
+[node name="RigidBody2D33" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1155, 480)
+
+[node name="RigidBody2D34" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1155, 580)
+
+[node name="RigidBody2D4" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(2, 184)
+
+[node name="RigidBody2D5" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(2, 307)
+
+[node name="RigidBody2D6" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(2, 430)
+
+[node name="RigidBody2D7" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(2, 553)
+
+[node name="RigidBody2D8" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(2, 582)
+
+[node name="RigidBody2D9" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(65, 647)
+rotation = 1.5708
+
+[node name="RigidBody2D19" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(65, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D10" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(189, 647)
+rotation = 1.5708
+
+[node name="RigidBody2D37" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(169, 444)
+rotation = 1.5708
+
+[node name="RigidBody2D41" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(166, 330)
+rotation = 1.5708
+
+[node name="RigidBody2D42" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(166, 330)
+rotation = 1.5708
+
+[node name="RigidBody2D45" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(293, 331)
+rotation = 1.5708
+
+[node name="RigidBody2D51" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(957, 191)
+rotation = 1.5708
+
+[node name="RigidBody2D52" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(836, 191)
+rotation = 1.5708
+
+[node name="RigidBody2D53" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(960, 310)
+rotation = 1.5708
+
+[node name="RigidBody2D54" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(965, 441)
+rotation = 1.5708
+
+[node name="RigidBody2D58" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(713, 439)
+rotation = 1.5708
+
+[node name="RigidBody2D59" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(420, 209)
+rotation = 1.5708
+
+[node name="RigidBody2D64" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(293, 91)
+rotation = 1.5708
+
+[node name="RigidBody2D65" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(419, 91)
+rotation = 1.5708
+
+[node name="RigidBody2D66" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(833, 96)
+rotation = 1.5708
+
+[node name="RigidBody2D67" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(962, 96)
+rotation = 1.5708
+
+[node name="RigidBody2D46" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(295, 568)
+rotation = 1.5708
+
+[node name="RigidBody2D47" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(408, 568)
+rotation = 1.5708
+
+[node name="RigidBody2D38" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(166, 212)
+rotation = 1.5708
+
+[node name="RigidBody2D20" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(189, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D11" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(309, 647)
+rotation = 1.5708
+
+[node name="RigidBody2D21" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(309, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D12" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(435, 648)
+rotation = 1.5708
+
+[node name="RigidBody2D22" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(435, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D13" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(562, 648)
+rotation = 1.5708
+
+[node name="RigidBody2D23" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(562, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D14" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(688, 648)
+rotation = 1.5708
+
+[node name="RigidBody2D24" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(688, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D15" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(815, 648)
+rotation = 1.5708
+
+[node name="RigidBody2D25" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(815, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D16" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(930, 648)
+rotation = 1.5708
+
+[node name="RigidBody2D26" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(930, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D17" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1030, 648)
+rotation = 1.5708
+
+[node name="RigidBody2D28" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1030, 0)
+rotation = 1.5708
+
+[node name="RigidBody2D18" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1100, 648)
+rotation = 1.5708
+
+[node name="RigidBody2D27" parent="." groups=["wall"] instance=ExtResource("3_lasn4")]
+position = Vector2(1100, 0)
+rotation = 1.5708
+
+[node name="spawn" type="Node2D" parent="."]
+
+[node name="0" type="Node2D" parent="spawn" groups=["playerspawn"]]
+position = Vector2(51, 273)
+
+[node name="1" type="Node2D" parent="spawn" groups=["playerspawn"]]
+position = Vector2(1086, 359)
