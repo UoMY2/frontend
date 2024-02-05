@@ -2,14 +2,8 @@
 ## eventLib
 ### Import
 
-To import, load the library file into a consant as follows.
-
+EventLib is set to autoload in the project settings so just call
 ```python
-const eventLib = preload("res://eventLib.gd")
+EventLib.test_function()
 ```
-
-To test if it works call:
-```python
-eventLib.test_function()
-```
-
+to test if it is imported correctly.
