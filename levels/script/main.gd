@@ -3,7 +3,7 @@ extends Node2D
 
 var card_position : Array = []
 var cards : Array = []
-
+var time = 60.0
 
 func _ready():
 	$Timer.start()
@@ -15,14 +15,21 @@ func _ready():
 	for i in len(card_position):
 		cards[i].position = card_position[i]
 	
-func _process(_delta):
+func _process(delta):
 	var check = get_children()
-	if len(check) == 3:
+	if time > 0:
+		time -= delta
+	else:
+		$Label.visible = false
+	$Label.text = "%02d" %time
+	if len(check) == 5:
 		$win.visible = true
 		$Timer.stop()
+		$Label.visible = false
 		await get_tree().create_timer(4).timeout
 		get_tree().quit()
 
+		
 
 
 

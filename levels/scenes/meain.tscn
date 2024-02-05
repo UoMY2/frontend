@@ -1,96 +1,323 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1y42u8oprovd"]
+[gd_scene load_steps=11 format=3 uid="uid://c1y42u8oprovd"]
 
 [ext_resource type="Script" path="res://script/main.gd" id="1_e605j"]
 [ext_resource type="Script" path="res://script/blue.gd" id="2_143tb"]
 [ext_resource type="Script" path="res://script/red.gd" id="2_stqhd"]
+[ext_resource type="Script" path="res://script/green.gd" id="3_kh06f"]
 [ext_resource type="Script" path="res://script/yellow.gd" id="4_jnq3h"]
 [ext_resource type="Script" path="res://script/pink.gd" id="5_4dctc"]
+[ext_resource type="Script" path="res://script/cyan.gd" id="6_7aryy"]
+[ext_resource type="Script" path="res://script/orange.gd" id="7_eo0dv"]
+[ext_resource type="Script" path="res://script/purple.gd" id="9_ybe8a"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="10_gwjij"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_e605j")
 
 [node name="red" type="TextureButton" parent="."]
-offset_left = 162.0
-offset_top = 114.0
-offset_right = 202.0
-offset_bottom = 154.0
+offset_left = 125.0
+offset_top = 125.0
+offset_right = 165.0
+offset_bottom = 165.0
 script = ExtResource("2_stqhd")
+metadata/_edit_use_anchors_ = true
 
 [node name="red2" type="TextureButton" parent="."]
-offset_left = 369.0
-offset_top = 111.0
-offset_right = 409.0
-offset_bottom = 151.0
+offset_left = 225.0
+offset_top = 125.0
+offset_right = 265.0
+offset_bottom = 165.0
 script = ExtResource("2_stqhd")
+metadata/_edit_use_anchors_ = true
+
+[node name="pink" type="TextureButton" parent="."]
+offset_left = 325.0
+offset_top = 127.0
+offset_right = 365.0
+offset_bottom = 167.0
+script = ExtResource("5_4dctc")
+metadata/_edit_use_anchors_ = true
 
 [node name="blue" type="TextureButton" parent="."]
-offset_left = 944.0
-offset_top = 132.0
-offset_right = 984.0
-offset_bottom = 172.0
+offset_left = 425.0
+offset_top = 125.0
+offset_right = 465.0
+offset_bottom = 165.0
 script = ExtResource("2_143tb")
+metadata/_edit_use_anchors_ = true
 
-[node name="blue2" type="TextureButton" parent="."]
-offset_left = 730.0
-offset_top = 413.0
-offset_right = 770.0
-offset_bottom = 453.0
-script = ExtResource("2_143tb")
+[node name="green" type="TextureButton" parent="."]
+offset_left = 525.0
+offset_top = 125.0
+offset_right = 565.0
+offset_bottom = 165.0
+script = ExtResource("3_kh06f")
+metadata/_edit_use_anchors_ = true
+
+[node name="green2" type="TextureButton" parent="."]
+offset_left = 625.0
+offset_top = 125.0
+offset_right = 665.0
+offset_bottom = 165.0
+script = ExtResource("3_kh06f")
+metadata/_edit_use_anchors_ = true
+
+[node name="cyan" type="TextureButton" parent="."]
+offset_left = 725.0
+offset_top = 125.0
+offset_right = 765.0
+offset_bottom = 165.0
+script = ExtResource("6_7aryy")
+
+[node name="cyan2" type="TextureButton" parent="."]
+offset_left = 825.0
+offset_top = 125.0
+offset_right = 865.0
+offset_bottom = 165.0
+script = ExtResource("6_7aryy")
 
 [node name="yellow" type="TextureButton" parent="."]
-offset_left = 142.0
-offset_top = 400.0
-offset_right = 182.0
-offset_bottom = 440.0
+offset_left = 125.0
+offset_top = 275.0
+offset_right = 165.0
+offset_bottom = 315.0
 script = ExtResource("4_jnq3h")
 
 [node name="yellow2" type="TextureButton" parent="."]
-offset_left = 381.0
-offset_top = 425.0
-offset_right = 421.0
-offset_bottom = 465.0
+offset_left = 225.0
+offset_top = 275.0
+offset_right = 265.0
+offset_bottom = 315.0
 script = ExtResource("4_jnq3h")
 
-[node name="pink" type="TextureButton" parent="."]
-offset_left = 683.0
-offset_top = 139.0
-offset_right = 723.0
-offset_bottom = 179.0
-script = ExtResource("5_4dctc")
+[node name="blue2" type="TextureButton" parent="."]
+offset_left = 325.0
+offset_top = 275.0
+offset_right = 365.0
+offset_bottom = 315.0
+script = ExtResource("2_143tb")
 
 [node name="pink2" type="TextureButton" parent="."]
-offset_left = 918.0
-offset_top = 464.0
-offset_right = 958.0
-offset_bottom = 504.0
+offset_left = 425.0
+offset_top = 275.0
+offset_right = 465.0
+offset_bottom = 315.0
 script = ExtResource("5_4dctc")
 
+[node name="orange" type="TextureButton" parent="."]
+offset_left = 525.0
+offset_top = 275.0
+offset_right = 565.0
+offset_bottom = 315.0
+script = ExtResource("7_eo0dv")
+
+[node name="orange2" type="TextureButton" parent="."]
+offset_left = 625.0
+offset_top = 275.0
+offset_right = 665.0
+offset_bottom = 315.0
+script = ExtResource("7_eo0dv")
+
+[node name="purple" type="TextureButton" parent="."]
+offset_left = 725.0
+offset_top = 275.0
+offset_right = 765.0
+offset_bottom = 315.0
+script = ExtResource("9_ybe8a")
+
+[node name="purple2" type="TextureButton" parent="."]
+offset_left = 825.0
+offset_top = 275.0
+offset_right = 865.0
+offset_bottom = 315.0
+script = ExtResource("9_ybe8a")
+
+[node name="red3" type="TextureButton" parent="."]
+offset_left = 125.0
+offset_top = 425.0
+offset_right = 165.0
+offset_bottom = 465.0
+script = ExtResource("2_stqhd")
+metadata/_edit_use_anchors_ = true
+
+[node name="red4" type="TextureButton" parent="."]
+offset_left = 225.0
+offset_top = 425.0
+offset_right = 265.0
+offset_bottom = 465.0
+script = ExtResource("2_stqhd")
+metadata/_edit_use_anchors_ = true
+
+[node name="pink3" type="TextureButton" parent="."]
+offset_left = 325.0
+offset_top = 425.0
+offset_right = 365.0
+offset_bottom = 465.0
+script = ExtResource("5_4dctc")
+metadata/_edit_use_anchors_ = true
+
+[node name="pink4" type="TextureButton" parent="."]
+offset_left = 425.0
+offset_top = 425.0
+offset_right = 465.0
+offset_bottom = 465.0
+script = ExtResource("5_4dctc")
+metadata/_edit_use_anchors_ = true
+
+[node name="blue3" type="TextureButton" parent="."]
+offset_left = 525.0
+offset_top = 425.0
+offset_right = 565.0
+offset_bottom = 465.0
+script = ExtResource("2_143tb")
+metadata/_edit_use_anchors_ = true
+
+[node name="blue4" type="TextureButton" parent="."]
+offset_left = 625.0
+offset_top = 425.0
+offset_right = 665.0
+offset_bottom = 465.0
+script = ExtResource("2_143tb")
+metadata/_edit_use_anchors_ = true
+
+[node name="green3" type="TextureButton" parent="."]
+offset_left = 725.0
+offset_top = 425.0
+offset_right = 765.0
+offset_bottom = 465.0
+script = ExtResource("3_kh06f")
+metadata/_edit_use_anchors_ = true
+
+[node name="green4" type="TextureButton" parent="."]
+offset_left = 825.0
+offset_top = 425.0
+offset_right = 865.0
+offset_bottom = 465.0
+script = ExtResource("3_kh06f")
+metadata/_edit_use_anchors_ = true
+
+[node name="cyan3" type="TextureButton" parent="."]
+offset_left = 125.0
+offset_top = 575.0
+offset_right = 165.0
+offset_bottom = 615.0
+script = ExtResource("6_7aryy")
+
+[node name="cyan4" type="TextureButton" parent="."]
+offset_left = 225.0
+offset_top = 575.0
+offset_right = 265.0
+offset_bottom = 615.0
+script = ExtResource("6_7aryy")
+
+[node name="yellow3" type="TextureButton" parent="."]
+offset_left = 325.0
+offset_top = 575.0
+offset_right = 365.0
+offset_bottom = 615.0
+script = ExtResource("4_jnq3h")
+
+[node name="yellow4" type="TextureButton" parent="."]
+offset_left = 425.0
+offset_top = 575.0
+offset_right = 465.0
+offset_bottom = 615.0
+script = ExtResource("4_jnq3h")
+
+[node name="orange3" type="TextureButton" parent="."]
+offset_left = 525.0
+offset_top = 575.0
+offset_right = 565.0
+offset_bottom = 615.0
+script = ExtResource("7_eo0dv")
+
+[node name="orange4" type="TextureButton" parent="."]
+offset_left = 625.0
+offset_top = 575.0
+offset_right = 665.0
+offset_bottom = 615.0
+script = ExtResource("7_eo0dv")
+
+[node name="purple3" type="TextureButton" parent="."]
+offset_left = 725.0
+offset_top = 575.0
+offset_right = 765.0
+offset_bottom = 615.0
+script = ExtResource("9_ybe8a")
+
+[node name="purple4" type="TextureButton" parent="."]
+offset_left = 825.0
+offset_top = 575.0
+offset_right = 865.0
+offset_bottom = 615.0
+script = ExtResource("9_ybe8a")
+
 [node name="Timer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 60.0
 one_shot = true
 
 [node name="lose" type="Label" parent="."]
 visible = false
-offset_left = 500.0
-offset_top = 229.0
-offset_right = 792.0
-offset_bottom = 403.0
+offset_left = 233.0
+offset_top = 242.0
+offset_right = 1193.0
+offset_bottom = 542.0
+theme_override_fonts/font = ExtResource("10_gwjij")
+theme_override_font_sizes/font_size = 300
 text = "You Lose"
 
 [node name="win" type="Label" parent="."]
 visible = false
-offset_left = 513.0
-offset_top = 214.0
-offset_right = 570.0
-offset_bottom = 237.0
+offset_left = 364.0
+offset_top = 243.0
+offset_right = 1084.0
+offset_bottom = 543.0
+theme_override_fonts/font = ExtResource("10_gwjij")
+theme_override_font_sizes/font_size = 300
 text = "Winner"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(687, 386)
+zoom = Vector2(0.25, 0.25)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 1132.0
+offset_top = 19.0
+offset_right = 1348.0
+offset_bottom = 211.0
+theme_override_fonts/font = ExtResource("10_gwjij")
+theme_override_font_sizes/font_size = 150
 
 [connection signal="pressed" from="red" to="red" method="_on_pressed"]
 [connection signal="pressed" from="red2" to="red2" method="_on_pressed"]
+[connection signal="pressed" from="pink" to="pink" method="_on_pressed"]
 [connection signal="pressed" from="blue" to="blue" method="_on_pressed"]
-[connection signal="pressed" from="blue2" to="blue2" method="_on_pressed"]
+[connection signal="pressed" from="green" to="green" method="_on_pressed"]
+[connection signal="pressed" from="green2" to="green2" method="_on_pressed"]
+[connection signal="pressed" from="cyan" to="cyan" method="_on_pressed"]
+[connection signal="pressed" from="cyan2" to="cyan2" method="_on_pressed"]
 [connection signal="pressed" from="yellow" to="yellow" method="_on_pressed"]
 [connection signal="pressed" from="yellow2" to="yellow2" method="_on_pressed"]
-[connection signal="pressed" from="pink" to="pink" method="_on_pressed"]
+[connection signal="pressed" from="blue2" to="blue2" method="_on_pressed"]
 [connection signal="pressed" from="pink2" to="pink2" method="_on_pressed"]
+[connection signal="pressed" from="orange" to="orange" method="_on_pressed"]
+[connection signal="pressed" from="orange2" to="orange2" method="_on_pressed"]
+[connection signal="pressed" from="purple" to="purple" method="_on_pressed"]
+[connection signal="pressed" from="purple2" to="purple2" method="_on_pressed"]
+[connection signal="pressed" from="red3" to="red3" method="_on_pressed"]
+[connection signal="pressed" from="red4" to="red4" method="_on_pressed"]
+[connection signal="pressed" from="pink3" to="pink3" method="_on_pressed"]
+[connection signal="pressed" from="pink4" to="pink4" method="_on_pressed"]
+[connection signal="pressed" from="blue3" to="blue3" method="_on_pressed"]
+[connection signal="pressed" from="blue4" to="blue4" method="_on_pressed"]
+[connection signal="pressed" from="green3" to="green3" method="_on_pressed"]
+[connection signal="pressed" from="green4" to="green4" method="_on_pressed"]
+[connection signal="pressed" from="cyan3" to="cyan3" method="_on_pressed"]
+[connection signal="pressed" from="cyan4" to="cyan4" method="_on_pressed"]
+[connection signal="pressed" from="yellow3" to="yellow3" method="_on_pressed"]
+[connection signal="pressed" from="yellow4" to="yellow4" method="_on_pressed"]
+[connection signal="pressed" from="orange3" to="orange3" method="_on_pressed"]
+[connection signal="pressed" from="orange4" to="orange4" method="_on_pressed"]
+[connection signal="pressed" from="purple3" to="purple3" method="_on_pressed"]
+[connection signal="pressed" from="purple4" to="purple4" method="_on_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
