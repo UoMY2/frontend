@@ -73,6 +73,7 @@ text = "Create lobby"
 script = ExtResource("6_jqd3n")
 
 [node name="Button2" type="Button" parent="."]
+layout_mode = 0
 offset_left = 662.0
 offset_top = 430.0
 offset_right = 1102.0
@@ -84,6 +85,7 @@ text = "Join lobby"
 script = ExtResource("7_e1dje")
 
 [node name="Button3" type="Button" parent="."]
+layout_mode = 0
 offset_left = 640.0
 offset_top = 390.0
 offset_right = 1548.0
