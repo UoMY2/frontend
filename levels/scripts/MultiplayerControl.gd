@@ -46,7 +46,7 @@ func SendPlayerInfo(name, id):
 
 @rpc("any_peer", "call_local")
 func StartGame():
-	var scene = load("res://scenes/main.tscn").instantiate()
+	var scene = load("res://scene/main.tscn").instantiate()
 	get_tree().root.add_child(scene)
 	self.hide()
 
@@ -61,10 +61,7 @@ func hostGame():
 	multiplayer.set_multiplayer_peer(peer)
 	print("waiting for players")
 	
-func _on_host_button_down():
-	hostGame()
-	SendPlayerInfo($LineEdit.text, multiplayer.get_unique_id())
-
+	
 func _on_join_button_down():
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(address, port)
@@ -75,3 +72,8 @@ func _on_join_button_down():
 func _on_start_button_down():
 	StartGame.rpc()
 	pass # Replace with function body.
+
+
+func _on_host_button_down():
+	hostGame()
+	SendPlayerInfo($LineEdit.text, multiplayer.get_unique_id())
