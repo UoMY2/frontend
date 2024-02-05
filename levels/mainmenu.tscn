@@ -60,7 +60,7 @@ texture = ExtResource("4_t24m2")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(684, 386)
 
-[node name="Button" type="Button" parent="."]
+[node name="CreateLobbyBtn" type="Button" parent="."]
 layout_mode = 0
 offset_left = 662.0
 offset_top = 410.0
@@ -72,7 +72,7 @@ theme_override_font_sizes/font_size = 90
 text = "Create lobby"
 script = ExtResource("6_jqd3n")
 
-[node name="Button2" type="Button" parent="."]
+[node name="JoinLobbyBtn" type="Button" parent="."]
 layout_mode = 0
 offset_left = 662.0
 offset_top = 430.0
@@ -84,7 +84,7 @@ theme_override_font_sizes/font_size = 90
 text = "Join lobby"
 script = ExtResource("7_e1dje")
 
-[node name="Button3" type="Button" parent="."]
+[node name="MainGameBtn" type="Button" parent="."]
 layout_mode = 0
 offset_left = 640.0
 offset_top = 390.0
@@ -96,6 +96,6 @@ theme_override_font_sizes/font_size = 90
 text = "Show main game (dev only)"
 script = ExtResource("8_tixp6")
 
-[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
-[connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]
-[connection signal="pressed" from="Button3" to="Button3" method="_on_pressed"]
+[connection signal="pressed" from="CreateLobbyBtn" to="CreateLobbyBtn" method="_on_pressed"]
+[connection signal="pressed" from="JoinLobbyBtn" to="JoinLobbyBtn" method="_on_pressed"]
+[connection signal="pressed" from="MainGameBtn" to="MainGameBtn" method="_on_pressed"]
