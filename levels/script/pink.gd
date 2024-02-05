@@ -9,18 +9,18 @@ func _ready():
 func _process(_delta):
 	if checker.pinkClear == true and flipped == true:
 		checker.can_click = false
-		await get_tree().create_timer(0.75).timeout
-		checker.can_click = true
+		await get_tree().create_timer(0.5).timeout
 		queue_free()
 		checker.pinkClear = false
+		checker.can_click = true
 
 	if flipped == true and checker.flipBack == true:
 		checker.can_click = false
-		await get_tree().create_timer(0.75).timeout
-		checker.can_click = true
+		await get_tree().create_timer(0.5).timeout
 		texture_normal = preload("res://img/white back.jpg")
 		flipped = false
 		checker.flag = true
+		checker.can_click = true
 		
 
 func _on_pressed():
