@@ -54,6 +54,7 @@ icon_mode = 0
 
 [node name="ErrorLbl" type="Label" parent="."]
 z_index = 4
+layout_mode = 0
 offset_left = 482.0
 offset_top = 380.0
 offset_right = 2102.0

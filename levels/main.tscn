@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://u2amms2my3nr"]
-
-[ext_resource type="Script" path="res://eventLib.gd" id="1_ovebg"]
-
-[node name="Node2D" type="Node2D"]
-script = ExtResource("1_ovebg")
