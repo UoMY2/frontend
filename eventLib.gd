@@ -54,7 +54,6 @@ func _lobby_welcome(data): # Called when lobby_welcome response is recieved.
 	the_lobby.addPlayer(data["your_name"], data['your_team'])
 	# Add current player & lobby id to the_lobby object
 	the_lobby.set_lobbyId(data["lobby_id"])
-	print(data["peer_teams"])
 	if "peer_teams" in data.keys(): # Are other players already in lobby?
 		for user in data["peer_teams"]: # peer_teams stores other players
 			# and their respective teams

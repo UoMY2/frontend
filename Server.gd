@@ -1,7 +1,7 @@
 # CALLED AUTOMATICALLY WHEN THE GAME IS FIRST OPENED.
 extends Node
 var socket = WebSocketPeer.new()
-@export var ip_address := "127.0.0.1"
+@export var ip_address := "159.65.209.57"
 @export var port := "8080"
 func _ready(): 
 	print("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port}))
@@ -11,6 +11,7 @@ func _process(delta):
 	socket.poll() # Poll the socket.
 	var state = socket.get_ready_state()
 	if state == WebSocketPeer.STATE_OPEN: # If connection is open...
+		#print("web socket opened")
 		while socket.get_available_packet_count(): # For each remaining incoming packet...
 			EventLib.handle_response(socket.get_packet().get_string_from_utf8())
 	elif state == WebSocketPeer.STATE_CLOSING:
