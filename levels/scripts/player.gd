@@ -17,7 +17,7 @@ func _physics_process(delta):
 			if not is_on_floor():
 				velocity.y += gravity * delta
 			
-			$GunRotation.look_at(get_viewport().get_mouse_position())
+			$GunRotation.look_at(get_global_mouse_position())
 			update_health.rpc()
 			if vitality <= 0:
 				#var dead = multiplayer.get_unique_id()

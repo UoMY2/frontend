@@ -15,6 +15,8 @@ script = ExtResource("1_wv4mb")
 PlayerScene = ExtResource("2_jjdpy")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["wall"]]
+position = Vector2(-16, 108)
+scale = Vector2(1.2, 1)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D"]
 position = Vector2(580, 648)
@@ -26,7 +28,8 @@ position = Vector2(579, 646.5)
 shape = SubResource("RectangleShape2D_ibrup")
 
 [node name="StaticBody2D7" type="StaticBody2D" parent="." groups=["wall"]]
-position = Vector2(-3, -658)
+position = Vector2(-10, -642)
+scale = Vector2(1.2, 1)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D7"]
 position = Vector2(580, 648)
@@ -38,9 +41,9 @@ position = Vector2(579, 647)
 shape = SubResource("RectangleShape2D_ibrup")
 
 [node name="StaticBody2D8" type="StaticBody2D" parent="." groups=["wall"]]
-position = Vector2(642, -11)
+position = Vector2(644, -23)
 rotation = 1.5708
-scale = Vector2(0.6, 1)
+scale = Vector2(0.7, 1)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D8"]
 position = Vector2(580, 648)
@@ -52,9 +55,9 @@ position = Vector2(579, 647)
 shape = SubResource("RectangleShape2D_ibrup")
 
 [node name="StaticBody2D9" type="StaticBody2D" parent="." groups=["wall"]]
-position = Vector2(1807, -13)
+position = Vector2(2014, -24)
 rotation = 1.5708
-scale = Vector2(0.6, 1)
+scale = Vector2(0.7, 1)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D9"]
 position = Vector2(580, 648)
@@ -66,7 +69,7 @@ position = Vector2(579, 648.25)
 shape = SubResource("RectangleShape2D_ibrup")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." groups=["wall"]]
-position = Vector2(64, -172)
+position = Vector2(170, -91)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D2"]
 position = Vector2(203.25, 653.75)
@@ -78,7 +81,7 @@ position = Vector2(203, 653)
 shape = SubResource("RectangleShape2D_sfu2m")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="." groups=["wall"]]
-position = Vector2(689, -172)
+position = Vector2(772, -91)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D3"]
 position = Vector2(203.25, 653.75)
@@ -90,7 +93,7 @@ position = Vector2(203, 653)
 shape = SubResource("RectangleShape2D_sfu2m")
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="." groups=["wall"]]
-position = Vector2(376, -333)
+position = Vector2(475, -272)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D4"]
 position = Vector2(203.25, 653.75)
@@ -102,7 +105,7 @@ position = Vector2(203, 653)
 shape = SubResource("RectangleShape2D_sfu2m")
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="." groups=["wall"]]
-position = Vector2(83, -495)
+position = Vector2(121, -437)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D5"]
 position = Vector2(203.25, 653.75)
@@ -114,7 +117,7 @@ position = Vector2(203, 654)
 shape = SubResource("RectangleShape2D_sfu2m")
 
 [node name="StaticBody2D6" type="StaticBody2D" parent="." groups=["wall"]]
-position = Vector2(664, -507)
+position = Vector2(828, -437)
 
 [node name="Icon" type="Sprite2D" parent="StaticBody2D6"]
 position = Vector2(203.25, 653.75)
@@ -128,7 +131,7 @@ shape = SubResource("RectangleShape2D_sfu2m")
 [node name="spawn" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="spawn" groups=["playerspawn"]]
-position = Vector2(116, 406)
+position = Vector2(222, 480)
 
 [node name="1" type="Node2D" parent="spawn" groups=["playerspawn"]]
-position = Vector2(1043, 426)
+position = Vector2(1115, 471)
