@@ -15,7 +15,7 @@ class Lobby:
 	func addPlayer(name, team):
 		playerTeam.append([name, team, false])
 var the_lobby = Lobby.new([],"") # Make new lobby object which is stored
-signal data_ready(status)  # A signal which is emited after a response is sent 
+signal data_ready(the_data)  # A signal which is emited after a response is sent 
 # to the server and the data has been processed
 
 static func test_function():
@@ -55,10 +55,9 @@ func _lobby_welcome(data): # Called when lobby_welcome response is recieved.
 	# Add current player & lobby id to the_lobby object
 	the_lobby.set_lobbyId(data["lobby_id"])
 	if "peer_teams" in data.keys(): # Are other players already in lobby?
-		for user in data["peer_teams"]: # peer_teams stores other players
-			# and their respective teams
-			the_lobby.addPlayer(user.keys(), user[user.keys()])
-			# E.g. {"peer_teams": [{"user": 0}]} will add ["user",0, false] to
+		for key in data["peer_teams"]:
+			the_lobby.addPlayer(key, data["peer_teams"][key])
+			# E.g. {"peer_teams": {{"user": 0}}} will add ["user",0, false] to
 			# playerTeam.
 	push_warning("[EventLib] Joined lobby with code: "+data["lobby_id"])
 	print(the_lobby.get_playerTeam())
@@ -66,9 +65,7 @@ func _lobby_welcome(data): # Called when lobby_welcome response is recieved.
 	# Emit the updated lobby class.
 
 func _lobby_peer_joined(data):
-	the_lobby.addPlayer(data["your_name"],data['your_team'])
-	data_ready.emit(the_lobby)
-	# Emit the updated lobby class.
+	the_lobby.addPlayer(data["their_name"],data["team"])
 
 func _client_already_in_lobby():
 	data_ready.emit("client_already_in_lobby")
