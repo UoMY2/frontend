@@ -52,21 +52,6 @@ same_column_width = true
 fixed_column_width = 200
 icon_mode = 0
 
-[node name="ErrorLbl" type="Label" parent="."]
-z_index = 4
-offset_left = 482.0
-offset_top = 380.0
-offset_right = 2102.0
-offset_bottom = 470.0
-scale = Vector2(0.25, 0.25)
-theme_override_colors/font_color = Color(1, 0.870588, 0.870588, 1)
-theme_override_colors/font_shadow_color = Color(0.67451, 0.156863, 0.141176, 1)
-theme_override_fonts/font = ExtResource("2_iairk")
-theme_override_font_sizes/font_size = 50
-text = "Can only ready up with 3 players on each team"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="CodeLbl" type="Label" parent="."]
 z_index = 4
 layout_mode = 0
@@ -132,7 +117,7 @@ vertical_alignment = 1
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(735, 468)
+position = Vector2(861, 453)
 scale = Vector2(0.680645, 0.680645)
 texture = ExtResource("3_0cl52")
 

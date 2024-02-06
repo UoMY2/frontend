@@ -1,8 +1,8 @@
 # CALLED AUTOMATICALLY WHEN THE GAME IS FIRST OPENED.
 extends Node
 var socket = WebSocketPeer.new()
-@export var ip_address := "159.65.209.57"
-@export var port := "8080"
+@export var ip_address = "127.0.0.1"
+@export var port = "8080"
 func _ready(): 
 	print("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port}))
 	socket.connect_to_url("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port})) # Connect to WS server.
