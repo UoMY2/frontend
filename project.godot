@@ -11,14 +11,18 @@ config_version=5
 [application]
 
 config/name="top down game"
-run/main_scene="res://levels/mainmenu.tscn"
+run/main_scene="res://Scenes/mainmenu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 EventLib="*res://eventLib.gd"
+
+Globalvar="*res://Scenes/Scripts/Globalvar.gd"
+
 Server="*res://Server.gd"
+
 
 [display]
 
