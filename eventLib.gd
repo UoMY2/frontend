@@ -2,7 +2,6 @@ extends Node
 class Lobby:
 	var playerTeam:Array
 	var lobbyId:String
-	var ready:bool
 	func _init(p, l):
 		playerTeam = p
 		lobbyId = l
@@ -16,7 +15,7 @@ class Lobby:
 				
 	func addPlayer(name, team):
 		playerTeam.append([name, team, false])
-	func removePlayer(name, team): # Find player and delete it.
+	func removePlayer(name): # Find player and delete it.
 		var index = search_player(name)
 		if index !=-1:
 			playerTeam.pop_at(index)
