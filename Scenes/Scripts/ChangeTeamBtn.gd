@@ -14,10 +14,10 @@ func _process(_delta):
 func _on_pressed():
 	find_player_pos()
 	#change team of player
-	if(Globalvar.playerArray[player_position][1] == 0):
-		Globalvar.playerArray[player_position][1] = 1
+	if(Globalvar.serverObj.playerTeam[player_position][1] == 0):
+		Globalvar.serverObj.playerTeam[player_position][1] = 1
 	else:
-		Globalvar.playerArray[player_position][1] = 0
+		Globalvar.serverObj.playerTeam[player_position][1] = 0
 	
 	#update table
 	Globalvar.update_tables = true
@@ -30,8 +30,8 @@ func _on_pressed():
 	
 #find the player position in the array
 func find_player_pos():
-	for i in range(6):
-		if(Globalvar.playerArray[i]!=[]):
-			if(Globalvar.playerArray[i][0]==Globalvar.current_player_name):
+	for i in range(len(Globalvar.serverObj.playerTeam)):
+		if(Globalvar.serverObj.playerTeam[i]!=[]):
+			if(Globalvar.serverObj.playerTeam[i][0]==EventLib.client_uname):
 				print("chaning position")
 				player_position = i

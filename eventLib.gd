@@ -114,7 +114,7 @@ func _lobby_peer_ready_change(data): # Peer changed ready so update ready in lob
 	the_lobby.setReady(data["their_name"], data["ready"])
 	
 func _lobby_peer_left(data):  # Peer left, so  remove them from the lobby obj.
-	the_lobby.removePlayer(data["their_name"],data["team"])
+	the_lobby.removePlayer(data["their_name"])
 
 # Various error responses for the lobby
 func _client_already_in_lobby(): 

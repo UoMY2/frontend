@@ -12,15 +12,18 @@ func _process(_delta):
 func _on_pressed():
 	
 	#remove the player from the array of players
-	var player_to_remove = Globalvar.current_player_name   #placeholder 
-	for i in range(len(Globalvar.playerArray)):
-		if(Globalvar.playerArray[i]!=[]):
-			print("asd:"+str(Globalvar.playerArray[i][0]))
-			print("rem:"+player_to_remove)
-			if(Globalvar.playerArray[i][0] == player_to_remove):
-				Globalvar.playerArray[i] == [] #remove the player name from the list
+	#var player_to_remove = Globalvar.current_player_name   #placeholder 
+	#for i in range(len(Globalvar.playerArray)):
+	#	if(Globalvar.playerArray[i]!=[]):
+	#		print("asd:"+str(Globalvar.playerArray[i][0]))
+	#		print("rem:"+player_to_remove)
+	#		if(Globalvar.playerArray[i][0] == player_to_remove):
+	#			Globalvar.playerArray[i] == [] #remove the player name from the list
 	
-	#update the tables for the other players
+	EventLib.leave_lobby()
+	
+	#reset the table for the player if they create another lobby
+	Globalvar.serverObj.playerTeam = []
 	Globalvar.update_tables = true
 	
 	get_tree().change_scene_to_file("res://Scenes/mainmenu.tscn")

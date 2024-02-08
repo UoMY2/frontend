@@ -16,28 +16,28 @@ func _ready():
 #called every frame. 'delta' is elapsed time since the previous frame
 func _process(_delta):
 	if(Globalvar.remove_ready):
-		if(Globalvar.playerArray[player_position][2] == true):
+		if(Globalvar.serverObj.playerTeam[player_position][2] == true):
 			#the player was previously ready so unready them
-			_on_pressed()
+			_on_pressed(true)
 		else:
 			Globalvar.remove_ready = false
 	pass
 
 #runs when the button is pressed
-func _on_pressed():
+func _on_pressed(force_remove=false):
 	#check that team sizes are even with sizes of 3v3
-	if(itemListBlue.get_item_count()==3 && itemListRed.get_item_count()==3):
+	if((itemListBlue.get_item_count()==3 && itemListRed.get_item_count()==3)||force_remove==true):
 		#ready or unready up the player
 		find_player_pos()
 		print("player index:"+str(player_item_index))
-		var player_name = Globalvar.playerArray[player_position][0]
-		if(Globalvar.playerArray[player_position][2] == false):
-			Globalvar.playerArray[player_position][2] = true
+		var player_name = Globalvar.serverObj.playerTeam[player_position][0]
+		if(Globalvar.serverObj.playerTeam[player_position][2] == false):
+			Globalvar.serverObj.playerTeam[player_position][2] = true
 			#change the text of the ready button to unready or vice versa
 			ready_btn.set_text("Unready")
 			
 			#update the name on the screen to append or remove "(ready)" next to player name
-			if(Globalvar.playerArray[player_position][1]==0):
+			if(Globalvar.serverObj.playerTeam[player_position][1]==0):
 				#on blue team
 				itemListBlue.set_item_text(player_item_index,player_name+"(ready)")
 			else:
@@ -49,12 +49,12 @@ func _on_pressed():
 			############## update player name to server to display ready for all other players ############
 			
 		else:
-			Globalvar.playerArray[player_position][2] = false
+			Globalvar.serverObj.playerTeam[player_position][2] = false
 			#change the text of the ready button to unready or vice versa
 			ready_btn.set_text("Ready up")
 			
 			#update the name on the screen to append or remove "(ready)" next to player name
-			if(Globalvar.playerArray[player_position][1]==0):
+			if(Globalvar.serverObj.playerTeam[player_position][1]==0):
 				#on blue team
 				itemListBlue.set_item_text(player_item_index,player_name)
 			else:
@@ -72,22 +72,21 @@ func _on_pressed():
 		error_msg.show()
 		await get_tree().create_timer(3.0).timeout
 		error_msg.hide()
-		print("pass")
 	pass
 	
 func find_player_pos():
 	for i in range(6):
-		if(Globalvar.playerArray[i]!=[]):
-			if(Globalvar.playerArray[i][0]==Globalvar.current_player_name):
+		if(Globalvar.serverObj.playerTeam[i]!=[]):
+			if(Globalvar.serverObj.playerTeam[i][0]==EventLib.client_uname):
 				print("chaning position")
 				player_position = i
-		if(Globalvar.playerArray[i]!=[]):
+		if(Globalvar.serverObj.playerTeam[i]!=[]):
 			print("i ========== "+ str(i))
 			#check blue item list
 			print("itemListBlue.get_item_count:"+str(itemListBlue.get_item_count()))
 			if(itemListBlue.get_item_count()>0 && i<itemListBlue.get_item_count()):
 				print("itemListBlue.get_item_text(i):"+itemListBlue.get_item_text(i))
-				if(Globalvar.current_player_name==itemListBlue.get_item_text(i)):
+				if(EventLib.client_uname==itemListBlue.get_item_text(i)):
 					#found the index of where the player is
 					print("found index blue, player_item_index="+str(player_item_index))
 					player_item_index = i
@@ -96,7 +95,7 @@ func find_player_pos():
 			if(itemListRed.get_item_count()>0 && i<itemListRed.get_item_count()):
 				#check red item list
 				print("itemListRed.get_item_text(i):"+itemListRed.get_item_text(i))
-				if(Globalvar.current_player_name==itemListRed.get_item_text(i)):
+				if(EventLib.client_uname==itemListRed.get_item_text(i)):
 					#found the index of where the player is
 					print("found index red, player_item_index="+str(player_item_index))
 					player_item_index = i

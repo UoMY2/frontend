@@ -18,17 +18,18 @@ func _process(_delta):
 	
 func update_lobby_code():
 	code_lbl.text = (Globalvar.lobby_code)
+	Globalvar.update_code = false
 
 func update_tables():
 	print("updating tables")
 	itemListBlue.clear()
 	itemListRed.clear()
-	for n in range(6):   #6 is the size of the player array
-		if(Globalvar.playerArray[n]!=[]):
-			print(Globalvar.playerArray)
-			if(Globalvar.playerArray[n][1]==0):
+	for n in range(len(Globalvar.serverObj.playerTeam)):   #6 is the size of the player array
+		if(Globalvar.serverObj.playerTeam[n]!=[]):
+			print(Globalvar.serverObj.playerTeam)
+			if(Globalvar.serverObj.playerTeam[n][1]==0):
 				#on blue team
-				itemListBlue.add_item(Globalvar.playerArray[n][0], null, false)
+				itemListBlue.add_item(Globalvar.serverObj.playerTeam[n][0], null, false)
 			else:
-				itemListRed.add_item(Globalvar.playerArray[n][0], null, false)
+				itemListRed.add_item(Globalvar.serverObj.playerTeam[n][0], null, false)
 	Globalvar.update_tables = false
