@@ -1,0 +1,234 @@
+[gd_scene load_steps=15 format=3 uid="uid://vlcig5csjdnd"]
+
+[ext_resource type="Script" path="res://12jus/mainn.gd" id="1_xbluu"]
+[ext_resource type="Texture2D" uid="uid://bg6nvii5gy8a1" path="res://12jus/icon.svg" id="2_fvpah"]
+[ext_resource type="Texture2D" uid="uid://bliupwjo54myd" path="res://12jus/rock.png" id="3_84gv8"]
+[ext_resource type="Texture2D" uid="uid://ceqatkd4w8oof" path="res://12jus/scissors.png" id="4_84xbi"]
+[ext_resource type="Texture2D" uid="uid://oqx86mx0fvb8" path="res://12jus/paper.png" id="5_7iss5"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://12jus/VT323_font - Copy/VT323-Regular.ttf" id="6_x6cqm"]
+
+[sub_resource type="Animation" id="Animation_6kts7"]
+resource_name = "paper"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Paper:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-200, 345), Vector2(350, 345)]
+}
+
+[sub_resource type="Animation" id="Animation_whted"]
+resource_name = "rock"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rock:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-200, 345), Vector2(350, 345)]
+}
+
+[sub_resource type="Animation" id="Animation_u78qp"]
+resource_name = "scissors"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scissors:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-200, 345), Vector2(350, 345)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mrucf"]
+_data = {
+"paper": SubResource("Animation_6kts7"),
+"rock": SubResource("Animation_whted"),
+"scissors": SubResource("Animation_u78qp")
+}
+
+[sub_resource type="Animation" id="Animation_pcqow"]
+resource_name = "paper2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Paper2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1566, 345), Vector2(1016, 345)]
+}
+
+[sub_resource type="Animation" id="Animation_jrapo"]
+resource_name = "rock2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rock2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1566, 345), Vector2(1016, 345)]
+}
+
+[sub_resource type="Animation" id="Animation_6n4bm"]
+resource_name = "scissors2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scissors2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1566, 345), Vector2(1016, 345)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nogge"]
+_data = {
+"paper2": SubResource("Animation_pcqow"),
+"rock2": SubResource("Animation_jrapo"),
+"scissors2": SubResource("Animation_6n4bm")
+}
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_xbluu")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(56, 60)
+scale = Vector2(0.625, 0.648438)
+texture = ExtResource("2_fvpah")
+
+[node name="rock" type="Button" parent="."]
+offset_left = 80.0
+offset_top = 585.0
+offset_right = 426.0
+offset_bottom = 744.0
+text = "Rock
+"
+
+[node name="paper" type="Button" parent="."]
+offset_left = 510.0
+offset_top = 585.0
+offset_right = 856.0
+offset_bottom = 744.0
+text = "Paper"
+
+[node name="scissors" type="Button" parent="."]
+offset_left = 933.0
+offset_top = 585.0
+offset_right = 1279.0
+offset_bottom = 744.0
+text = "Scissors
+"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mrucf")
+}
+
+[node name="Rock" type="Sprite2D" parent="."]
+position = Vector2(-200, 345)
+scale = Vector2(0.117373, 0.106674)
+texture = ExtResource("3_84gv8")
+
+[node name="Scissors" type="Sprite2D" parent="."]
+position = Vector2(-200, 345)
+scale = Vector2(0.0867142, 0.0762614)
+texture = ExtResource("4_84xbi")
+
+[node name="Paper" type="Sprite2D" parent="."]
+position = Vector2(-200, 345)
+scale = Vector2(0.448333, 0.405172)
+texture = ExtResource("5_7iss5")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(685, 388)
+zoom = Vector2(0.25, 0.25)
+
+[node name="spawn" type="Node2D" parent="."]
+position = Vector2(-200, 345)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.5
+one_shot = true
+
+[node name="spawn2" type="Node2D" parent="."]
+position = Vector2(1566, 345)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nogge")
+}
+
+[node name="Rock2" type="Sprite2D" parent="."]
+position = Vector2(1516, 345)
+scale = Vector2(0.117373, 0.106674)
+texture = ExtResource("3_84gv8")
+
+[node name="Scissors2" type="Sprite2D" parent="."]
+position = Vector2(1516, 345)
+scale = Vector2(0.0867142, 0.0762614)
+texture = ExtResource("4_84xbi")
+
+[node name="Paper2" type="Sprite2D" parent="."]
+position = Vector2(1516, 345)
+scale = Vector2(0.448333, 0.405172)
+texture = ExtResource("5_7iss5")
+
+[node name="countdown" type="Label" parent="."]
+offset_left = 652.0
+offset_top = 259.0
+offset_right = 837.0
+offset_bottom = 411.0
+theme_override_fonts/font = ExtResource("6_x6cqm")
+theme_override_font_sizes/font_size = 150
+
+[node name="score" type="Label" parent="."]
+offset_left = 549.0
+offset_top = 8.0
+offset_right = 872.0
+offset_bottom = 140.0
+theme_override_fonts/font = ExtResource("6_x6cqm")
+theme_override_font_sizes/font_size = 130
+
+[node name="aniTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="winner" type="Label" parent="."]
+offset_left = 26.0
+offset_top = 191.0
+offset_right = 1346.0
+offset_bottom = 491.0
+theme_override_fonts/font = ExtResource("6_x6cqm")
+theme_override_font_sizes/font_size = 250
+horizontal_alignment = 1
+
+[connection signal="pressed" from="rock" to="." method="_on_rock_pressed"]
+[connection signal="pressed" from="paper" to="." method="_on_paper_pressed"]
+[connection signal="pressed" from="scissors" to="." method="_on_scissors_pressed"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer2" to="." method="_on_animation_player_2_animation_finished"]
+[connection signal="timeout" from="aniTimer" to="." method="_on_ani_timer_timeout"]
