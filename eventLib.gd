@@ -108,20 +108,26 @@ func _lobby_welcome(data): # Called when lobby_welcome response is recieved.
 
 func _lobby_peer_joined(data): # Peer joined so add their name to the lobby obj
 	the_lobby.addPlayer(data["their_name"],data["their_team"])
+	data_ready.emit(true)
 
 func _lobby_peer_team_change(data): # Peer joined so update their team stored in the lobby obj.
 	the_lobby.changeTeam(data["their_name"])
+	data_ready.emit(true)
 
 func _lobby_peer_ready_change(data): # Peer changed ready so update ready in lobby obj.
 	the_lobby.setReady(data["their_name"], data["ready"])
+	data_ready.emit(true)
 	
 func _lobby_peer_left(data):  # Peer left, so  remove them from the lobby obj.
 	the_lobby.removePlayer(data["their_name"])
+	data_ready.emit(true)
 
 # Various error responses for the lobby
 func _client_already_in_lobby(): 
 	data_ready.emit("client_already_in_lobby")
-	push_warning("[EventLib] client_already_in_lobby")	
+	push_warning("[EventLib] client_already_in_lobby")
+	data_ready.emit("client_already_in_lobby")
+	
 	# Emit error.
 func _lobby_not_found():
 	data_ready.emit("lobby_not_found")

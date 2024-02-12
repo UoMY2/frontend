@@ -18,13 +18,14 @@ func _process(_delta):
 		update_lobby_code()
 	#print("temp_server.playerTeam is"+str(temp_server.playerTeam))
 	#print("EventLib.the_lobby.playerTeam is"+str(EventLib.the_lobby.playerTeam))
-	if(temp_server != EventLib.the_lobby):
-		print("changing")
-		Globalvar.update_tables = true
-		Globalvar.update_code = true
-		temp_server = EventLib.the_lobby
-	if(EventLib.player_ready==true):
+	print("waiting for update")
+	var the_signal = await EventLib.data_ready
+	print("updated")
+	Globalvar.update_tables = true
+	Globalvar.update_code = true
+	temp_server = EventLib.the_lobby
 		#switch scene
+	if(EventLib.player_ready==true):
 		get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
 		#generate a character for the player
 		#var astronaught_instance = astronaunt.instantiate()
