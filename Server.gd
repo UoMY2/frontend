@@ -1,7 +1,8 @@
 # CALLED AUTOMATICALLY WHEN THE GAME IS FIRST OPENED.
 extends Node
 var socket = WebSocketPeer.new()
-@export var ip_address = "127.0.0.1"
+#127.0.0.1
+@export var ip_address = "y2.squ1dd13.ink"
 @export var port = "8080"
 func _ready(): 
 	print("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port}))

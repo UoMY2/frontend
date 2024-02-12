@@ -19,39 +19,45 @@ func _process(_delta):
 		update_lobby_code()
 		
 	#print("waiting for update")
-	var the_signal = await EventLib.data_ready
+	#var the_signal = await EventLib.data_ready
+	#if(the_signal != "true"):
+	#	print("the_signal"+str(the_signal))
 	#print("updated")
-	Globalvar.update_tables = true
-	Globalvar.update_code = true
-	
-	print("EventLib.player_ready:"+str(EventLib.player_ready))
-	if(EventLib.player_ready==true):
-		#get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
-		#generate a character for the player
-		#var astronaught_instance = astronaunt.instantiate()
-		#add_child(instance)
+	#if(the_signal == "ship_welcome"):
+	if(Globalvar.go_main_game == true):
+		Globalvar.update_tables = true
+		Globalvar.update_code = true
 		
-		############################################
-		print("going to main game")
-		
-		#Add player into game (goes to game_level scene)
-		Globalvar.add_player = true
-
-		#add the rest of the players as remote players ie. different script and detach player interaction script
-		Globalvar.add_remote_players = true
-		############################################
-		
-		print("Current Scene:" + str(get_tree()))
-		print("##################################")
-		
-		#if get_tree().current_scene.name == "res://Scenes/game_level.tscn":
-		
+		#print("EventLib.player_ready:"+str(EventLib.player_ready))
+		if(EventLib.player_ready==true):
+			#get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
+			#generate a character for the player
+			#var astronaught_instance = astronaunt.instantiate()
+			#add_child(instance)
 			
-		# Transition to the game scene
-		get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
-		
-		EventLib.player_ready=false
-		
+			############################################
+			print("going to main game")
+			
+			#Add player into game (goes to game_level scene)
+			Globalvar.add_player = true
+
+			#add the rest of the players as remote players ie. different script and detach player interaction script
+			Globalvar.add_remote_players = true
+			############################################
+			
+			print("Current Scene:" + str(get_tree()))
+			print("##################################")
+			
+			#if get_tree().current_scene.name == "res://Scenes/game_level.tscn":
+			
+				
+			# Transition to the game scene
+			get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
+			
+			EventLib.player_ready=false
+			
+		Globalvar.go_main_game = false
+			
 	pass
 	
 func update_lobby_code():

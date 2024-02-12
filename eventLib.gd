@@ -7,7 +7,7 @@ class Lobby:
 		lobbyId = l
 	func search_player(name):
 		for index in range(len(playerTeam)):
-			print(len(playerTeam))
+			#print(len(playerTeam))
 			if playerTeam[index][0] == name:
 				return index
 		push_error("[EventLib] Player {p} doesn't exist.".format({"p":name}))
@@ -35,6 +35,7 @@ var client_uname = "" # Used to idenify the client.
 
 
 signal data_ready(the_data)  # A signal which is emited after a response is sent 
+signal ship_data_ready(the_data)
 var player_ready = false
 # to the server and the data has been processed
 
@@ -139,6 +140,7 @@ func _lobby_full():
 func _ship_welcome(data):
 	print(data)
 	player_ready = true
-	data_ready.emit(true)
+	#data_ready.emit("")
+	Globalvar.go_main_game = true
 	print("player ready")
 

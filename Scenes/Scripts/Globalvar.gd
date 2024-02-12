@@ -1,6 +1,6 @@
 extends Node
 
- 
+var go_main_game = false
 
 var playerArray = [[],[],[],[],[],[]]  #the first three elements are blue team and last three are red team
 var serverObj
