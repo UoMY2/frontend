@@ -40,9 +40,6 @@ func _on_pressed(force_remove=false):
 			
 			############## update player name to server to display ready for all other players ############
 			await EventLib.client_ready_change(true)
-			
-			Globalvar.update_tables = true
-			Globalvar.update_code = true
 	
 		else:
 			#change the text of the ready button to unready or vice versa
@@ -52,9 +49,6 @@ func _on_pressed(force_remove=false):
 			
 			############## update player name to server to display ready for all other players ############
 			EventLib.client_ready_change(false)
-			
-			Globalvar.update_tables = true
-			Globalvar.update_code = true
 			
 			#turn off remove ready 
 			Globalvar.remove_ready = false

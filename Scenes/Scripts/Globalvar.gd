@@ -6,8 +6,6 @@ var playerArray = [[],[],[],[],[],[]]  #the first three elements are blue team a
 var serverObj
 
 #boolean values to run methods
-var update_tables = false
-var update_code = false
 var remove_ready = false
 var add_player  = false
 var add_remote_players = false

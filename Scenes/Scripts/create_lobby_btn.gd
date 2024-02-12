@@ -36,10 +36,6 @@ func _on_pressed():
 	Globalvar.current_player_team = currentPlayer[1]
 	Globalvar.current_player_ready = currentPlayer[2]
 	
-	#update table
-	Globalvar.update_tables = true
-	Globalvar.update_code = true
-	
 	#change scene
 	get_tree().change_scene_to_file("res://Scenes/lobby.tscn")
 	pass #enter code to create a lobby 

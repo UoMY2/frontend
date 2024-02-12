@@ -5,66 +5,38 @@ extends Control
 @onready var itemListRed = get_node("RedTeamContainer/ItemListRed")
 @onready var code_lbl = get_node("GameCode")
 
-
 @onready var temp_server = Globalvar.serverObj
 
 func _ready():
-	pass
+	EventLib.go_to_main.connect(_on_go_to_main)
+	EventLib.update_player_tables.connect(_on_update_player_tables)
+	EventLib.update_lobby_code.connect(_on_update_lobby_code)
+	
+	# Initial update
+	_on_update_lobby_code()
+	_on_update_player_tables()
 	
 #called every frame. 'delta' is elapsed time since the previous frame
 func _process(_delta):
-	if(Globalvar.update_tables):
-		update_tables()
-	if(Globalvar.update_code):
-		update_lobby_code()
-		
-	#print("waiting for update")
-	#var the_signal = await EventLib.data_ready
-	#if(the_signal != "true"):
-	#	print("the_signal"+str(the_signal))
-	#print("updated")
-	#if(the_signal == "ship_welcome"):
-	if(Globalvar.go_main_game == true):
-		Globalvar.update_tables = true
-		Globalvar.update_code = true
-		
-		#print("EventLib.player_ready:"+str(EventLib.player_ready))
-		if(EventLib.player_ready==true):
-			#get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
-			#generate a character for the player
-			#var astronaught_instance = astronaunt.instantiate()
-			#add_child(instance)
-			
-			############################################
-			print("going to main game")
-			
-			#Add player into game (goes to game_level scene)
-			Globalvar.add_player = true
-
-			#add the rest of the players as remote players ie. different script and detach player interaction script
-			Globalvar.add_remote_players = true
-			############################################
-			
-			print("Current Scene:" + str(get_tree()))
-			print("##################################")
-			
-			#if get_tree().current_scene.name == "res://Scenes/game_level.tscn":
-			
-				
-			# Transition to the game scene
-			get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
-			
-			EventLib.player_ready=false
-			
-		Globalvar.go_main_game = false
-			
 	pass
+		
+func _on_go_to_main():
+	print("going to main game")
 	
-func update_lobby_code():
-	code_lbl.text = (Globalvar.lobby_code)
-	Globalvar.update_code = false
+	#Add player into game (goes to game_level scene)
+	Globalvar.add_player = true
 
-func update_tables():
+	#add the rest of the players as remote players ie. different script and detach player interaction script
+	Globalvar.add_remote_players = true
+	############################################
+	
+	# Transition to the game scene
+	get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
+	
+func _on_update_lobby_code():
+	code_lbl.text = (Globalvar.lobby_code)
+
+func _on_update_player_tables():
 	print("updating tables")
 	itemListBlue.clear()
 	itemListRed.clear()
@@ -87,4 +59,3 @@ func update_tables():
 				else:
 					#player ready
 					itemListRed.add_item(EventLib.the_lobby.playerTeam[n][0]+"(ready)", null, false)
-	Globalvar.update_tables = false

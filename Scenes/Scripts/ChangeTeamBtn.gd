@@ -15,8 +15,6 @@ func _on_pressed():
 	print("asdasdasd")
 	find_player_pos()
 	
-	#update table
-	Globalvar.update_tables = true
 	#unready the player
 	Globalvar.remove_ready = true
 	
@@ -24,8 +22,6 @@ func _on_pressed():
 	############################# update the server so the other players know they switched teams  ##############################
 	
 	await EventLib.client_team_change()
-	Globalvar.update_tables = true
-	Globalvar.update_code = true
 	
 	pass
 	

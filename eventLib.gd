@@ -33,10 +33,13 @@ class Lobby:
 var the_lobby = Lobby.new([],"") # Make new lobby object which is stored
 var client_uname = "" # Used to idenify the client.
 
+# We need one signal for every event that other scripts need to be able to
+# respond to.
+signal go_to_main
+signal update_player_tables
+signal update_lobby_code
 
 signal data_ready(the_data)  # A signal which is emited after a response is sent 
-signal ship_data_ready(the_data)
-var player_ready = false
 # to the server and the data has been processed
 
 static func test_function():
@@ -58,7 +61,7 @@ func handle_response(request_string): # Takes in a JSON request and
 				"client_already_in_lobby_error": _client_already_in_lobby()
 				"lobby_not_found": _lobby_not_found()
 				"lobby_full": _lobby_full()
-				"ship_welcome": _ship_welcome(data)
+				"ship_welcome": go_to_main.emit()
 				_: return data # Default.
 # ----------- LOBBY METHODS --------------------#
 
@@ -79,6 +82,10 @@ func leave_lobby():
 	Server.socket.send_text(JSON.stringify({"type":"lobby_bye"}))
 	the_lobby = Lobby.new([],"") # Overwrite old lobby object
 
+func update_lobby_visual():
+	update_player_tables.emit()
+	update_lobby_code.emit()
+
 func client_team_change():
 	var new_team = 1 - the_lobby.playerTeam[the_lobby.search_player(client_uname)][1] 
 	# Get client index in list and switch team from 0 -> 1 or 1 -> 0
@@ -86,9 +93,12 @@ func client_team_change():
 	# Change team on the backend side.
 	the_lobby.changeTeam(client_uname) 
 	# Change team on the frontend side.
+	update_lobby_visual()
+	
 func client_ready_change(new_ready):
 	Server.socket.send_text(JSON.stringify({"type": "lobby_ready_change","ready": new_ready}))
 	the_lobby.setReady(client_uname, new_ready) # Update ready on the frontend.
+	update_lobby_visual()
 	
 	
 # ----------- SERVER RESPONSE METHODS -----------#	
@@ -110,18 +120,22 @@ func _lobby_welcome(data): # Called when lobby_welcome response is recieved.
 func _lobby_peer_joined(data): # Peer joined so add their name to the lobby obj
 	the_lobby.addPlayer(data["their_name"],data["their_team"])
 	data_ready.emit(true)
+	update_lobby_visual()
 
 func _lobby_peer_team_change(data): # Peer joined so update their team stored in the lobby obj.
 	the_lobby.changeTeam(data["their_name"])
 	data_ready.emit(true)
+	update_lobby_visual()
 
 func _lobby_peer_ready_change(data): # Peer changed ready so update ready in lobby obj.
 	the_lobby.setReady(data["their_name"], data["ready"])
 	data_ready.emit(true)
+	update_lobby_visual()
 	
 func _lobby_peer_left(data):  # Peer left, so  remove them from the lobby obj.
 	the_lobby.removePlayer(data["their_name"])
 	data_ready.emit(true)
+	update_lobby_visual()
 
 # Various error responses for the lobby
 func _client_already_in_lobby(): 
@@ -137,10 +151,4 @@ func _lobby_full():
 	data_ready.emit("lobby_full")
 	push_warning("[EventLib] lobby_full")
 
-func _ship_welcome(data):
-	print(data)
-	player_ready = true
-	#data_ready.emit("")
-	Globalvar.go_main_game = true
-	print("player ready")
 
