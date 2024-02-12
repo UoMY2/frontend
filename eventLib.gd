@@ -35,6 +35,7 @@ var client_uname = "" # Used to idenify the client.
 
 
 signal data_ready(the_data)  # A signal which is emited after a response is sent 
+var player_ready = false
 # to the server and the data has been processed
 
 static func test_function():
@@ -56,6 +57,7 @@ func handle_response(request_string): # Takes in a JSON request and
 				"client_already_in_lobby_error": _client_already_in_lobby()
 				"lobby_not_found": _lobby_not_found()
 				"lobby_full": _lobby_full()
+				"ship_welcome": _ship_welcome(data)
 				_: return data # Default.
 # ----------- LOBBY METHODS --------------------#
 
@@ -127,4 +129,9 @@ func _lobby_not_found():
 func _lobby_full():
 	data_ready.emit("lobby_full")
 	push_warning("[EventLib] lobby_full")
+
+func _ship_welcome(data):
+	print(data)
+	player_ready = True
+	print("player ready")
 
