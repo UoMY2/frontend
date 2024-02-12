@@ -7,6 +7,7 @@ extends Node2D
 @onready var astronaught_instance = astronaught_scene.instantiate()
 
 func _ready():
+	#print("Current Scene:" + str(get_tree_string()))
 	pass
 		
 func _process(_delta):

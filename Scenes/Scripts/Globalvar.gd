@@ -1,7 +1,6 @@
 extends Node
 
-
-
+ 
 
 var playerArray = [[],[],[],[],[],[]]  #the first three elements are blue team and last three are red team
 var serverObj

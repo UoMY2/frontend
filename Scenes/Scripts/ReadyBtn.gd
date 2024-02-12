@@ -33,38 +33,28 @@ func _on_pressed(force_remove=false):
 		print("player index:"+str(player_item_index))
 		var player_name = EventLib.the_lobby.playerTeam[player_position][0]
 		if(EventLib.the_lobby.playerTeam[player_position][2] == false):
-			EventLib.the_lobby.playerTeam[player_position][2] = true
 			#change the text of the ready button to unready or vice versa
 			ready_btn.set_text("Unready")
 			
-			#update the name on the screen to append or remove "(ready)" next to player name
-			if(EventLib.the_lobby.playerTeam[player_position][1]==0):
-				#on blue team
-				itemListBlue.set_item_text(player_item_index,player_name+"(ready)")
-			else:
-				print("changing name of red team")
-				print("player_item_index"+str(player_item_index))
-				#on red team
-				itemListRed.set_item_text(player_item_index,player_name+"(ready)")
-				
+			#the logic to display the player readyness is in the lobby script
+			
 			############## update player name to server to display ready for all other players ############
-			EventLib.client_ready_change(true)
+			await EventLib.client_ready_change(true)
+			
+			Globalvar.update_tables = true
+			Globalvar.update_code = true
+	
 		else:
-			EventLib.the_lobby.playerTeam[player_position][2] = false
 			#change the text of the ready button to unready or vice versa
 			ready_btn.set_text("Ready up")
 			
-			#update the name on the screen to append or remove "(ready)" next to player name
-			if(EventLib.the_lobby.playerTeam[player_position][1]==0):
-				#on blue team
-				itemListBlue.set_item_text(player_item_index,player_name)
-			else:
-				#on red team
-				itemListRed.set_item_text(player_item_index,player_name)
+			#the logic to display the player readyness is in the lobby script
 			
 			############## update player name to server to display ready for all other players ############
 			EventLib.client_ready_change(false)
 			
+			Globalvar.update_tables = true
+			Globalvar.update_code = true
 			
 			#turn off remove ready 
 			Globalvar.remove_ready = false

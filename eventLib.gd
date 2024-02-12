@@ -131,7 +131,7 @@ func _client_already_in_lobby():
 	# Emit error.
 func _lobby_not_found():
 	data_ready.emit("lobby_not_found")
-	push_warning("[EventLib] lobby_not_found")		
+	push_warning("[EventLib] lobby_not_found")
 func _lobby_full():
 	data_ready.emit("lobby_full")
 	push_warning("[EventLib] lobby_full")
@@ -139,5 +139,6 @@ func _lobby_full():
 func _ship_welcome(data):
 	print(data)
 	player_ready = true
+	data_ready.emit(true)
 	print("player ready")
 

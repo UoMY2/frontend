@@ -12,12 +12,8 @@ func _process(_delta):
 
 #runs when the button is pressed
 func _on_pressed():
+	print("asdasdasd")
 	find_player_pos()
-	#change team of player
-	if(EventLib.the_lobby.playerTeam[player_position][1] == 0):
-		EventLib.the_lobby.playerTeam[player_position][1] = 1
-	else:
-		EventLib.the_lobby.playerTeam[player_position][1] = 0
 	
 	#update table
 	Globalvar.update_tables = true
@@ -26,6 +22,11 @@ func _on_pressed():
 	
 	
 	############################# update the server so the other players know they switched teams  ##############################
+	
+	await EventLib.client_team_change()
+	Globalvar.update_tables = true
+	Globalvar.update_code = true
+	
 	pass
 	
 #find the player position in the array
