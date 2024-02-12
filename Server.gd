@@ -7,7 +7,7 @@ func _ready():
 	print("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port}))
 	socket.connect_to_url("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port})) # Connect to WS server.
 
-func _process(delta):
+func _process(_delta):
 	socket.poll() # Poll the socket.
 	var state = socket.get_ready_state()
 	if state == WebSocketPeer.STATE_OPEN: # If connection is open...

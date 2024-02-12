@@ -26,7 +26,8 @@ func _process(_delta):
 #runs when the button is pressed
 func _on_pressed(force_remove=false):
 	#check that team sizes are even with sizes of 3v3
-	if((itemListBlue.get_item_count()==3 && itemListRed.get_item_count()==3)||force_remove==true):
+	#if((itemListBlue.get_item_count()==3 && itemListRed.get_item_count()==3)||force_remove==true):
+	if(itemListRed.get_item_count()>0 || itemListBlue.get_item_count()>0 || force_remove==true):    #for testing purposes so 2 players can start game
 		#ready or unready up the player
 		find_player_pos()
 		print("player index:"+str(player_item_index))
@@ -75,7 +76,8 @@ func _on_pressed(force_remove=false):
 	pass
 	
 func find_player_pos():
-	for i in range(6):
+	#for i  in range(6):
+	for i in range(len(Globalvar.serverObj.playerTeam)):    #FOR TESTING ONLY SO 2 PLAYERS CAN PLAY
 		if(Globalvar.serverObj.playerTeam[i]!=[]):
 			if(Globalvar.serverObj.playerTeam[i][0]==EventLib.client_uname):
 				print("chaning position")

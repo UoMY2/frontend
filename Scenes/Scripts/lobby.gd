@@ -14,6 +14,13 @@ func _process(_delta):
 		update_tables()
 	if(Globalvar.update_code):
 		update_lobby_code()
+	#if(Server.state=="switch"):
+		#switch scene
+		#get_tree().change_scene_to_file("res://Scenes/game_level.tscn")
+		#generate a character for the player
+		#var astronaught_instance = astronaunt.instantiate()
+		#add_child(instance)
+		
 	pass
 	
 func update_lobby_code():
