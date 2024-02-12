@@ -15,10 +15,13 @@ func _process(_delta):
 #runs when the button is pressed
 func _on_pressed():
 	print("creating lobby")
-	Globalvar.serverObj = await EventLib.create_lobby()       #create lobby library
-	print(Globalvar.serverObj.playerTeam)
-	var player_arr = Globalvar.serverObj.playerTeam
-	Globalvar.lobby_code  = Globalvar.serverObj.lobbyId
+	await EventLib.create_lobby()       #create lobby library
+	print(EventLib.the_lobby.playerTeam)
+	var player_arr = EventLib.the_lobby.playerTeam
+	Globalvar.lobby_code  = EventLib.the_lobby.lobbyId
+	
+	#used for updating the lobby
+	Globalvar.serverObj = EventLib.the_lobby
 	
 	#add 1 player to the blue team for the initial lobby creation
 	var currentPlayer = player_arr[0]     

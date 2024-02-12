@@ -16,7 +16,7 @@ func _ready():
 #called every frame. 'delta' is elapsed time since the previous frame
 func _process(_delta):
 	if(Globalvar.remove_ready):
-		if(Globalvar.serverObj.playerTeam[player_position][2] == true):
+		if(EventLib.the_lobby.playerTeam[player_position][2] == true):
 			#the player was previously ready so unready them
 			_on_pressed(true)
 		else:
@@ -31,14 +31,14 @@ func _on_pressed(force_remove=false):
 		#ready or unready up the player
 		find_player_pos()
 		print("player index:"+str(player_item_index))
-		var player_name = Globalvar.serverObj.playerTeam[player_position][0]
-		if(Globalvar.serverObj.playerTeam[player_position][2] == false):
-			Globalvar.serverObj.playerTeam[player_position][2] = true
+		var player_name = EventLib.the_lobby.playerTeam[player_position][0]
+		if(EventLib.the_lobby.playerTeam[player_position][2] == false):
+			EventLib.the_lobby.playerTeam[player_position][2] = true
 			#change the text of the ready button to unready or vice versa
 			ready_btn.set_text("Unready")
 			
 			#update the name on the screen to append or remove "(ready)" next to player name
-			if(Globalvar.serverObj.playerTeam[player_position][1]==0):
+			if(EventLib.the_lobby.playerTeam[player_position][1]==0):
 				#on blue team
 				itemListBlue.set_item_text(player_item_index,player_name+"(ready)")
 			else:
@@ -48,14 +48,14 @@ func _on_pressed(force_remove=false):
 				itemListRed.set_item_text(player_item_index,player_name+"(ready)")
 				
 			############## update player name to server to display ready for all other players ############
-			
+			EventLib.client_ready_change(true)
 		else:
-			Globalvar.serverObj.playerTeam[player_position][2] = false
+			EventLib.the_lobby.playerTeam[player_position][2] = false
 			#change the text of the ready button to unready or vice versa
 			ready_btn.set_text("Ready up")
 			
 			#update the name on the screen to append or remove "(ready)" next to player name
-			if(Globalvar.serverObj.playerTeam[player_position][1]==0):
+			if(EventLib.the_lobby.playerTeam[player_position][1]==0):
 				#on blue team
 				itemListBlue.set_item_text(player_item_index,player_name)
 			else:
@@ -63,7 +63,7 @@ func _on_pressed(force_remove=false):
 				itemListRed.set_item_text(player_item_index,player_name)
 			
 			############## update player name to server to display ready for all other players ############
-			
+			EventLib.client_ready_change(false)
 			
 			
 			#turn off remove ready 
@@ -77,12 +77,12 @@ func _on_pressed(force_remove=false):
 	
 func find_player_pos():
 	#for i  in range(6):
-	for i in range(len(Globalvar.serverObj.playerTeam)):    #FOR TESTING ONLY SO 2 PLAYERS CAN PLAY
-		if(Globalvar.serverObj.playerTeam[i]!=[]):
-			if(Globalvar.serverObj.playerTeam[i][0]==EventLib.client_uname):
+	for i in range(len(EventLib.the_lobby.playerTeam)):    #FOR TESTING ONLY SO 2 PLAYERS CAN PLAY
+		if(EventLib.the_lobby.playerTeam[i]!=[]):
+			if(EventLib.the_lobby.playerTeam[i][0]==EventLib.client_uname):
 				print("chaning position")
 				player_position = i
-		if(Globalvar.serverObj.playerTeam[i]!=[]):
+		if(EventLib.the_lobby.playerTeam[i]!=[]):
 			print("i ========== "+ str(i))
 			#check blue item list
 			print("itemListBlue.get_item_count:"+str(itemListBlue.get_item_count()))

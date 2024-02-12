@@ -23,7 +23,7 @@ func _on_pressed():
 	EventLib.leave_lobby()
 	
 	#reset the table for the player if they create another lobby
-	Globalvar.serverObj.playerTeam = []
+	#Globalvar.serverObj.playerTeam = []
 	Globalvar.update_tables = true
 	
 	get_tree().change_scene_to_file("res://Scenes/mainmenu.tscn")

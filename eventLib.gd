@@ -76,7 +76,7 @@ func join_lobby(code):
 
 func leave_lobby():
 	Server.socket.send_text(JSON.stringify({"type":"lobby_bye"}))
-	var the_lobby = Lobby.new([],"") # Overwrite old lobby object
+	the_lobby = Lobby.new([],"") # Overwrite old lobby object
 
 func client_team_change():
 	var new_team = 1 - the_lobby.playerTeam[the_lobby.search_player(client_uname)][1] 
@@ -132,6 +132,6 @@ func _lobby_full():
 
 func _ship_welcome(data):
 	print(data)
-	player_ready = True
+	player_ready = true
 	print("player ready")
 
