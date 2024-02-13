@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bs2tkij1d3ukh"]
+[gd_scene load_steps=9 format=3 uid="uid://dp7mckr217oo1"]
 
 [ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="1_dsjdq"]
 [ext_resource type="Script" path="res://levels/mainmenu.gd" id="1_jo0u1"]

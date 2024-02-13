@@ -1,40 +1,36 @@
 extends TileMap
 
-@onready var mole_scene = preload("res://moleminigame.tscn")
-
-var xlist = [32,48,64,80,96,112,128,144,160,176,192]
+@onready var mole_scene = preload("res://molecharacter.tscn")
+ 
+var xlist = [27.5,43.5,59.5,75.5,91.5,107.5,123.5,139.5,155.5,171.5,187.5]
 var ylist=[148,212,276]
 var used_positions = []
 var moles = []
 var molesup = [false,false,false,false,false,false,false,false,false,false]
 var score=0
-
+var last_moles = []
 
 
 func _ready():
-	 # Replace with the path to your Label node
-	# Generate random mole locations
 	for i in range(10):
-		var x = xlist[randi() % xlist.size()]-4.5
+		var x = xlist[randi() % xlist.size()]
 		var y = ylist[randi() % ylist.size()]
 		var mole_position = Vector2(x, y)
 		while mole_position in used_positions:
-			x = xlist[randi() % xlist.size()]-4.5
+			x = xlist[randi() % xlist.size()]
 			y = ylist[randi() % ylist.size()]
 			mole_position = Vector2(x, y)
 		used_positions.append(mole_position)
 		var mole = instance_mole(mole_position)
 		moles.append(mole)
 	
-	
 	while true:
 		move_mole()
-		showmole()
 		await get_tree().create_timer(2.5).timeout
 		move_down()
 		showmole()
+	print("finished")
 	
-
 
 func instance_mole(mole_position):
 	var mole = mole_scene.instantiate()
@@ -45,11 +41,13 @@ func instance_mole(mole_position):
 func move_mole():
 	for j in range(2):
 		var i= randi_range(0,9)
-		while molesup[i]:
+		while molesup[i] or (i in last_moles) :
 			i= randi_range(0,9)
 		moles[i].position.y = moles[i].position.y -15 - 100
 		molesup[i]= true
-		showmole()
+	last_moles = []
+	showmole()
+	
 		
 
 func move_down():
@@ -65,6 +63,7 @@ func move_down():
 # This is in TileMap.gd
 
 func mole_clicked(mole):
+	
 	var score_label = get_node("Label") 
 	print("Mole was clicked: ", mole)
 
@@ -79,6 +78,7 @@ func showmole():
 			moles[i].visible=false
 		else:
 			moles[i].visible=true
+			last_moles.append(i)
 	
 
 
