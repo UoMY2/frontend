@@ -1,8 +1,6 @@
-[gd_scene load_steps=30 format=3 uid="uid://dktcl5y1e4ayg"]
+[gd_scene load_steps=28 format=3 uid="uid://dktcl5y1e4ayg"]
 
-[ext_resource type="Script" path="res://Players/astronaught.gd" id="1_13vku"]
 [ext_resource type="Texture2D" uid="uid://bndm48f0almhh" path="res://art/out_of_space/astronaught.png" id="2_1x7nx"]
-[ext_resource type="Script" path="res://Players/player_interaction.gd" id="3_a0wlf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jl0oo"]
 size = Vector2(10, 6)
@@ -242,7 +240,6 @@ radius = 19.0
 
 [node name="Astronaught" type="CharacterBody2D"]
 z_index = 5
-script = ExtResource("1_13vku")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_1x7nx")
@@ -268,10 +265,7 @@ libraries = {
 "": SubResource("AnimationLibrary_8exem")
 }
 
-[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("interactor")]
-script = ExtResource("3_a0wlf")
-interactor = NodePath("..")
-interaction_action = &"open_minigame"
+[node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_cp85u")

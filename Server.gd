@@ -3,17 +3,22 @@ extends Node
 
 var socket = WebSocketPeer.new()
 
-func _ready(): 
-	socket.connect_to_url("ws://localhost:8080/ws") # Connect to WS server.
+# y2.squ1dd13.ink   <-- our server
+# 127.0.0.1         <-- your computer
+@export var ip_address = "y2.squ1dd13.ink"
+@export var port = "8080"
 
-func _process(delta):
+func _ready(): 
+	print("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port}))
+	socket.connect_to_url("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port})) # Connect to WS server.
+
+func _process(_delta):
 	socket.poll() # Poll the socket.
 	var state = socket.get_ready_state()
 	if state == WebSocketPeer.STATE_OPEN: # If connection is open...
+		#print("web socket opened")
 		while socket.get_available_packet_count(): # For each remaining incoming packet...
 			EventLib.handle_response(socket.get_packet().get_string_from_utf8())
-			# Use EventLib to handle the server response.
-		#EventLib.create_lobby()
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
 		pass
