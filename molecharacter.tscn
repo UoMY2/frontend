@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Sprite2D.gd" id="3_8cpvo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7pr77"]
-size = Vector2(13.5, 12.5)
+size = Vector2(139.5, 127)
 
 [node name="Node2D" type="CharacterBody2D"]
 script = ExtResource("1_tyrea")
