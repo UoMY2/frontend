@@ -1,7 +1,8 @@
 extends TileMap
 
 @onready var mole_scene = preload("res://molecharacter.tscn")
- 
+
+
 var xlist = [27.5,43.5,59.5,75.5,91.5,107.5,123.5,139.5,155.5,171.5,187.5]
 var ylist=[148,212,276]
 var used_positions = []
@@ -9,9 +10,11 @@ var moles = []
 var molesup = [false,false,false,false,false,false,false,false,false,false]
 var score=0
 var last_moles = []
+var my_timer: Timer
 
 
 func _ready():
+	my_timer = $moletimer
 	for i in range(10):
 		var x = xlist[randi() % xlist.size()]
 		var y = ylist[randi() % ylist.size()]
@@ -24,12 +27,14 @@ func _ready():
 		var mole = instance_mole(mole_position)
 		moles.append(mole)
 	
-	while true:
-		move_mole()
-		await get_tree().create_timer(2.5).timeout
-		move_down()
-		showmole()
-	print("finished")
+
+	move_mole()
+
+	showmole()
+	
+	my_timer.start()
+	
+
 	
 
 func instance_mole(mole_position):
@@ -62,11 +67,11 @@ func move_down():
 		
 # This is in TileMap.gd
 
+
 func mole_clicked(mole):
-	
+	my_timer.start()
 	var score_label = get_node("Label") 
 	print("Mole was clicked: ", mole)
-
 	score = score +1
 	score_label.text = str("Score: "+ str(score))
 	move_down()
@@ -81,5 +86,7 @@ func showmole():
 			last_moles.append(i)
 	
 
-
-
+func _on_moletimer_timeout():
+	move_down()
+	move_mole()
+	my_timer.start()

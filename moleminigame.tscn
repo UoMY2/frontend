@@ -75,4 +75,9 @@ text = "Score: 0"
 label_settings = SubResource("LabelSettings_brd7w")
 horizontal_alignment = 3
 
+[node name="moletimer" type="Timer" parent="TileMap"]
+wait_time = 1.5
+autostart = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="TileMap/moletimer" to="TileMap" method="_on_moletimer_timeout"]
