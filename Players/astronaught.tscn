@@ -240,6 +240,7 @@ radius = 19.0
 
 [node name="Astronaught" type="CharacterBody2D"]
 z_index = 5
+collision_layer = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_1x7nx")

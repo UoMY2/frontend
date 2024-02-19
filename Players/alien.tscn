@@ -241,6 +241,7 @@ radius = 19.0
 
 [node name="Alien" type="CharacterBody2D"]
 z_index = 5
+collision_layer = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_uf5c5")
