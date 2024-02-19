@@ -3,6 +3,8 @@ extends Node2D
 #instantiate the characters
 @onready var alien_scene = load("res://Players/alien.tscn")
 @onready var astronaught_scene = load("res://Players/astronaught.tscn")
+@onready var light_texture = load("res://art/Textures/light(2).png")
+
 func _ready():
 	#print("Current Scene:" + str(get_tree_string()))
 	pass
@@ -42,14 +44,21 @@ func _process(_delta):
 		player_instance.set_script(load("res://Players/player.gd"))
 		
 		#add player interaciton script to the player
-		var area2d = null
-		if team == 0:
-			area2d = player_instance.get_node("./Area2D")
-			add_child(player_instance)
-		else:
-			area2d = player_instance.get_node("./Area2D")
-			add_child(player_instance)
+		var area2d = player_instance.get_node("./Area2D")
 		area2d.set_script(load("res://Players/player_interaction.gd"))
+		
+		add_child(player_instance)
+		
+		#add point light node onto player
+		var lightNode = PointLight2D.new()
+		player_instance.add_child(lightNode)
+		
+		#lightNode = player_instance.get_node("./PointLight2D")
+		lightNode.set_texture(light_texture)
+		lightNode.set_texture_scale(5)
+		lightNode.set("energy",0.3)
+		lightNode.set("shadow_enabled",true)
+		
 		Globalvar.add_player = false
 	if (Globalvar.add_remote_players):
 		var peer_spawns = data["peer_spawns"]

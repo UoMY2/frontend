@@ -1,7 +1,7 @@
 [gd_scene load_steps=29 format=3 uid="uid://deka0bf45cue2"]
 
 [ext_resource type="Texture2D" uid="uid://ccpla11sab7jp" path="res://art/out_of_space/alien_spritesheet.png" id="1_uf5c5"]
-[ext_resource type="Script" path="res://Players/player_interaction.gd" id="3_icqil"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="4_7tw2i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jl0oo"]
 size = Vector2(10, 6)
@@ -269,7 +269,21 @@ libraries = {
 }
 
 [node name="Area2D" type="Area2D" parent="."]
-script = ExtResource("3_icqil")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_pixu2")
+
+[node name="pressFBtn" type="Label" parent="."]
+visible = false
+offset_left = 12.0
+offset_top = -5.0
+offset_right = 732.0
+offset_bottom = 85.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("4_7tw2i")
+theme_override_font_sizes/font_size = 90
+text = "Press F to join game"
