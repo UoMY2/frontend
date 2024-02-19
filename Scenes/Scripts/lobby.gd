@@ -20,12 +20,12 @@ func _ready():
 func _process(_delta):
 	pass
 		
-func _on_go_to_main():
+func _on_go_to_main(data):
 	print("going to main game")
 	
 	#Add player into game (goes to game_level scene)
 	Globalvar.add_player = true
-
+	Globalvar.ship_init_data = data
 	#add the rest of the players as remote players ie. different script and detach player interaction script
 	Globalvar.add_remote_players = true
 	############################################

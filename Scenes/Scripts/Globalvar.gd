@@ -16,4 +16,7 @@ var current_player_name = ""  #this is the current player's name
 var current_player_team = 0  #this is the current player's team
 var current_player_ready = false
 var current_player_position = Vector2()
+var ship_init_data
+var player_layer_no = 0
+var playerNodes = {} # Stores the id of the node and the username.
 

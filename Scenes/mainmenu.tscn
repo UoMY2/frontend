@@ -45,7 +45,7 @@ texture = ExtResource("3_kwsc1")
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(683, 388)
+position = Vector2(684, 374)
 scale = Vector2(0.680645, 0.680645)
 texture = ExtResource("4_xkdul")
 
