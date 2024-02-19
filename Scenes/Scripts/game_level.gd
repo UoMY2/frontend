@@ -3,7 +3,7 @@ extends Node2D
 #instantiate the characters
 @onready var alien_scene = load("res://Players/alien.tscn")
 @onready var astronaught_scene = load("res://Players/astronaught.tscn")
-@onready var light_texture = load("res://art/Textures/light(2).png")
+@onready var light_texture = load("res://art/Textures/light.png")
 
 func _ready():
 	#print("Current Scene:" + str(get_tree_string()))
@@ -53,7 +53,6 @@ func _process(_delta):
 		var lightNode = PointLight2D.new()
 		player_instance.add_child(lightNode)
 		
-		#lightNode = player_instance.get_node("./PointLight2D")
 		lightNode.set_texture(light_texture)
 		lightNode.set_texture_scale(5)
 		lightNode.set("energy",0.3)
