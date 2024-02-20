@@ -35,8 +35,6 @@ func _ready():
 	my_timer.start()
 	
 
-	
-
 func instance_mole(mole_position):
 	var mole = mole_scene.instantiate()
 	add_child(mole)

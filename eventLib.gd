@@ -32,15 +32,16 @@ class Lobby:
 	
 var the_lobby = Lobby.new([],"") # Make new lobby object which is stored
 var client_uname = "" # Used to idenify the client.
-
+var playerRefs: Array # Associates the username with the spawned player obj.
 # We need one signal for every event that other scripts need to be able to
 # respond to.
-signal go_to_main
+signal go_to_main(the_data)
 signal update_player_tables
 signal update_lobby_code
 
 signal data_ready(the_data)  # A signal which is emited after a response is sent 
 # to the server and the data has been processed
+signal peer_movement(the_data)
 
 static func test_function():
 	print("Library has been imported sucessfully.")
@@ -61,7 +62,8 @@ func handle_response(request_string): # Takes in a JSON request and
 				"client_already_in_lobby_error": _client_already_in_lobby()
 				"lobby_not_found": _lobby_not_found()
 				"lobby_full": _lobby_full()
-				"ship_welcome": go_to_main.emit()
+				"ship_welcome": go_to_main.emit(data)
+				"ship_mov_peer_position_update": _peer_position_update(data)
 				_: return data # Default.
 # ----------- LOBBY METHODS --------------------#
 
@@ -85,6 +87,10 @@ func leave_lobby():
 func update_lobby_visual():
 	update_player_tables.emit()
 	update_lobby_code.emit()
+
+func update_client_pos(newPos):
+	Server.socket.send_text(JSON.stringify({"type": "ship_mov_position_update",
+	"x": newPos[0],"y": newPos[1]}))
 
 func client_team_change():
 	var new_team = 1 - the_lobby.playerTeam[the_lobby.search_player(client_uname)][1] 
@@ -147,8 +153,12 @@ func _client_already_in_lobby():
 func _lobby_not_found():
 	data_ready.emit("lobby_not_found")
 	push_warning("[EventLib] lobby_not_found")
+
 func _lobby_full():
 	data_ready.emit("lobby_full")
 	push_warning("[EventLib] lobby_full")
-
+# ---------------- MOVEMENT METHODS ---------------------------#
+func _peer_position_update(data):
+	peer_movement.emit(data) 
+	
 
