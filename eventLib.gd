@@ -27,7 +27,32 @@ class Lobby:
 		var index = search_player(name)
 		if index !=-1: # Change team from 0 -> 1,or 1->0
 			playerTeam[search_player(name)][1] = 1 - playerTeam[search_player(name)][1] 
+
+class Ship:
+	var ship_lobby:Lobby
+	var minigames: Dictionary
+	func _init(sl,m):
+		ship_lobby = sl
+		minigames = m
+	func get_minigame(name):
+		return minigames[name]
+	
 		
+class Minigame:
+	var game_name:String
+	var pos:Vector2
+	var is_active: bool
+	var players: String # 1v1,2v2 or 3v3
+	var expired: bool
+	var cooldown: float
+	func _init(n,po,ia,pl, e):
+		game_name = n
+		pos = po
+		is_active = ia
+		players = pl
+		expired = e
+		
+	
 	
 	
 var the_lobby = Lobby.new([],"") # Make new lobby object which is stored
@@ -64,7 +89,7 @@ func handle_response(request_string): # Takes in a JSON request and
 				"lobby_full": _lobby_full()
 				"ship_welcome": go_to_main.emit(data)
 				"ship_mov_peer_position_update": _peer_position_update(data)
-				_: return data # Default.
+				_: data_ready.emit(data) # Emit arbitrary response if applicable
 # ----------- LOBBY METHODS --------------------#
 
 # ----------- CLIENT REQUEST METHODS -----------#		
@@ -105,7 +130,9 @@ func client_ready_change(new_ready):
 	Server.socket.send_text(JSON.stringify({"type": "lobby_ready_change","ready": new_ready}))
 	the_lobby.setReady(client_uname, new_ready) # Update ready on the frontend.
 	update_lobby_visual()
-	
+
+func message_send(request): 
+	Server.socket.send_text(request)
 	
 # ----------- SERVER RESPONSE METHODS -----------#	
 func _lobby_welcome(data): # Called when lobby_welcome response is recieved.
@@ -160,5 +187,3 @@ func _lobby_full():
 # ---------------- MOVEMENT METHODS ---------------------------#
 func _peer_position_update(data):
 	peer_movement.emit(data) 
-	
-
