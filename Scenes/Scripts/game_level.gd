@@ -57,6 +57,9 @@ func _process(_delta):
 		#add movement script to the player
 		player_instance.set_script(load("res://Players/player.gd"))
 		
+		#change name label
+		var nameLbl = player_instance.get_node("nameLbl")
+		nameLbl.text = EventLib.client_uname
 		
 		var PlayerSprite = player_instance.get_node("Sprite2D")
 		
@@ -115,6 +118,7 @@ func _process(_delta):
 		for player in peer_spawns.keys():
 			var pos = Vector2(peer_spawns[player]["x"], peer_spawns[player]["y"])
 			var team = EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][1]
+			var player_name = EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][0]
 			var area2d = null
 			if team == 0:
 				player_instance = alien_scene.instantiate().get_node(".")
@@ -128,6 +132,10 @@ func _process(_delta):
 				add_child(player_instance)
 			Globalvar.playerNodes.merge({player:player_instance.get_instance_id()})
 			
+			#change name label
+			var nameLbl = player_instance.get_node("nameLbl")
+			nameLbl.text = player_name
+				
 		Globalvar.add_remote_players = false
 			
 

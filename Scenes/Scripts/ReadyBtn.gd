@@ -7,6 +7,7 @@ var player_item_index = 0
 @onready var ready_btn = get_node("/root/LobbyControl/ReadyBtn")
 @onready var error_msg = get_node("/root/LobbyControl/ErrorLbl")
 
+@onready var readyBtn = get_node("/root/LobbyControl/ReadyBtn")
 
 #called when the node enters the scene tree for the first time
 func _ready():
@@ -21,13 +22,18 @@ func _process(_delta):
 			_on_pressed(true)
 		else:
 			Globalvar.remove_ready = false
-	pass
+	
+	
+	if(itemListRed.get_item_count()!=itemListBlue.get_item_count()):
+		readyBtn.disabled = true
+	else:
+		readyBtn.disabled = false
 
 #runs when the button is pressed
 func _on_pressed(force_remove=false):
 	#check that team sizes are even with sizes of 3v3
 	#if((itemListBlue.get_item_count()==3 && itemListRed.get_item_count()==3)||force_remove==true):
-	if(itemListRed.get_item_count()>0 || itemListBlue.get_item_count()>0 || force_remove==true):    #for testing purposes so 2 players can start game
+	if((itemListRed.get_item_count()>0 && itemListBlue.get_item_count()>0) || force_remove==true):    #for testing purposes so 2 players can start game
 		#ready or unready up the player
 		find_player_pos()
 		print("player index:"+str(player_item_index))

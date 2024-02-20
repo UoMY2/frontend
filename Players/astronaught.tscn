@@ -300,3 +300,15 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("2_ocf0n")
 theme_override_font_sizes/font_size = 90
 text = "Press F to join game"
+
+[node name="nameLbl" type="Label" parent="."]
+offset_left = -7.0
+offset_top = -18.0
+offset_right = 137.0
+offset_bottom = 72.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_ocf0n")
+theme_override_font_sizes/font_size = 90
+text = "name"

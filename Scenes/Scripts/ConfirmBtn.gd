@@ -7,25 +7,33 @@ func _on_pressed():
 	
 	var lobby_data = await EventLib.join_lobby(tf.text)
 	
-	#used for updating
-	Globalvar.serverObj = EventLib.the_lobby
+	if(str(lobby_data)=="lobby_not_found"):
+		print("lobby not found so don't do anything")
+	if(str(lobby_data)=="lobby_full"):
+		print("lobby is full")
+		#NEED TO ADD LABEL
 	
-	print(EventLib.the_lobby.playerTeam)
-	var player_arr = EventLib.the_lobby.playerTeam
-	Globalvar.lobby_code  = EventLib.the_lobby.lobbyId
 	
-	#add 1 player to the blue team for the initial lobby creation
-	#find the index of the current player
-	var index = find_index(player_arr)
-	var currentPlayer = player_arr[index]     
-	
-	#EventLib.client_uname = currentPlayer[0]
-	Globalvar.current_player_team = currentPlayer[1]
-	Globalvar.current_player_ready = currentPlayer[2]
-	
-	#change scene
-	get_tree().change_scene_to_file("res://Scenes/lobby.tscn")
-	
+	else:
+		#used for updating
+		Globalvar.serverObj = EventLib.the_lobby
+		
+		print(EventLib.the_lobby.playerTeam)
+		var player_arr = EventLib.the_lobby.playerTeam
+		Globalvar.lobby_code  = EventLib.the_lobby.lobbyId
+		
+		#add 1 player to the blue team for the initial lobby creation
+		#find the index of the current player
+		var index = find_index(player_arr)
+		var currentPlayer = player_arr[index]     
+		
+		#EventLib.client_uname = currentPlayer[0]
+		Globalvar.current_player_team = currentPlayer[1]
+		Globalvar.current_player_ready = currentPlayer[2]
+		
+		#change scene
+		get_tree().change_scene_to_file("res://Scenes/lobby.tscn")
+		
 	pass # Replace with function body.
 
 func find_index(player_arr):

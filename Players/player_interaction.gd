@@ -19,7 +19,6 @@ func _process(delta):
 #will run when the player presses the interaction_action (in this case "F")
 func _input(event):
 	if(event.is_action_pressed(interaction_action)):
-		print("pressed F")
 		#make sure there actually is a interactable object nearby
 		if(selected_interactable != null):
 			selected_interactable.interact(interactor)

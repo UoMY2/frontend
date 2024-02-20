@@ -54,6 +54,7 @@ icon_mode = 0
 
 [node name="LeaderboardLbl" type="Label" parent="."]
 z_index = 4
+layout_mode = 0
 offset_left = 630.0
 offset_top = 300.0
 offset_right = 1062.0

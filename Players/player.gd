@@ -18,6 +18,7 @@ func _physics_process(_delta):
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
 		Input.get_action_strength("down") - Input.get_action_strength("up")
 	)
+	#print("player: input_direction:"+str(input_direction))
 	
 	update_animation_parameters(input_direction)
 	

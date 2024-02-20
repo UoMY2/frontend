@@ -12,10 +12,8 @@ func _process(_delta):
 
 #runs when the button is pressed
 func _on_pressed():
-	print("asdasdasd")
-	find_player_pos()
 	
-	#unready the player
+	#unready all the players
 	Globalvar.remove_ready = true
 	
 	
@@ -24,11 +22,4 @@ func _on_pressed():
 	await EventLib.client_team_change()
 	
 	pass
-	
-#find the player position in the array
-func find_player_pos():
-	for i in range(len(EventLib.the_lobby.playerTeam)):
-		if(EventLib.the_lobby.playerTeam[i]!=[]):
-			if(EventLib.the_lobby.playerTeam[i][0]==EventLib.client_uname):
-				print("chaning position")
-				player_position = i
+
