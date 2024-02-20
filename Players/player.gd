@@ -8,6 +8,8 @@ extends CharacterBody2D
 @onready var state_machine = animation_tree.get("parameters/playback")
 
 func _ready():
+	var player_interaction = get_node("./Area2D")
+	player_interaction.display_instruction_text.connect(_on_display_instruction_text)
 	update_animation_parameters(starting_direction)
 	
 func _physics_process(_delta):
@@ -37,3 +39,10 @@ func pick_new_state():
 		EventLib.update_client_pos(global_position)
 	else:
 		state_machine.travel("idle")
+
+func _on_display_instruction_text(data):
+	var pressFBtn = get_node("pressFBtn")
+	if(data==true):
+		pressFBtn.visible = true
+	else:
+		pressFBtn.visible = false

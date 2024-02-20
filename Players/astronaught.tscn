@@ -1,6 +1,13 @@
-[gd_scene load_steps=28 format=3 uid="uid://dktcl5y1e4ayg"]
+[gd_scene load_steps=31 format=3 uid="uid://dktcl5y1e4ayg"]
 
 [ext_resource type="Texture2D" uid="uid://bndm48f0almhh" path="res://art/out_of_space/astronaught.png" id="2_1x7nx"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="2_ocf0n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fq04o"]
+bg_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1p1j"]
+bg_color = Color(1, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jl0oo"]
 size = Vector2(10, 6)
@@ -169,51 +176,51 @@ _data = {
 "walk_up": SubResource("Animation_j6suj")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_woii8"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t6tsg"]
 animation = &"idle_down"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1bxfp"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rkclp"]
 animation = &"idle_up"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dweei"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tg3rs"]
 animation = &"idle_right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vewgv"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gipri"]
 animation = &"idle_left"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_e6vip"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_woii8")
+blend_point_0/node = SubResource("AnimationNodeAnimation_t6tsg")
 blend_point_0/pos = Vector2(0, 1.1)
-blend_point_1/node = SubResource("AnimationNodeAnimation_1bxfp")
+blend_point_1/node = SubResource("AnimationNodeAnimation_rkclp")
 blend_point_1/pos = Vector2(0, -1.1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_dweei")
+blend_point_2/node = SubResource("AnimationNodeAnimation_tg3rs")
 blend_point_2/pos = Vector2(1, 0)
-blend_point_3/node = SubResource("AnimationNodeAnimation_vewgv")
+blend_point_3/node = SubResource("AnimationNodeAnimation_gipri")
 blend_point_3/pos = Vector2(-1, 0)
 min_space = Vector2(-1, -1.1)
 max_space = Vector2(1, 1.1)
 blend_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hii7x"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mlrml"]
 animation = &"walk_down"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nxd4t"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ri0l3"]
 animation = &"walk_up"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ngqgv"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xfnw5"]
 animation = &"walk_right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5x1dd"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aerxr"]
 animation = &"walk_left"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_vjua1"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_hii7x")
+blend_point_0/node = SubResource("AnimationNodeAnimation_mlrml")
 blend_point_0/pos = Vector2(0, 1.1)
-blend_point_1/node = SubResource("AnimationNodeAnimation_nxd4t")
+blend_point_1/node = SubResource("AnimationNodeAnimation_ri0l3")
 blend_point_1/pos = Vector2(0, -1.1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_ngqgv")
+blend_point_2/node = SubResource("AnimationNodeAnimation_xfnw5")
 blend_point_2/pos = Vector2(1, 0)
-blend_point_3/node = SubResource("AnimationNodeAnimation_5x1dd")
+blend_point_3/node = SubResource("AnimationNodeAnimation_aerxr")
 blend_point_3/pos = Vector2(-1, 0)
 min_space = Vector2(-1, -1.1)
 max_space = Vector2(1, 1.1)
@@ -240,12 +247,21 @@ radius = 19.0
 
 [node name="Astronaught" type="CharacterBody2D"]
 z_index = 5
+collision_layer = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_1x7nx")
 hframes = 4
 vframes = 4
 frame = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Sprite2D"]
+visible = false
+offset_right = 930.0
+offset_bottom = 155.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fq04o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_d1p1j")
+value = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)
@@ -269,3 +285,18 @@ libraries = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_cp85u")
+
+[node name="pressFBtn" type="Label" parent="."]
+visible = false
+offset_left = 12.0
+offset_top = -5.0
+offset_right = 732.0
+offset_bottom = 85.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("2_ocf0n")
+theme_override_font_sizes/font_size = 90
+text = "Press F to join game"
