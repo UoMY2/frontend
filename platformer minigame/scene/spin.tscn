@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ndd4cccn3ivu"]
+
+[ext_resource type="Script" path="res://scripts/spin.gd" id="1_bbyxl"]
+[ext_resource type="Texture2D" uid="uid://dyf1d6jywufag" path="res://Texture/line.jpg" id="2_wc0pu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qoux"]
+size = Vector2(21, 25.76)
+
+[node name="spin" type="CharacterBody2D" groups=["obstacle"]]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_bbyxl")
+
+[node name="Line" type="Sprite2D" parent="."]
+texture = ExtResource("2_wc0pu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.38419e-05)
+scale = Vector2(1, 50)
+shape = SubResource("RectangleShape2D_3qoux")

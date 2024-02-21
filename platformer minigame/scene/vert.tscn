@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cibx0sh5qfk24"]
+
+[ext_resource type="Script" path="res://scripts/vert.gd" id="1_1dvcp"]
+[ext_resource type="Texture2D" uid="uid://dyf1d6jywufag" path="res://Texture/line.jpg" id="2_bayh0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ck0xw"]
+size = Vector2(19.6923, 20)
+
+[node name="vert" type="CharacterBody2D"]
+scale = Vector2(0.25, 0.4)
+script = ExtResource("1_1dvcp")
+
+[node name="Line" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_bayh0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(65, 1)
+shape = SubResource("RectangleShape2D_ck0xw")
