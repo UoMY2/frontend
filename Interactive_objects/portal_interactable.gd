@@ -1,7 +1,7 @@
 #this script defines what the banana does when the player interacts with it
 extends Interactable
 
-@onready var animation_tree = get_node("/root/game_level/Portal/AnimationTree")
+@onready var animation_tree = get_node("../AnimationTree")
 @onready var state_machine = animation_tree.get("parameters/playback")
 @onready var state = 1
 @onready var tilemap = get_node("/root/game_level/TileMap")

@@ -29,6 +29,8 @@ func _process(_delta):
 	var data = null
 	var player_instance = null
 	if(Globalvar.add_player):
+		EventLib.portal_ready_to_spawn.emit() # Portals need to spawn AFTER
+		# the scene is added.
 		var json = JSON.new()
 		var err = json.parse(str(Globalvar.ship_init_data)) # Parse and validate JSON
 		if err == OK: # If JSON is valid...
