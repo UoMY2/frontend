@@ -314,7 +314,6 @@ occluder_light_mask = 7
 [node name="LightOccluder2D4" type="LightOccluder2D" parent="."]
 position = Vector2(8, 0)
 rotation = 0.0195654
-scale = Vector2(1, 1)
 occluder = SubResource("OccluderPolygon2D_1t77o")
 
 [node name="LightOccluder2D3" type="LightOccluder2D" parent="."]
