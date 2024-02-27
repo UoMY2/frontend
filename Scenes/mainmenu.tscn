@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://bs2tkij1d3ukh"]
 
-[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="1_dsjdq"]
-[ext_resource type="Script" path="res://levels/mainmenu.gd" id="1_jo0u1"]
-[ext_resource type="Texture2D" uid="uid://pbqblqqnq46h" path="res://art/Main_menu/blue planet.png" id="2_pr6kr"]
-[ext_resource type="Texture2D" uid="uid://dot3y5xqlq8gk" path="res://art/Main_menu/background.png" id="3_m0w4i"]
-[ext_resource type="Texture2D" uid="uid://csp5adyh2hcur" path="res://art/Main_menu/red_planet_e.png" id="4_t24m2"]
-[ext_resource type="Script" path="res://levels/create_lobby_btn.gd" id="6_jqd3n"]
-[ext_resource type="Script" path="res://levels/join_lobby_btn.gd" id="7_e1dje"]
-[ext_resource type="Script" path="res://levels/show_main_game_btn.gd" id="8_tixp6"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="2_1e66p"]
+[ext_resource type="Texture2D" uid="uid://pbqblqqnq46h" path="res://art/Main_menu/blue planet.png" id="3_kwsc1"]
+[ext_resource type="Texture2D" uid="uid://dot3y5xqlq8gk" path="res://art/Main_menu/background.png" id="4_xkdul"]
+[ext_resource type="Texture2D" uid="uid://csp5adyh2hcur" path="res://art/Main_menu/red_planet_e.png" id="5_abwcs"]
+[ext_resource type="Script" path="res://Scenes/Scripts/create_lobby_btn.gd" id="6_xrncv"]
+[ext_resource type="Script" path="res://Scenes/Scripts/join_lobby_btn.gd" id="7_8tp62"]
+[ext_resource type="Script" path="res://Scenes/Scripts/mainmenu.gd" id="8_f4exh"]
+[ext_resource type="Script" path="res://Scenes/Scripts/show_main_game_btn.gd" id="8_jmhlt"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -16,7 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jo0u1")
+script = ExtResource("8_f4exh")
 
 [node name="Label" type="Label" parent="."]
 z_index = 1
@@ -26,7 +26,7 @@ offset_top = 350.0
 offset_right = 1063.0
 offset_bottom = 440.0
 scale = Vector2(0.25, 0.25)
-theme_override_fonts/font = ExtResource("1_dsjdq")
+theme_override_fonts/font = ExtResource("2_1e66p")
 theme_override_font_sizes/font_size = 90
 text = "Out of Space"
 horizontal_alignment = 1
@@ -40,14 +40,14 @@ vertical_alignment = 1
 z_index = 1
 position = Vector2(650, 300)
 scale = Vector2(0.128, 0.128)
-texture = ExtResource("2_pr6kr")
+texture = ExtResource("3_kwsc1")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(683, 388)
+position = Vector2(684, 374)
 scale = Vector2(0.680645, 0.680645)
-texture = ExtResource("3_m0w4i")
+texture = ExtResource("4_xkdul")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -55,47 +55,47 @@ texture = ExtResource("3_m0w4i")
 z_index = 1
 position = Vector2(720, 480)
 scale = Vector2(0.128, 0.128)
-texture = ExtResource("4_t24m2")
+texture = ExtResource("5_abwcs")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(684, 386)
 
-[node name="Button" type="Button" parent="."]
+[node name="CreateLobbyBtn" type="Button" parent="."]
 layout_mode = 0
 offset_left = 662.0
 offset_top = 410.0
 offset_right = 1102.0
 offset_bottom = 508.0
 scale = Vector2(0.1, 0.1)
-theme_override_fonts/font = ExtResource("1_dsjdq")
+theme_override_fonts/font = ExtResource("2_1e66p")
 theme_override_font_sizes/font_size = 90
 text = "Create lobby"
-script = ExtResource("6_jqd3n")
+script = ExtResource("6_xrncv")
 
-[node name="Button2" type="Button" parent="."]
+[node name="JoinLobbyBtn" type="Button" parent="."]
 layout_mode = 0
 offset_left = 662.0
 offset_top = 430.0
 offset_right = 1102.0
 offset_bottom = 528.0
 scale = Vector2(0.1, 0.1)
-theme_override_fonts/font = ExtResource("1_dsjdq")
+theme_override_fonts/font = ExtResource("2_1e66p")
 theme_override_font_sizes/font_size = 90
 text = "Join lobby"
-script = ExtResource("7_e1dje")
+script = ExtResource("7_8tp62")
 
-[node name="Button3" type="Button" parent="."]
+[node name="MainGameBtn" type="Button" parent="."]
 layout_mode = 0
 offset_left = 640.0
 offset_top = 390.0
 offset_right = 1548.0
 offset_bottom = 488.0
 scale = Vector2(0.1, 0.1)
-theme_override_fonts/font = ExtResource("1_dsjdq")
+theme_override_fonts/font = ExtResource("2_1e66p")
 theme_override_font_sizes/font_size = 90
 text = "Show main game (dev only)"
-script = ExtResource("8_tixp6")
+script = ExtResource("8_jmhlt")
 
-[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
-[connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]
-[connection signal="pressed" from="Button3" to="Button3" method="_on_pressed"]
+[connection signal="pressed" from="CreateLobbyBtn" to="CreateLobbyBtn" method="_on_pressed"]
+[connection signal="pressed" from="JoinLobbyBtn" to="JoinLobbyBtn" method="_on_pressed"]
+[connection signal="pressed" from="MainGameBtn" to="MainGameBtn" method="_on_pressed"]
