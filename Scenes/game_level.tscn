@@ -311,18 +311,8 @@ occluder = SubResource("OccluderPolygon2D_8c37d")
 occluder_light_mask = 7
 
 [node name="LightOccluder2D4" type="LightOccluder2D" parent="."]
-<<<<<<< HEAD
-position = Vector2(8, 0)
-rotation = 0.0195654
-occluder = SubResource("OccluderPolygon2D_1t77o")
-
-[node name="LightOccluder2D3" type="LightOccluder2D" parent="."]
-position = Vector2(10, 795)
-rotation = -3.13181
-=======
 position = Vector2(2.67902, -406.44)
 rotation = 0.0166749
->>>>>>> origin/main
 occluder = SubResource("OccluderPolygon2D_1t77o")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
