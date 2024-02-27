@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b02qpom37010v"
-path="res://.godot/imported/spaceship_tilemap3.png-33dfed77640b1990199770736e60ae70.ctex"
+uid="uid://dfnrb3ior0dn8"
+path="res://.godot/imported/Screenshot 2024-01-31 at 9.05.24 PM.png-a6bd245d6f3ad4c176256062a9010fad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/out_of_space/spaceship_tilemap3.png"
-dest_files=["res://.godot/imported/spaceship_tilemap3.png-33dfed77640b1990199770736e60ae70.ctex"]
+source_file="res://art/out_of_space/Screenshot 2024-01-31 at 9.05.24 PM.png"
+dest_files=["res://.godot/imported/Screenshot 2024-01-31 at 9.05.24 PM.png-a6bd245d6f3ad4c176256062a9010fad.ctex"]
 
 [params]
 
