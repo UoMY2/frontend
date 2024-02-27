@@ -18,7 +18,26 @@ func update_progress_bar(score,team,alienbar):
 	if team =="alien":
 		alienbar.value+=score
 
-
+#func on_data(data):
+	##print("game_level::on_data(" + str(data) + ")")
+##
+	#if !EventLib.is_valid_message(data):
+		#print("not valid message: ", data)
+		#return
+#
+	##if data["type"] == "ship_minigame_join":
+		### For now, we don't use any of this information.
+		##var flagID = data["flag_id"]
+		##var _peerNames = data["peers"]
+##
+		##start_minigame(flagID)
+		#
+	#if data["type"] == "ship_minigame_join":
+		### For now, we don't use any of this information.
+		#var flagID = data["flag_id"]
+		#var _peerNames = data["peers"]
+##
+		#start_minigame(flagID)
 
 func _ready():
 	#print("Current Scene:" + str(get_tree_string()))
@@ -132,6 +151,7 @@ func _process(_delta):
 				area2d = player_instance.get_node("./Area2D")
 				player_instance.set_script(load("res://Players/player_remote.gd"))
 				add_child(player_instance)
+			#player_instance.position = pos
 			Globalvar.playerNodes.merge({player:player_instance.get_instance_id()})
 			
 			#change name label

@@ -67,6 +67,7 @@ signal go_to_main(the_data)
 signal update_player_tables
 signal update_lobby_code
 signal portal_ready_to_spawn
+signal add_portal_tiles
 
 signal data_ready(the_data)  # A signal which is emited after a response is sent 
 # to the server and the data has been processed
@@ -212,6 +213,10 @@ func _handle_welcome(data):
 		var area_2d = portal_instance.get_node("./Area2D")
 		get_tree().get_root().get_node("game_level").add_child(portal_instance)
 		area_2d.set_script(load("res://Interactive_objects/portal_interactable.gd"))
+		
+		print("printing tiles")
+		#add the tiles around a portal
+		add_portal_tiles.emit("red",a_minigame.pos)
 		
 		
 		
