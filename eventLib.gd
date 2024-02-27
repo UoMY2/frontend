@@ -214,13 +214,18 @@ func _handle_welcome(data):
 		get_tree().get_root().get_node("game_level").add_child(portal_instance)
 		area_2d.set_script(load("res://Interactive_objects/portal_interactable.gd"))
 		
-		print("printing tiles")
+		portal_instance.name=flag
+		print("flag nanme:"+flag)
+		print(portal_instance.get_path())
+		#add portal coords
+		#Globalvar.portal_position.append(portal_instance.position)
+		
+		#print("printing tiles")
 		#add the tiles around a portal
-		add_portal_tiles.emit("red",a_minigame.pos)
+		#add_portal_tiles.emit("red",a_minigame.pos)
 		
-		
-		
-	
+func is_valid_message(object) -> bool:
+	return typeof(object) == TYPE_DICTIONARY && object.has("type")
 		
 	
 	
