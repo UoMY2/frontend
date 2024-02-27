@@ -4,22 +4,49 @@ extends Node2D
 @onready var alien_scene = load("res://Players/alien.tscn")
 @onready var astronaught_scene = load("res://Players/astronaught.tscn")
 @onready var light_texture = load("res://art/Textures/light.png")
+@onready var timer 
+
 
 var alienbar: ProgressBar
-var timer = Timer.new()  # Create a new Timer instance
-var time_label = Label.new()  # Create a new Label instance
-
-
-
+var time_label 
+var countdown_seconds = 600
+var minutes
+var seconds
 
 func update_progress_bar(score,team,alienbar):
-	alienbar.max_value += score
-	
 	if team =="alien":
+		alienbar.max_value += score
 		alienbar.value+=score
+	
+	elif team  == "human":
+		alienbar.max_value += score
+	
+	if alienbar.max_value ==0:
+		var stylebox_flat = StyleBoxFlat.new()
+		var stylebox_flat1 = StyleBoxFlat.new()
+		stylebox_flat.bg_color = Color(1, 1, 1) 
+		stylebox_flat1.bg_color = Color(1, 1, 1) 
+	
+	else: 
+		var stylebox_flat = StyleBoxFlat.new()
+		
+		var stylebox_flat1 = StyleBoxFlat.new()
+		stylebox_flat.bg_color = Color(1, 0, 0) # Set the background color to red
+		stylebox_flat1.bg_color = Color(0, 0, 1) # Set the border color to blue
+
+		# Apply the StyleBoxFlat to the ProgressBar's fill
+		alienbar.add_theme_stylebox_override("fill", stylebox_flat)
+		
+		alienbar.add_theme_stylebox_override("background", stylebox_flat1)
+
+		# Apply the StyleBoxFlat to the ProgressBar's fill
+		alienbar.add_theme_stylebox_override("fill", stylebox_flat)
+		
+		alienbar.add_theme_stylebox_override("background", stylebox_flat1)
+		
 
 func on_data(data):
-	print("game_level::on_data(" + str(data) + ")")
+	#print("game_level::on_data(" + str(data) + ")")
 
 	if !EventLib.is_valid_message(data):
 		print("not valid message: ", data)
@@ -50,15 +77,18 @@ func on_data(data):
 			print("no winnign team")
 			Globalvar.add_portal_tiles_gl.emit("purple",portal)
 
+
 func _ready():
 	EventLib.data_ready.connect(on_data)
 	#print("Current Scene:" + str(get_tree_string()))
 	pass
+
 		
 func _process(_delta):
 	var yourPos = null
 	var data = null
 	var player_instance = null
+	
 	if(Globalvar.add_player):
 		EventLib.portal_ready_to_spawn.emit() # Portals need to spawn AFTER
 		# the scene is added.
@@ -107,8 +137,8 @@ func _process(_delta):
 		var stylebox_flat = StyleBoxFlat.new()
 		
 		var stylebox_flat1 = StyleBoxFlat.new()
-		stylebox_flat.bg_color = Color(1, 0, 0) # Set the background color to red
-		stylebox_flat1.bg_color = Color(0, 0, 1) # Set the border color to blue
+		stylebox_flat.bg_color = Color(1, 1, 1) # Set the background color to red
+		stylebox_flat1.bg_color = Color(1, 1, 1) # Set the border color to blue
 
 		# Apply the StyleBoxFlat to the ProgressBar's fill
 		alienbar.add_theme_stylebox_override("fill", stylebox_flat)
@@ -125,10 +155,23 @@ func _process(_delta):
 		
 		alienbar.size.x = 100
 		alienbar.size.y = 10
-	
-		update_progress_bar(5,"alien",alienbar)
-		update_progress_bar(2,"as",alienbar)
+		
+		update_progress_bar(0,"None",alienbar) #Show white at the begining
+		
+		timer = Timer.new()
+		timer.wait_time = 600
+		timer.connect("timeout", Callable(self, "_on_Timer_timeout"))
+		timer.autostart = true
+		PlayerSprite.add_child(timer)
+		
 
+		time_label = Label.new()
+		time_label.text = "600"  # Initial display for 10 minutes
+		PlayerSprite.add_child(time_label)
+		
+		time_label.position.y =  PlayerSprite.position.y - 95
+		time_label.position.x = PlayerSprite.position.x - 45
+		time_label.add_theme_font_size_override("font_size", 12)
 		
 		#add player interaciton script to the player
 		var area2d = player_instance.get_node("./Area2D")
@@ -172,6 +215,14 @@ func _process(_delta):
 			nameLbl.text = player_name
 				
 		Globalvar.add_remote_players = false
+		
+	#Update the timer 
+	if timer.time_left > 0:
+		var minutes = int(timer.time_left / 60)
+		var seconds = float(int(timer.time_left) % 60)
+		time_label.text = "Time Left: %s:%s" % [str(minutes), str(seconds)]
+
+	#Place a condition here to update the progress bar
 			
-
-
+func _on_Timer_timeout():
+	pass
