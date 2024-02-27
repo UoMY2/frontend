@@ -1,4 +1,5 @@
 extends Node
+@onready var portal_scene = load("res://Interactive_objects/portal.tscn")
 class Lobby:
 	var playerTeam:Array
 	var lobbyId:String
@@ -36,22 +37,24 @@ class Ship:
 		minigames = m
 	func get_minigame(name):
 		return minigames[name]
+	func add_minigame(data):
+		minigames.merge(data)
 	
 		
 class Minigame:
 	var game_name:String
 	var pos:Vector2
-	var is_active: bool
 	var players: String # 1v1,2v2 or 3v3
 	var expired: bool
 	var cooldown: float
-	func _init(n,po,ia,pl, e):
+	var cooldown_active: bool
+	func _init(n,po,pl,c):
 		game_name = n
 		pos = po
-		is_active = ia
 		players = pl
-		expired = e
-		
+		expired = false
+		cooldown = c
+		cooldown_active = false
 	
 	
 	
@@ -63,6 +66,7 @@ var playerRefs: Array # Associates the username with the spawned player obj.
 signal go_to_main(the_data)
 signal update_player_tables
 signal update_lobby_code
+signal portal_ready_to_spawn
 
 signal data_ready(the_data)  # A signal which is emited after a response is sent 
 # to the server and the data has been processed
@@ -87,7 +91,7 @@ func handle_response(request_string): # Takes in a JSON request and
 				"client_already_in_lobby_error": _client_already_in_lobby()
 				"lobby_not_found": _lobby_not_found()
 				"lobby_full": _lobby_full()
-				"ship_welcome": go_to_main.emit(data)
+				"ship_welcome": _handle_welcome(data)
 				"ship_mov_peer_position_update": _peer_position_update(data)
 				_: data_ready.emit(data) # Emit arbitrary response if applicable
 # ----------- LOBBY METHODS --------------------#
@@ -187,3 +191,31 @@ func _lobby_full():
 # ---------------- MOVEMENT METHODS ---------------------------#
 func _peer_position_update(data):
 	peer_movement.emit(data) 
+
+# ---------------- SHIP METHODS --------------------------------#
+func _handle_welcome(data):
+	go_to_main.emit(data) # Switch scene
+	await portal_ready_to_spawn # Wait for the scene to be created.
+	# Now add the flags.
+	var the_ship = Ship.new(the_lobby, {})
+	for flag in data["flags"]:
+		# Create minigame object for each minigame.
+		var a_minigame = Minigame.new(data["flags"][flag]["minigame"], 
+		Vector2(data["flags"][flag]["pos"]["x"], 
+		data["flags"][flag]["pos"]["y"]), 
+		"1v1", data["flags"][flag]["cooldown"])
+		the_ship.add_minigame({data["flags"][flag]["minigame"]:a_minigame})
+		var portal_instance = portal_scene.instantiate().get_node(".")
+		portal_instance.position = a_minigame.pos
+		var nameLbl = portal_instance.get_node("nameLbl")
+		nameLbl.text = data["flags"][flag]["minigame"]
+		var area_2d = portal_instance.get_node("./Area2D")
+		get_tree().get_root().get_node("game_level").add_child(portal_instance)
+		area_2d.set_script(load("res://Interactive_objects/portal_interactable.gd"))
+		
+		
+		
+	
+		
+	
+	
