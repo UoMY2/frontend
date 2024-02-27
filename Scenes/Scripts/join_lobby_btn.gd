@@ -10,6 +10,10 @@ func _process(_delta):
 
 #runs when the button is pressed
 func _on_pressed():
-	# Transition to the game scene
-	get_tree().change_scene_to_file("res://levels/game_level.tscn")
-	pass
+	print("joining lobby")
+	
+	#switch scenes to enter a code
+	get_tree().change_scene_to_file("res://Scenes/join_lobby.tscn")
+	
+	
+	pass #enter code to join a lobby 
