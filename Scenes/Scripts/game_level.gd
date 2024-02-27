@@ -178,13 +178,13 @@ func _process(_delta):
 				
 		Globalvar.add_remote_players = false
 		
-	#Update the timer
+	#Update the timer 
 	if timer.time_left > 0:
 		var minutes = int(timer.time_left / 60)
 		var seconds = float(int(timer.time_left) % 60)
 		time_label.text = "Time Left: %s:%s" % [str(minutes), str(seconds)]
 
-
+	#Place a condition here to update the progress bar
 			
 func _on_Timer_timeout():
 	pass
