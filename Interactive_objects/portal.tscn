@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://bcyt0yswhp0li"]
+[gd_scene load_steps=18 format=3 uid="uid://bcyt0yswhp0li"]
 
 [ext_resource type="Texture2D" uid="uid://bfagj7jb88qe3" path="res://art/Objects/portals.png" id="1_88ic3"]
 [ext_resource type="Script" path="res://Interactive_objects/portal_interactable.gd" id="2_7pkay"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="3_odfyb"]
 
 [sub_resource type="Animation" id="Animation_2fre3"]
 resource_name = "blue_portal_idle"
@@ -99,9 +100,11 @@ transitions = ["Start", "purple_portal_idle", SubResource("AnimationNodeStateMac
 radius = 23.19
 
 [node name="Portal" type="Node2D"]
+z_index = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_88ic3")
+offset = Vector2(0, -15)
 hframes = 3
 vframes = 2
 frame = 3
@@ -119,8 +122,22 @@ tree_root = SubResource("AnimationNodeStateMachine_guojk")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="Area2D" type="Area2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_7pkay")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, 5)
+position = Vector2(-1, -15)
 shape = SubResource("CircleShape2D_w1gfy")
+
+[node name="nameLbl" type="Label" parent="."]
+offset_left = -26.0
+offset_top = -48.0
+offset_right = 494.0
+offset_bottom = 42.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_odfyb")
+theme_override_font_sizes/font_size = 90
+text = "name"
+horizontal_alignment = 1

@@ -1,5 +1,7 @@
 extends Node
 
+signal add_portal_tiles_gl
+
 var go_main_game = false
 
 var playerArray = [[],[],[],[],[],[]]  #the first three elements are blue team and last three are red team
@@ -19,4 +21,5 @@ var current_player_position = Vector2()
 var ship_init_data
 var player_layer_no = 0
 var playerNodes = {} # Stores the id of the node and the username.
+
 

@@ -44,8 +44,42 @@ func update_progress_bar(score,team,alienbar):
 		
 		alienbar.add_theme_stylebox_override("background", stylebox_flat1)
 		
+
+func on_data(data):
+	#print("game_level::on_data(" + str(data) + ")")
+
+	if !EventLib.is_valid_message(data):
+		print("not valid message: ", data)
+		return
+
+	#if data["type"] == "ship_minigame_join":
+		## For now, we don't use any of this information.
+		#var flagID = data["flag_id"]
+		#var _peerNames = data["peers"]
+#
+		#start_minigame(flagID)
 		
+	if data["type"] == "ship_minigame_finished":
+		## For now, we don't use any of this information.
+		var flagID = data["flag_id"]
+		var portal = get_node("/root/game_level/"+flagID)
+		print(portal)
+		if(data.has("winning_team")):
+			var winning_team = data["winning_team"]
+			print("has winnign team")
+			if(winning_team == 1):
+				#blue team won
+				Globalvar.add_portal_tiles_gl.emit("blue",portal)
+			else:
+				#red team won
+				Globalvar.add_portal_tiles_gl.emit("red",portal)
+		else:
+			print("no winnign team")
+			Globalvar.add_portal_tiles_gl.emit("purple",portal)
+
+
 func _ready():
+	EventLib.data_ready.connect(on_data)
 	#print("Current Scene:" + str(get_tree_string()))
 	pass
 
@@ -56,6 +90,8 @@ func _process(_delta):
 	var player_instance = null
 	
 	if(Globalvar.add_player):
+		EventLib.portal_ready_to_spawn.emit() # Portals need to spawn AFTER
+		# the scene is added.
 		var json = JSON.new()
 		var err = json.parse(str(Globalvar.ship_init_data)) # Parse and validate JSON
 		if err == OK: # If JSON is valid...
@@ -141,6 +177,7 @@ func _process(_delta):
 		var area2d = player_instance.get_node("./Area2D")
 		area2d.set_script(load("res://Players/player_interaction.gd"))
 		
+		player_instance.name = EventLib.client_uname
 		add_child(player_instance)
 		
 		#add point light node onto player
@@ -170,6 +207,7 @@ func _process(_delta):
 				area2d = player_instance.get_node("./Area2D")
 				player_instance.set_script(load("res://Players/player_remote.gd"))
 				add_child(player_instance)
+			#player_instance.new_position = pos
 			Globalvar.playerNodes.merge({player:player_instance.get_instance_id()})
 			
 			#change name label
