@@ -5,6 +5,7 @@ extends Node2D
 @onready var astronaught_scene = load("res://Players/astronaught.tscn")
 @onready var light_texture = load("res://art/Textures/light.png")
 @onready var timer 
+@onready var font = load("res://Fonts/VT323_font/VT323-Regular.ttf")
 
 
 var alienbar: ProgressBar
@@ -26,13 +27,15 @@ func update_progress_bar(score,team,alienbar):
 		var stylebox_flat1 = StyleBoxFlat.new()
 		stylebox_flat.bg_color = Color(1, 1, 1) 
 		stylebox_flat1.bg_color = Color(1, 1, 1) 
+		#stylebox_flat.bg_color = Color(225,91,102) # Set the background color to red
+		#stylebox_flat1.bg_color = Color(91, 110, 225) # Set the border color to blue
 	
 	else: 
 		var stylebox_flat = StyleBoxFlat.new()
 		
 		var stylebox_flat1 = StyleBoxFlat.new()
-		stylebox_flat.bg_color = Color(1, 0, 0) # Set the background color to red
-		stylebox_flat1.bg_color = Color(0, 0, 1) # Set the border color to blue
+		stylebox_flat.bg_color = Color(225,91,102) # Set the background color to red
+		stylebox_flat1.bg_color = Color(91, 110, 225) # Set the border color to blue
 
 		# Apply the StyleBoxFlat to the ProgressBar's fill
 		alienbar.add_theme_stylebox_override("fill", stylebox_flat)
@@ -60,7 +63,7 @@ func on_data(data):
 		#start_minigame(flagID)
 		
 	if data["type"] == "ship_minigame_finished":
-		## For now, we don't use any of this information.
+		## handle the ship_minigame_finished method
 		var flagID = data["flag_id"]
 		var portal = get_node("/root/game_level/"+flagID)
 		print(portal)
@@ -88,6 +91,7 @@ func _process(_delta):
 	var yourPos = null
 	var data = null
 	var player_instance = null
+	
 	
 	if(Globalvar.add_player):
 		EventLib.portal_ready_to_spawn.emit() # Portals need to spawn AFTER
@@ -130,6 +134,7 @@ func _process(_delta):
 		var alienbar = ProgressBar.new()
 	
 		PlayerSprite.add_child(alienbar)
+		
 	
 
 		alienbar.show_percentage = false
@@ -137,8 +142,11 @@ func _process(_delta):
 		var stylebox_flat = StyleBoxFlat.new()
 		
 		var stylebox_flat1 = StyleBoxFlat.new()
-		stylebox_flat.bg_color = Color(1, 1, 1) # Set the background color to red
-		stylebox_flat1.bg_color = Color(1, 1, 1) # Set the border color to blue
+		stylebox_flat.bg_color = Color(1, 1, 1) 
+		stylebox_flat1.bg_color = Color(1, 1, 1) 
+		#stylebox_flat.bg_color = Color(225,91,102) # Set the background color to red
+		#stylebox_flat1.bg_color = Color(91, 110, 225) # Set the border color to blue
+		
 
 		# Apply the StyleBoxFlat to the ProgressBar's fill
 		alienbar.add_theme_stylebox_override("fill", stylebox_flat)
@@ -150,8 +158,11 @@ func _process(_delta):
 		alienbar.max_value = 0  # Set the maximum value for the progress bar
 		alienbar.value = 0  # Set the initial value for the progress bar
 		
-		alienbar.position.y = PlayerSprite.position.y - 75
+		
+		alienbar.position.y = PlayerSprite.position.y - 85
 		alienbar.position.x = PlayerSprite.position.x - 50
+		#alienbar.set("theme_override_colors/font_outline_color","000000")
+		#alienbar.set("theme_override_constants/outline_size",2)
 		
 		alienbar.size.x = 100
 		alienbar.size.y = 10
@@ -166,11 +177,17 @@ func _process(_delta):
 		
 
 		time_label = Label.new()
-		time_label.text = "600"  # Initial display for 10 minutes
+		time_label.text = "600"  # Initial displa"y for 10 minutes
+		time_label.set("theme_override_fonts/font",font)
+		time_label.set("theme_override_colors/font_outline_color","000000")
+		time_label.set("theme_override_colors/font_shadow_color","000000")
+		time_label.set("theme_override_constants/shadow_offset_y",1)
+		time_label.set("theme_override_constants/shadow_outline_size",1)
+		time_label.set("theme_override_constants/outline_size",2)
 		PlayerSprite.add_child(time_label)
 		
-		time_label.position.y =  PlayerSprite.position.y - 95
-		time_label.position.x = PlayerSprite.position.x - 45
+		time_label.position.y =  PlayerSprite.position.y - 90
+		time_label.position.x = PlayerSprite.position.x -10
 		time_label.add_theme_font_size_override("font_size", 12)
 		
 		#add player interaciton script to the player
@@ -186,7 +203,7 @@ func _process(_delta):
 		
 		lightNode.set_texture(light_texture)
 		lightNode.set_texture_scale(5)
-		lightNode.set("energy",0.3)
+		lightNode.set("energy",0.2)
 		lightNode.set("shadow_enabled",true)
 		
 		Globalvar.add_player = false
@@ -220,7 +237,7 @@ func _process(_delta):
 	if timer.time_left > 0:
 		var minutes = int(timer.time_left / 60)
 		var seconds = float(int(timer.time_left) % 60)
-		time_label.text = "Time Left: %s:%s" % [str(minutes), str(seconds)]
+		time_label.text = "%s:%s"%[str(minutes), str(seconds)]
 
 	#Place a condition here to update the progress bar
 			

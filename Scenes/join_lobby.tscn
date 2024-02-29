@@ -62,5 +62,31 @@ offset_bottom = 169.0
 position = Vector2(774.39, 347.682)
 scale = Vector2(0.170161, 0.170161)
 
+[node name="no_lobby_found_lbl" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 749.0
+offset_top = 348.0
+offset_right = 1253.0
+offset_bottom = 438.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_color = Color(0.560784, 0.560784, 0.576471, 1)
+theme_override_fonts/font = ExtResource("2_oghsy")
+theme_override_font_sizes/font_size = 90
+text = "No lobby found"
+
+[node name="lobby_full_lbl" type="Label" parent="."]
+visible = false
+offset_left = 749.0
+offset_top = 348.0
+offset_right = 1253.0
+offset_bottom = 438.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_color = Color(0.560784, 0.560784, 0.576471, 1)
+theme_override_fonts/font = ExtResource("2_oghsy")
+theme_override_font_sizes/font_size = 90
+text = "Lobby is full
+"
+
 [connection signal="pressed" from="ConfirmBtn" to="ConfirmBtn" method="_on_pressed"]
 [connection signal="pressed" from="BackBtn" to="BackBtn" method="_on_pressed"]
