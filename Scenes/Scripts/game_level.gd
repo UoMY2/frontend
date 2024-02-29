@@ -370,8 +370,6 @@ func _process(_delta):
 	var player_instance = null
 
 	if (Globalvar.add_player):
-
-	if (Globalvar.add_player):
 		EventLib.portal_ready_to_spawn.emit() # Portals need to spawn AFTER
 		# the scene is added.
 		var json = JSON.new()
