@@ -82,6 +82,17 @@ func update_progress_bar(score, team, alienbar):
 
 ## == Managing minigame state ==
 
+## Disables all processing for the ship scene and hides it from view.
+func _pause_ship():
+	process_mode = Node.PROCESS_MODE_DISABLED
+	hide()
+
+## Re-enables normal processing for the ship scene and shows it.
+func _resume_ship():
+	# "Inherit" is the default, so this resumes processing unless a parent is paused.
+	process_mode = Node.PROCESS_MODE_INHERIT
+	show()
+
 ## Creates an instance of the minigame associated with the given flag ID and starts it. The
 ## minigame will be given `peerNames` so that it knows which other players are in the game.
 ##
@@ -100,10 +111,10 @@ func _enter_minigame_for_flag(flagID: String, peerNames: Array[String]):
 	_current_minigame.init_peer_names(peerNames)
 
 	# Add the scene so that the player can interact with the minigame.
-	add_child(_current_minigame)
+	get_tree().root.add_child(_current_minigame)
 
 	# Disable processing for the ship, because we'll be in the background until the minigame ends.
-	set_process(false)
+	_pause_ship()
 
 ## Returns `true` if there is an ongoing minigame.
 func _in_minigame() -> bool:
@@ -117,7 +128,7 @@ func _exit_minigame():
 	_current_minigame.on_minigame_end()
 
 	# Hide the minigame.
-	remove_child(_current_minigame)
+	get_tree().root.remove_child(_current_minigame)
 
 	# Make sure the resources are freed.
 	_current_minigame.queue_free()
@@ -126,7 +137,7 @@ func _exit_minigame():
 	_current_minigame = null
 
 	# Start updating the ship scene again.
-	set_process(true)
+	_resume_ship()
 
 ## == Specific message handling ==
 

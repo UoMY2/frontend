@@ -4,9 +4,3 @@
 
 [node name="Demo" type="Node2D"]
 script = ExtResource("1_1ixje")
-
-[node name="Backdrop" type="ColorRect" parent="."]
-offset_right = 1366.0
-offset_bottom = 768.0
-color = Color(0, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
