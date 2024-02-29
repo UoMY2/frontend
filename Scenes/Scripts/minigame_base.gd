@@ -34,26 +34,16 @@ func on_ship_endgame():
 ## Called when a peer disconnects from the server.
 ##
 ## Minigames **must** override this.
-func on_peer_left(_name: String):
+func on_peer_left(_theirName: String):
 	assert(false, "`on_peer_left` was not overridden")
 
 ## Called when a player outside the minigame disconnects from the server.
 ##
 ## Minigames **must** override this.
-func on_non_peer_left(_name: String):
+func on_non_peer_left(_theirName: String):
 	assert(false, "`on_non_peer_left` was not overridden")
 
 ## == The following items are universal to all minigames. ==
-
-func _ready():
-	# Start handling messages from the server.
-	var returned = EventLib.data_ready.connect(_on_data)
-
-	# Make sure the connection was successful.
-	assert(returned == OK, "failed to connect to `data_ready`")
-
-	# Now that we're connected to `data_ready`, we want to start receiving data.
-	EventLib.start_data()
 
 ## (GDScript does not have a native `Set` datatype, so we use `Dictionary` objects with dummy
 ## values instead.)
@@ -70,66 +60,35 @@ func init_peer_names(names: Array[String]):
 	_dead_peer_names = {}
 
 	# Underscore is to prevent shadowing.
-	for _name in names:
+	for theirName in names:
 		# Add to the set.
-		_peer_names[_name] = null
+		_peer_names[theirName] = null
 
-## Returns an array containing the names of the other players currently in the minigame.
-func peers() -> Array[String]:
-	return _peer_names.keys()
+## Returns a set containing the names of the other players currently in the minigame.
+func peers() -> Dictionary:
+	return _peer_names
 
-## Returns an array containing the names of all of the players who started in the minigame but have
+## Returns a set containing the names of all of the players who started in the minigame but have
 ## since disconnected.
-func disconnected_peers() -> Array[String]:
-	return _dead_peer_names.keys()
+func disconnected_peers() -> Dictionary:
+	return _dead_peer_names
 
 ## Moves the given peer from the connected set to the disconnected set. Panics if the peer is not
 ## initially in the connected set.
-func _disconnect_peer(_name: String):
+func _disconnect_peer(theirName: String):
 	# Remove from the set of alive peers and add to the set of dead ones.
-	assert(_peer_names.erase(_name), "peer does not exist")
-	_dead_peer_names[name] = null
+	assert(_peer_names.erase(theirName), "peer does not exist")
+	_dead_peer_names[theirName] = null
 
 ## Called when the server sends us a `ship_peer_left` message.
-func _on_player_left_ship(data: Dictionary):
-	# Underscore is to prevent shadowing.
-	var _name: String = data["their_name"]
-
-	if _peer_names.has(_name):
-		_disconnect_peer(_name)
-		on_peer_left(_name)
+func on_player_left_ship(theirName: String):
+	if _peer_names.has(theirName):
+		_disconnect_peer(theirName)
+		on_peer_left(theirName)
 
 		return
 
-	assert(!_dead_peer_names.has(_name), "peer disconnected twice")
+	assert(!_dead_peer_names.has(theirName), "peer disconnected twice")
 
 	# Not a peer.
-	on_non_peer_left(_name)
-
-## Called when the server sends us a `ship_welcome_back` message. Reloads the ship scene.
-func _on_ship_wb(_data: Dictionary):
-	pass
-
-## Called whenever we receive data on the `data_ready` signal.
-func _on_data(data):
-	# Error if the event library gave us something weird.
-	assert(EventLib.is_valid_message(data), "minigames should only be given pure message data")
-
-	# We only handle "universal" messages - that is, messages that all minigames need to respond to
-	# in the same way.
-	match data["type"]:
-		"ship_welcome_back":
-			on_minigame_end()
-			_on_ship_wb(data)
-
-		"ship_peer_left":
-			_on_player_left_ship(data)
-
-		"ship_endgame":
-			on_ship_endgame()
-
-	# Must be a minigame-specific message.
-	var processed = on_message(data)
-
-	# Panic if the minigame implementation couldn't handle the message.
-	assert(processed, "minigame did not understand message: " + str(data))
+	on_non_peer_left(theirName)

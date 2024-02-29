@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://nn63s05nftpc"]
+
+[node name="PlayerTeam0" type="ColorRect"]
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(1, 0, 0, 1)

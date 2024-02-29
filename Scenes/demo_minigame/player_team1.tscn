@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://buerje8g2ymsv"]
+
+[node name="PlayerTeam1" type="ColorRect"]
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0, 0, 1, 1)
