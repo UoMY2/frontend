@@ -596,7 +596,15 @@ func _process(_delta):
 				area2d = player_instance.get_node("./Area2D")
 				player_instance.set_script(load("res://Players/player_remote.gd"))
 				add_child(player_instance)
-			#player_instance.new_position = pos
+
+			# To set the player's position we have to set both `position` and `new_position`. If we
+			# just set `position`, the value of `new_position` will override it; if we just set
+			# `new_position`, the remote player script will see that there is a difference between
+			# `position` and `new_position` and infer that the player must have moved, so will turn
+			# it to face the direction it "moved". Setting both prevents this.
+			player_instance.position = pos
+			player_instance.new_position = pos
+
 			player_instance.name = EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][0]
 			Globalvar.playerNodes.merge({player: player_instance.get_instance_id()})
 
