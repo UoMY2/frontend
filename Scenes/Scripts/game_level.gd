@@ -84,25 +84,15 @@ func update_progress_bar(score, team, alienbar):
 
 ## Disables all processing for the ship scene and hides it from view.
 func _pause_ship():
-	process_mode = Node.PROCESS_MODE_DISABLED
+	propagate_call("set_process", [false])
+	propagate_call("set_physics_process", [false])
 	hide()
-
-var _wantsUnpause: bool = false
 
 ## Re-enables normal processing for the ship scene and shows it.
 func _resume_ship():
-	# We seemingly can't set `process_mode` directly (or even deferred), but we can set it during
-	# physics processing, so we just set a flag and do it then.
-	_wantsUnpause = true
-
+	propagate_call("set_process", [true])
+	propagate_call("set_physics_process", [true])
 	show()
-
-func _physics_process(_delta):
-	if _wantsUnpause:
-		_wantsUnpause = false
-
-		# "Inherit" is the default, so this resumes processing unless a parent is paused.
-		process_mode = Node.PROCESS_MODE_INHERIT
 
 ## Creates an instance of the minigame associated with the given flag ID and starts it. The
 ## minigame will be given `peerNames` so that it knows which other players are in the game.
