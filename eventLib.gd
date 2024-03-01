@@ -216,12 +216,12 @@ func _handle_welcome(data):
 		portal_instance.name = flag
 		
 		#add a cooldown timer for each portal
-		var cooldown_timer = Timer.new()
-		cooldown_timer.set("one_shot",true)
-		cooldown_timer.set("autostart",false)
+		#var cooldown_timer = Timer.new()
+		#cooldown_timer.set("one_shot",true)
+		#cooldown_timer.set("autostart",false)
 		#cooldown_timer.connect("timeout", Callable(self, "_stop_cooldown"))
 		
-		portal_instance.add_child(cooldown_timer)
+		#portal_instance.add_child(cooldown_timer)
 		
 		
 

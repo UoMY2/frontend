@@ -173,6 +173,7 @@ func _on_welcome_back(_msg: Dictionary):
 			current_player.position = Vector2(int(_msg["your_spawn"]["x"]),int(_msg["your_spawn"]["y"]))
 			################## current_player.show() ##################
 		else:
+			print(_msg)
 			#set location of all other players
 			var current_player = get_node("/root/game_level/"+player[0])
 			current_player.position = Vector2(int(_msg["peer_positions"][player[0]]["x"]),int(_msg["peer_positions"][player[0]]["y"]))
