@@ -46,6 +46,8 @@ var _flag_minigames: Dictionary = {
 
 func _ready():
 	EventLib.data_ready.connect(_on_any_data)
+	#var player_interaction = get_node("./Area2D")
+	#player_interaction.display_instruction_text.connect(_on_display_instruction_text)
 
 func update_progress_bar(score, team, alienbar):
 	if team == "alien":
@@ -147,7 +149,10 @@ func _on_player_left(theirName: String):
 		_current_minigame.on_player_left_ship(theirName)
 
 	# todo: Remove the player from our local state.
-
+	var player_node = get_node("/root/game_level/"+theirName)
+	player_node.queue_free()
+	
+	####### switch scene to minigame?? #######
 	pass
 
 ## Called when the server sends a `ship_welcome_back` message.
@@ -156,14 +161,68 @@ func _on_welcome_back(_msg: Dictionary):
 
 	# todo: Use the data in `_msg` to update what's going on in the ship scene before we remove the
 	# minigame scene.
-
+	print("length:"+str(len(EventLib.the_lobby.playerTeam)))
+	
+	for i in range(len(EventLib.the_lobby.playerTeam)):
+		print("EventLib.the_lobby.playerTeam[i][0]:"+EventLib.the_lobby.playerTeam[i][0])
+		var player = EventLib.the_lobby.playerTeam[i]
+		if player[0] == EventLib.client_uname:
+			#set location of current player
+			var current_player = get_node("/root/game_level/"+EventLib.client_uname)
+			current_player.position = Vector2(int(_msg["your_spawn"]["x"]),int(_msg["your_spawn"]["y"]))
+			################## current_player.show() ##################
+		else:
+			#set location of all other players
+			var current_player = get_node("/root/game_level/"+player[0])
+			current_player.position = Vector2(int(_msg["peer_positions"][player[0]]["x"]),int(_msg["peer_positions"][player[0]]["y"]))
+			################## current_player.show() ################## might not need these
+	
+		
+	for key in _flag_minigames:
+		var flag = get_node("/root/game_level/"+key)
+		if(_msg["flag_states"].has(key)):
+			if (_msg["flag_states"][key].has("capture_team")):
+				var winning_team = _msg["flag_states"][key]["capture_team"]
+				print("has winning team")
+				if (winning_team == 1):
+					#blue team won
+					Globalvar.add_portal_tiles_gl.emit("blue", flag)
+					
+				else:
+					#red team won
+					Globalvar.add_portal_tiles_gl.emit("red", flag)
+				#start cooldown timer for the flag
+				var cooldown_timer = flag.get_node("Timer")
+				Globalvar.flag_cooldown_dict[key] = true  #make sure this minigame cannot be entered until cooldownn has finished
+				print(_msg)
+				cooldown_timer.set("wait_time",_msg["flag_states"][key]["cooldown_left"])
+				cooldown_timer.start()
+				cooldown_timer.timeout.connect(_stop_cooldown.bind(key))
+				
+			elif(_msg["flag_states"][key].has("ongoing_players")):
+				#ongoing players
+				############### maybe add a new flag colour to show a game is ongoing ###############
+				Globalvar.ongoing_players = _msg["flag_states"][key]["ongoing_players"]
+				
+			elif(_msg["flag_states"][key].has("locked_players")):
+				#locked players
+				Globalvar.locked_players = _msg["flag_states"][key]["locked_players"]
+				############### store capture team?? ####################
+		
+		else:
+			#no change, just spawn regular portal
+			Globalvar.add_portal_tiles_gl.emit("purple", flag)
+	
+		
 	_exit_minigame()
 
 ## Called when another player returns to the ship.
 func _on_peer_welcome_back(_msg: Dictionary):
 	assert(!_in_minigame())
 
-	# todo: Handle
+	var player_rejoin = get_node("/root/game_level/"+_msg["their_name"])
+	player_rejoin.position = Vector2(_msg["spawn"]["x"],_msg["spawn"]["y"])  #set remote player spawn
+	player_rejoin.show() #show remote player
 
 ## Called when the local player is put into a minigame.
 func _on_minigame_join(msg: Dictionary):
@@ -178,15 +237,23 @@ func _on_minigame_join(msg: Dictionary):
 func _on_peer_minigame_join(_msg: Dictionary):
 	assert(!_in_minigame())
 
-	# todo: Handle
+	# hide the player which just joined a minigame
+	print(_msg["their_name"])
+	var player = get_node("/root/game_level/"+_msg["their_name"])
+	player.hide()
+	
 	pass
 
 ## Called when the server sends a message telling us how many seconds are left in the ship.
 func _on_tick(_msg: Dictionary):
 	assert(!_in_minigame())
-
+	
 	# todo: Handle game time update.
-	pass
+	var wait_time = _msg["seconds_left"]
+	print(wait_time)
+	var game_timer = get_node("/root/game_level/"+EventLib.client_uname+"/Sprite2D/game_timer")
+	game_timer.start(wait_time)
+	############### need to check if this actually works ###############
 
 ## Called when the local player is in the ship (that is, when they are *not* in a minigame
 ## themselves) and some other minigame ends.
@@ -195,10 +262,9 @@ func _on_other_minigame_finished(msg: Dictionary):
 
 	var flagID = msg["flag_id"]
 	var portal = get_node("/root/game_level/"+flagID)
-	print(portal)
 	if (msg.has("winning_team")):
 		var winning_team = msg["winning_team"]
-		print("has winnign team")
+		print("has winning team")
 		if (winning_team == 1):
 			#blue team won
 			Globalvar.add_portal_tiles_gl.emit("blue", portal)
@@ -223,44 +289,71 @@ func _on_no_flags_in_reach():
 ## activate one.
 func _on_flag_player_locked():
 	# No assertion, as above.
-	# todo: Handle
-
+	# change label
+	var pressFlbl = get_node("/root/game_level/"+EventLib.client_uname+"/pressFBtn")
+	pressFlbl.text = "You are already queued up to another game"
+	await get_tree().create_timer(3.0).timeout
+	pressFlbl.text = "Press F to join game"
+	pressFlbl.hide()
+	
 	print("you are already locked to a flag")
 
 ## Called when the server reports that the flag that was nearest the player is already owned by
 ## their team.
 func _on_flag_already_captured(_flagID: String):
 	# No assertion, as above.
-	# todo: Handle
+	# change label
+	var pressFlbl = get_node("/root/game_level/"+EventLib.client_uname+"/pressFBtn")
+	pressFlbl.text = "Your team already own this flag"
+	await get_tree().create_timer(3.0).timeout
+	pressFlbl.text = "Press F to join game"
+	pressFlbl.hide()
 
 	print("your team already owns this flag")
 
 ## Called when the server reports that the flag nearest the player is already in use.
 func _on_flag_already_in_use(_flagID: String):
 	# No assertion, as above.
-	# todo: Handle
-
+	# change label
+	var pressFlbl = get_node("/root/game_level/"+EventLib.client_uname+"/pressFBtn")
+	pressFlbl.text = "Players are already capturing this flag"
+	await get_tree().create_timer(3.0).timeout
+	pressFlbl.text = "Press F to join game"
+	pressFlbl.hide()
+	################# check if this actaully works ###############
 	print("the nearest flag is already in use")
 
 ## Called when the server reports that the flag nearest the player is cooling down.
 func _on_flag_cooling_down(_flagID: String):
 	# No assertion, as above.
-	# todo: Handle
+	# change label
+	var pressFlbl = get_node("/root/game_level/"+EventLib.client_uname+"/pressFBtn")
+	pressFlbl.text = "This flag is still cooling down"
+	await get_tree().create_timer(3.0).timeout
+	pressFlbl.text = "Press F to join game"
+	pressFlbl.hide()
 
 	print("the nearest flag is currently cooling down")
 
 ## Called when the server reports that the flag nearest the player is already active.
 func _on_flag_already_activated(_flagID: String):
 	# No assertion, as above.
-	# todo: Handle
+	var pressFlbl = get_node("/root/game_level/"+EventLib.client_uname+"/pressFBtn")
+	pressFlbl.text = "This flag has been activated by someone else"
+	await get_tree().create_timer(3.0).timeout
+	pressFlbl.text = "Press F to join game"
+	pressFlbl.hide()
 
 	print("someone has already activated the nearest flag")
 
 ## Called when the server reports an update to the time remaining for a flag's cooldown.
 func _on_cooldown_tick(_msg: Dictionary):
 	assert(!_in_minigame())
-
+	
 	# todo: Handle
+	var cooldown_timer = get_node("/root/game_level/"+_msg["flag_id"]+"/Timer")
+	cooldown_timer.start(_msg["time_left"])
+	
 	pass
 
 ## Called when the local player becomes locked to a flag.
@@ -268,7 +361,12 @@ func _on_local_player_lock_set(_flagID: String):
 	assert(!_in_minigame())
 
 	# todo: Handle
-
+	var lockedLbl = get_node("/root/game_level/"+EventLib.client_uname+"/lockedLbl")
+	lockedLbl.text = lockedLbl.text+_flagID
+	lockedLbl.show()
+	await get_tree().create_timer(3.0).timeout
+	lockedLbl.hide()
+	lockedLbl.text = "You've been queued up to play: "
 	print("you have been locked to a flag")
 
 ## Called when a peer becomes locked to a flag.
@@ -276,6 +374,7 @@ func _on_peer_lock_set(_msg: Dictionary):
 	assert(!_in_minigame())
 
 	# todo: Handle
+	############# do we actaully need to show anything on the frontend?? ###############
 	pass
 
 ## == End specific message handling ==
@@ -397,6 +496,7 @@ func _process(_delta):
 		player_instance.add_child(camera)
 		#add movement script to the player
 		player_instance.set_script(load("res://Players/player.gd"))
+		player_instance.name = EventLib.client_uname
 
 		#change name label
 		var nameLbl = player_instance.get_node("nameLbl")
@@ -408,6 +508,7 @@ func _process(_delta):
 		var alienbar = ProgressBar.new()
 
 		PlayerSprite.add_child(alienbar)
+		
 
 		alienbar.show_percentage = false
 
@@ -442,6 +543,7 @@ func _process(_delta):
 		timer.wait_time = 600
 		timer.connect("timeout", Callable(self, "_on_Timer_timeout"))
 		timer.autostart = true
+		timer.name = "game_timer"
 		PlayerSprite.add_child(timer)
 
 		time_label = Label.new()
@@ -493,6 +595,7 @@ func _process(_delta):
 				player_instance.set_script(load("res://Players/player_remote.gd"))
 				add_child(player_instance)
 			#player_instance.new_position = pos
+			player_instance.name = EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][0]
 			Globalvar.playerNodes.merge({player: player_instance.get_instance_id()})
 
 			#change name label
@@ -510,4 +613,9 @@ func _process(_delta):
 	#Place a condition here to update the progress bar
 
 func _on_Timer_timeout():
+	#switch to leaderboard
 	pass
+	
+func _stop_cooldown(flagID):
+	Globalvar.flag_cooldown_dict[flagID] = false  #make sure this minigame can be entered
+	

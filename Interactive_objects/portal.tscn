@@ -141,3 +141,6 @@ theme_override_fonts/font = ExtResource("3_odfyb")
 theme_override_font_sizes/font_size = 90
 text = "name"
 horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

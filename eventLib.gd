@@ -65,6 +65,7 @@ signal update_player_tables
 signal update_lobby_code
 signal portal_ready_to_spawn
 signal add_portal_tiles
+signal flag_cooldown_timeout(flagID)
 
 signal data_ready(the_data) # A signal which is emited after a response is sent
 # to the server and the data has been processed
@@ -210,16 +211,19 @@ func _handle_welcome(data):
 		var area_2d = portal_instance.get_node("./Area2D")
 		get_tree().get_root().get_node("game_level").add_child(portal_instance)
 		area_2d.set_script(load("res://Interactive_objects/portal_interactable.gd"))
-
+	
+		#set name of portal 
 		portal_instance.name = flag
-		print("flag nanme:" + flag)
-		print(portal_instance.get_path())
-		#add portal coords
-		#Globalvar.portal_position.append(portal_instance.position)
-
-		#print("printing tiles")
-		#add the tiles around a portal
-		#add_portal_tiles.emit("red",a_minigame.pos)
+		
+		#add a cooldown timer for each portal
+		var cooldown_timer = Timer.new()
+		cooldown_timer.set("one_shot",true)
+		cooldown_timer.set("autostart",false)
+		#cooldown_timer.connect("timeout", Callable(self, "_stop_cooldown"))
+		
+		portal_instance.add_child(cooldown_timer)
+		
+		
 
 func is_valid_message(object) -> bool:
 	return typeof(object) == TYPE_DICTIONARY&&object.has("type")

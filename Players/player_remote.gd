@@ -38,7 +38,7 @@ func update_animation_parameters(move_input : Vector2):
 
 func _update_pos(data):
 	#var client_id = data["their_name"]
-	print("remote player position:"+str(Vector2(data["x"],data["y"])))
+	
 	new_position = Vector2(data["x"],data["y"])
 	
 
