@@ -103,6 +103,10 @@ func _resume_ship():
 func _enter_minigame_for_flag(flagID: String, peerNames: Array[String]):
 	assert(!_in_minigame())
 
+	# Move the player to (0, 0) so the camera is centred on the minigame scene. This is fine
+	# because the player's position will be set again when they return to the ship.
+	get_node(EventLib.client_uname).position = Vector2.ZERO
+
 	# TEMPORARY ONLY - see comment above `_flag_minigames`.
 	var minigameID = _flag_minigames[flagID]
 
