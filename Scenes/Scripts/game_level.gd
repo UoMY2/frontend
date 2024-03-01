@@ -96,6 +96,17 @@ func _resume_ship():
 	propagate_call("set_physics_process", [true])
 	show()
 
+## Returns the camera attached to the local player.
+func _player_camera() -> Camera2D:
+	for node in get_node(EventLib.client_uname).get_children():
+		if node is Camera2D:
+			return node
+
+	assert(false, "no player camera")
+
+	# Unreachable
+	return null
+
 ## Creates an instance of the minigame associated with the given flag ID and starts it. The
 ## minigame will be given `peerNames` so that it knows which other players are in the game.
 ##
@@ -116,6 +127,11 @@ func _enter_minigame_for_flag(flagID: String, peerNames: Array[String]):
 	# Add the scene so that the player can interact with the minigame.
 	get_tree().root.add_child(_current_minigame)
 
+	# Disable the player's camera so that the minigame is forced to use its own. We have to do this
+	# because the camera attached to the player tracks their movement, which can create a confusing
+	# offset in the rendering for the minigame.
+	_player_camera().enabled = false
+
 	# Disable processing for the ship, because we'll be in the background until the minigame ends.
 	_pause_ship()
 
@@ -129,6 +145,9 @@ func _exit_minigame():
 
 	# Let the minigame do any cleanup.
 	_current_minigame.on_minigame_end()
+
+	# Re-enable the player's camera. (See `_enter_minigame_for_flag` for why we disabled it.)
+	_player_camera().enabled = true
 
 	# Hide the minigame.
 	get_tree().root.remove_child(_current_minigame)
