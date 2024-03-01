@@ -159,25 +159,20 @@ func _on_player_left(theirName: String):
 ## Called when the server sends a `ship_welcome_back` message.
 func _on_welcome_back(_msg: Dictionary):
 	assert(_in_minigame())
+	
+	#spawn the local player
+	var local_player = get_node("/root/game_level/"+EventLib.client_uname)
+	local_player.position = Vector2(float(_msg["your_spawn"]["x"]),float(_msg["your_spawn"]["y"]))
 
 	# todo: Use the data in `_msg` to update what's going on in the ship scene before we remove the
 	# minigame scene.
-	print("length:"+str(len(EventLib.the_lobby.playerTeam)))
+	#print("length:"+str(_msg["peer_positions"].size()))
 	
-	for i in range(len(EventLib.the_lobby.playerTeam)):
-		print("EventLib.the_lobby.playerTeam[i][0]:"+EventLib.the_lobby.playerTeam[i][0])
-		var player = EventLib.the_lobby.playerTeam[i]
-		if player[0] == EventLib.client_uname:
-			#set location of current player
-			var current_player = get_node("/root/game_level/"+EventLib.client_uname)
-			current_player.position = Vector2(int(_msg["your_spawn"]["x"]),int(_msg["your_spawn"]["y"]))
-			################## current_player.show() ##################
-		else:
-			print(_msg)
-			#set location of all other players
-			var current_player = get_node("/root/game_level/"+player[0])
-			current_player.position = Vector2(int(_msg["peer_positions"][player[0]]["x"]),int(_msg["peer_positions"][player[0]]["y"]))
-			################## current_player.show() ################## might not need these
+	for key in _msg["peer_positions"]:
+		
+		var current_player = get_node("/root/game_level/"+key)
+		current_player.position = Vector2(float(_msg["peer_positions"][key]["x"]),float(_msg["peer_positions"][key]["y"]))
+		################## current_player.show() ################## might not need these
 	
 		
 	for key in _flag_minigames:
@@ -189,17 +184,18 @@ func _on_welcome_back(_msg: Dictionary):
 				if (winning_team == 1):
 					#blue team won
 					Globalvar.add_portal_tiles_gl.emit("blue", flag)
-					
 				else:
 					#red team won
 					Globalvar.add_portal_tiles_gl.emit("red", flag)
 				#start cooldown timer for the flag
 				var cooldown_timer = flag.get_node("Timer")
-				Globalvar.flag_cooldown_dict[key] = true  #make sure this minigame cannot be entered until cooldownn has finished
+				Globalvar.flag_cooldown_dict[key] = true  #make sure this minigame cannot be entered until cooldown has finished
 				print(_msg)
-				cooldown_timer.set("wait_time",_msg["flag_states"][key]["cooldown_left"])
-				cooldown_timer.start()
-				cooldown_timer.timeout.connect(_stop_cooldown.bind(key))
+				if(_msg["flag_states"][key].has("cooldown_left")):
+					cooldown_timer.set("wait_time",_msg["flag_states"][key]["cooldown_left"])
+					cooldown_timer.start()
+				if(!cooldown_timer.timeout.is_connected(_stop_cooldown)):
+					cooldown_timer.timeout.connect(_stop_cooldown.bind(key))
 				
 			elif(_msg["flag_states"][key].has("ongoing_players")):
 				#ongoing players
@@ -214,7 +210,7 @@ func _on_welcome_back(_msg: Dictionary):
 		else:
 			#no change, just spawn regular portal
 			Globalvar.add_portal_tiles_gl.emit("purple", flag)
-	
+		
 		
 	_exit_minigame()
 

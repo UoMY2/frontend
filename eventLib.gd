@@ -189,6 +189,7 @@ func _lobby_full():
 	push_warning("[EventLib] lobby_full")
 # ---------------- MOVEMENT METHODS ---------------------------#
 func _peer_position_update(data):
+	print("AHHHHHH")
 	peer_movement.emit(data)
 
 # ---------------- SHIP METHODS --------------------------------#
