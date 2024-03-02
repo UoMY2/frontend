@@ -22,4 +22,10 @@ var ship_init_data
 var player_layer_no = 0
 var playerNodes = {} # Stores the id of the node and the username.
 
+#game_level message handle variables
+var flag_cooldown_dict = {}
+var ongoing_players = []
+var locked_players = []
+var flags_copy = {}
+
 

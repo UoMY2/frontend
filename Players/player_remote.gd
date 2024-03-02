@@ -3,24 +3,26 @@ extends CharacterBody2D
 @export var move_speed : float = 100
 
 @export var starting_direction : Vector2 = Vector2(0,1)
-@export var player_id : String
-#@export var pos_initial: Vector2
 @export var new_position: Vector2
-#@export var pos_final: Vector2
 @onready var animation_tree = $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
+var time_stationary = 0
 
 func _ready():
 	update_animation_parameters(starting_direction)
 	EventLib.peer_movement.connect(_update_pos)
 # Determine state of remote player.
-func _process(_delta):
+func _process(delta):
 	if new_position == position:
-		state_machine.travel("idle")
-		
+		#add delta to ensure faster frame rates dont always show idle state
+		time_stationary += delta
+		if(time_stationary>0.05):
+			state_machine.travel("idle")
 		return
+	time_stationary=0
+	var moveDir = (new_position - position)
+	#print(moveDir)
 	
-	var moveDir = (new_position - position).normalized()
 	
 	animation_tree.set("parameters/walk/blend_position", moveDir)
 	animation_tree.set("parameters/idle/blend_position", moveDir)
@@ -37,8 +39,7 @@ func update_animation_parameters(move_input : Vector2):
 # Called when position update is sent from the server.
 
 func _update_pos(data):
-	#var client_id = data["their_name"]
-	print("remote player position:"+str(Vector2(data["x"],data["y"])))
-	new_position = Vector2(data["x"],data["y"])
+	var client_id = data["their_name"]
+	if(client_id == name):
+		new_position = Vector2(data["x"],data["y"])
 	
-

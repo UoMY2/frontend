@@ -1,8 +1,8 @@
 extends Node
 @onready var portal_scene = load("res://Interactive_objects/portal.tscn")
 class Lobby:
-	var playerTeam:Array
-	var lobbyId:String
+	var playerTeam: Array
+	var lobbyId: String
 	func _init(p, l):
 		playerTeam = p
 		lobbyId = l
@@ -11,54 +11,51 @@ class Lobby:
 			#print(len(playerTeam))
 			if playerTeam[index][0] == name:
 				return index
-		push_error("[EventLib] Player {p} doesn't exist.".format({"p":name}))
-		return -1
-				
+		push_error("[EventLib] Player {p} doesn't exist.".format({"p": name}))
+		return - 1
+
 	func addPlayer(name, team):
 		playerTeam.append([name, team, false])
 	func removePlayer(name): # Find player and delete it.
 		var index = search_player(name)
-		if index !=-1:
+		if index != - 1:
 			playerTeam.pop_at(index)
-	func setReady (name, ready):
+	func setReady(name, ready):
 		var index = search_player(name)
-		if index !=-1:
+		if index != - 1:
 			playerTeam[search_player(name)][2] = ready
-	func changeTeam (name):
+	func changeTeam(name):
 		var index = search_player(name)
-		if index !=-1: # Change team from 0 -> 1,or 1->0
-			playerTeam[search_player(name)][1] = 1 - playerTeam[search_player(name)][1] 
+		if index != - 1: # Change team from 0 -> 1,or 1->0
+			playerTeam[search_player(name)][1] = 1 - playerTeam[search_player(name)][1]
 
 class Ship:
-	var ship_lobby:Lobby
+	var ship_lobby: Lobby
 	var minigames: Dictionary
-	func _init(sl,m):
+	func _init(sl, m):
 		ship_lobby = sl
 		minigames = m
 	func get_minigame(name):
 		return minigames[name]
 	func add_minigame(data):
 		minigames.merge(data)
-	
-		
+
 class Minigame:
-	var game_name:String
-	var pos:Vector2
+	var game_name: String
+	var pos: Vector2
 	var players: String # 1v1,2v2 or 3v3
 	var expired: bool
 	var cooldown: float
 	var cooldown_active: bool
-	func _init(n,po,pl,c):
+	func _init(n, po, pl, c):
 		game_name = n
 		pos = po
 		players = pl
 		expired = false
 		cooldown = c
 		cooldown_active = false
-	
-	
-	
-var the_lobby = Lobby.new([],"") # Make new lobby object which is stored
+
+var the_lobby = Lobby.new([], "") # Make new lobby object which is stored
 var client_uname = "" # Used to idenify the client.
 var playerRefs: Array # Associates the username with the spawned player obj.
 # We need one signal for every event that other scripts need to be able to
@@ -68,15 +65,16 @@ signal update_player_tables
 signal update_lobby_code
 signal portal_ready_to_spawn
 signal add_portal_tiles
+signal flag_cooldown_timeout(flagID)
 
-signal data_ready(the_data)  # A signal which is emited after a response is sent 
+signal data_ready(the_data) # A signal which is emited after a response is sent
 # to the server and the data has been processed
 signal peer_movement(the_data)
 
 static func test_function():
 	print("Library has been imported sucessfully.")
 
-func handle_response(request_string): # Takes in a JSON request and 
+func handle_response(request_string): # Takes in a JSON request and
 	# calls library specific functions accordingly
 	var json = JSON.new()
 	var err = json.parse(request_string) # Parse and validate JSON
@@ -87,8 +85,8 @@ func handle_response(request_string): # Takes in a JSON request and
 				"lobby_welcome": _lobby_welcome(data)
 				"lobby_peer_joined": _lobby_peer_joined(data)
 				"lobby_peer_team_change": _lobby_peer_team_change(data)
-				"lobby_peer_left": _lobby_peer_left(data)      
-				"lobby_peer_ready_change": _lobby_peer_ready_change(data)         
+				"lobby_peer_left": _lobby_peer_left(data)
+				"lobby_peer_ready_change": _lobby_peer_ready_change(data)
 				"client_already_in_lobby_error": _client_already_in_lobby()
 				"lobby_not_found": _lobby_not_found()
 				"lobby_full": _lobby_full()
@@ -97,22 +95,22 @@ func handle_response(request_string): # Takes in a JSON request and
 				_: data_ready.emit(data) # Emit arbitrary response if applicable
 # ----------- LOBBY METHODS --------------------#
 
-# ----------- CLIENT REQUEST METHODS -----------#		
+# ----------- CLIENT REQUEST METHODS -----------#
 
 func create_lobby(): # Send lobby create request to server.
-	Server.socket.send_text(JSON.stringify({"type":"lobby_create"}))
+	Server.socket.send_text(JSON.stringify({"type": "lobby_create"}))
 	var response = await data_ready
-	return response 
+	return response
 
 func join_lobby(code):
-	Server.socket.send_text(JSON.stringify({"type":"lobby_join", "lobby_id":code}))
-	var response = await data_ready 
+	Server.socket.send_text(JSON.stringify({"type": "lobby_join", "lobby_id": code}))
+	var response = await data_ready
 	# Wait for response to be received and variables updated
 	return response # Return class if sucessful, else return error.
 
 func leave_lobby():
-	Server.socket.send_text(JSON.stringify({"type":"lobby_bye"}))
-	the_lobby = Lobby.new([],"") # Overwrite old lobby object
+	Server.socket.send_text(JSON.stringify({"type": "lobby_bye"}))
+	the_lobby = Lobby.new([], "") # Overwrite old lobby object
 
 func update_lobby_visual():
 	update_player_tables.emit()
@@ -120,26 +118,26 @@ func update_lobby_visual():
 
 func update_client_pos(newPos):
 	Server.socket.send_text(JSON.stringify({"type": "ship_mov_position_update",
-	"x": newPos[0],"y": newPos[1]}))
+	"x": newPos[0], "y": newPos[1]}))
 
 func client_team_change():
-	var new_team = 1 - the_lobby.playerTeam[the_lobby.search_player(client_uname)][1] 
+	var new_team = 1 - the_lobby.playerTeam[the_lobby.search_player(client_uname)][1]
 	# Get client index in list and switch team from 0 -> 1 or 1 -> 0
-	Server.socket.send_text(JSON.stringify({"type":"lobby_team_change", "team": new_team}))
+	Server.socket.send_text(JSON.stringify({"type": "lobby_team_change", "team": new_team}))
 	# Change team on the backend side.
-	the_lobby.changeTeam(client_uname) 
+	the_lobby.changeTeam(client_uname)
 	# Change team on the frontend side.
 	update_lobby_visual()
-	
+
 func client_ready_change(new_ready):
-	Server.socket.send_text(JSON.stringify({"type": "lobby_ready_change","ready": new_ready}))
+	Server.socket.send_text(JSON.stringify({"type": "lobby_ready_change", "ready": new_ready}))
 	the_lobby.setReady(client_uname, new_ready) # Update ready on the frontend.
 	update_lobby_visual()
 
-func message_send(request): 
-	Server.socket.send_text(request)
-	
-# ----------- SERVER RESPONSE METHODS -----------#	
+func message_send(request):
+	Server.socket.send_text(JSON.stringify(request))
+
+# ----------- SERVER RESPONSE METHODS -----------#
 func _lobby_welcome(data): # Called when lobby_welcome response is recieved.
 	# I.e. the user joins the lobby
 	the_lobby.addPlayer(data["your_name"], data['your_team'])
@@ -151,12 +149,12 @@ func _lobby_welcome(data): # Called when lobby_welcome response is recieved.
 			the_lobby.addPlayer(key, data["peer_teams"][key])
 			# E.g. {"peer_teams": {{"user": 0}}} will add ["user",0, false] to
 			# playerTeam.
-	push_warning("[EventLib] Joined lobby with code: "+data["lobby_id"])
+	push_warning("[EventLib] Joined lobby with code: " + data["lobby_id"])
 	data_ready.emit(the_lobby)
 	# Emit the updated lobby class.
 
 func _lobby_peer_joined(data): # Peer joined so add their name to the lobby obj
-	the_lobby.addPlayer(data["their_name"],data["their_team"])
+	the_lobby.addPlayer(data["their_name"], data["their_team"])
 	data_ready.emit(true)
 	update_lobby_visual()
 
@@ -169,18 +167,18 @@ func _lobby_peer_ready_change(data): # Peer changed ready so update ready in lob
 	the_lobby.setReady(data["their_name"], data["ready"])
 	data_ready.emit(true)
 	update_lobby_visual()
-	
-func _lobby_peer_left(data):  # Peer left, so  remove them from the lobby obj.
+
+func _lobby_peer_left(data): # Peer left, so  remove them from the lobby obj.
 	the_lobby.removePlayer(data["their_name"])
 	data_ready.emit(true)
 	update_lobby_visual()
 
 # Various error responses for the lobby
-func _client_already_in_lobby(): 
+func _client_already_in_lobby():
 	data_ready.emit("client_already_in_lobby")
 	push_warning("[EventLib] client_already_in_lobby")
 	data_ready.emit("client_already_in_lobby")
-	
+
 	# Emit error.
 func _lobby_not_found():
 	data_ready.emit("lobby_not_found")
@@ -191,7 +189,7 @@ func _lobby_full():
 	push_warning("[EventLib] lobby_full")
 # ---------------- MOVEMENT METHODS ---------------------------#
 func _peer_position_update(data):
-	peer_movement.emit(data) 
+	peer_movement.emit(data)
 
 # ---------------- SHIP METHODS --------------------------------#
 func _handle_welcome(data):
@@ -199,11 +197,12 @@ func _handle_welcome(data):
 	await portal_ready_to_spawn # Wait for the scene to be created.
 	# Now add the flags.
 	var the_ship = Ship.new(the_lobby, {})
+	Globalvar.flags_copy = data["flags"]
 	for flag in data["flags"]:
 		# Create minigame object for each minigame.
-		var a_minigame = Minigame.new(data["flags"][flag]["minigame"], 
-		Vector2(data["flags"][flag]["pos"]["x"], 
-		data["flags"][flag]["pos"]["y"]), 
+		var a_minigame = Minigame.new(data["flags"][flag]["minigame"],
+		Vector2(data["flags"][flag]["pos"]["x"],
+		data["flags"][flag]["pos"]["y"]),
 		"1v1", data["flags"][flag]["cooldown"])
 		the_ship.add_minigame({data["flags"][flag]["minigame"]:a_minigame})
 		var portal_instance = portal_scene.instantiate().get_node(".")
@@ -213,19 +212,19 @@ func _handle_welcome(data):
 		var area_2d = portal_instance.get_node("./Area2D")
 		get_tree().get_root().get_node("game_level").add_child(portal_instance)
 		area_2d.set_script(load("res://Interactive_objects/portal_interactable.gd"))
+	
+		#set name of portal 
+		portal_instance.name = flag
 		
-		portal_instance.name=flag
-		print("flag nanme:"+flag)
-		print(portal_instance.get_path())
-		#add portal coords
-		#Globalvar.portal_position.append(portal_instance.position)
+		#add a cooldown timer for each portal
+		#var cooldown_timer = Timer.new()
+		#cooldown_timer.set("one_shot",true)
+		#cooldown_timer.set("autostart",false)
+		#cooldown_timer.connect("timeout", Callable(self, "_stop_cooldown"))
 		
-		#print("printing tiles")
-		#add the tiles around a portal
-		#add_portal_tiles.emit("red",a_minigame.pos)
+		#portal_instance.add_child(cooldown_timer)
 		
+		
+
 func is_valid_message(object) -> bool:
-	return typeof(object) == TYPE_DICTIONARY && object.has("type")
-		
-	
-	
+	return typeof(object) == TYPE_DICTIONARY&&object.has("type")

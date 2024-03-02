@@ -37,7 +37,6 @@ func update_animation_parameters(move_input : Vector2):
 func pick_new_state():
 	if(velocity != Vector2.ZERO):
 		state_machine.travel("walk")
-		print("local player position:"+str(global_position))
 		EventLib.update_client_pos(global_position)
 	else:
 		state_machine.travel("idle")
