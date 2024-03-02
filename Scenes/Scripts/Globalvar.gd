@@ -26,5 +26,6 @@ var playerNodes = {} # Stores the id of the node and the username.
 var flag_cooldown_dict = {}
 var ongoing_players = []
 var locked_players = []
+var flags_copy = {}
 
 

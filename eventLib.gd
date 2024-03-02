@@ -189,7 +189,6 @@ func _lobby_full():
 	push_warning("[EventLib] lobby_full")
 # ---------------- MOVEMENT METHODS ---------------------------#
 func _peer_position_update(data):
-	print("AHHHHHH")
 	peer_movement.emit(data)
 
 # ---------------- SHIP METHODS --------------------------------#
@@ -198,6 +197,7 @@ func _handle_welcome(data):
 	await portal_ready_to_spawn # Wait for the scene to be created.
 	# Now add the flags.
 	var the_ship = Ship.new(the_lobby, {})
+	Globalvar.flags_copy = data["flags"]
 	for flag in data["flags"]:
 		# Create minigame object for each minigame.
 		var a_minigame = Minigame.new(data["flags"][flag]["minigame"],

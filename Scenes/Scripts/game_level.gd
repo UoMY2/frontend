@@ -49,7 +49,7 @@ func _ready():
 	#var player_interaction = get_node("./Area2D")
 	#player_interaction.display_instruction_text.connect(_on_display_instruction_text)
 
-func update_progress_bar(score, team, alienbar):
+func update_progress_bar(score, team):
 	if team == "alien":
 		alienbar.max_value += score
 		alienbar.value += score
@@ -193,19 +193,24 @@ func _on_welcome_back(_msg: Dictionary):
 		current_player.position = Vector2(float(_msg["peer_positions"][key]["x"]),float(_msg["peer_positions"][key]["y"]))
 		################## current_player.show() ################## might not need these
 	
-		
 	for key in _flag_minigames:
 		var flag = get_node("/root/game_level/"+key)
 		if(_msg["flag_states"].has(key)):
 			if (_msg["flag_states"][key].has("capture_team")):
 				var winning_team = _msg["flag_states"][key]["capture_team"]
 				print("has winning team")
+				var score_pb = Globalvar.flags_copy[key]["worth"]  #this is the score to add to the progress bar
+				#print("score_pb:"+str(score_pb))
 				if (winning_team == 1):
 					#blue team won
 					Globalvar.add_portal_tiles_gl.emit("blue", flag)
+					#update the progress bar
+					update_progress_bar(score_pb,"human")
+					#### add the indiviual scores for each player ###
 				else:
 					#red team won
 					Globalvar.add_portal_tiles_gl.emit("red", flag)
+					update_progress_bar(score_pb,"alien")
 				#start cooldown timer for the flag
 				var cooldown_timer = flag.get_node("Timer")
 				Globalvar.flag_cooldown_dict[key] = true  #make sure this minigame cannot be entered until cooldown has finished
@@ -395,13 +400,15 @@ func _on_peer_lock_set(_msg: Dictionary):
 	pass
 	
 func _on_ship_endgame():
+	#stop all players from entering minigames until current ongoing minigames finish
 	pass
 	
 func _no_flags_in_endgame():
+	#is displayed if players try to enter a minigame after the game has ended
 	pass
 	
 func _on_game_end():
-	#switch back to lobby temporarily
+	#switch back to lobby temporarily to produce a full timeline in the game
 	pass
 
 ## == End specific message handling ==
@@ -543,8 +550,8 @@ func _process(_delta):
 		var PlayerSprite = player_instance.get_node("Sprite2D")
 
 		#add progress bar for alien
-		var alienbar = ProgressBar.new()
-
+		alienbar = ProgressBar.new()
+		alienbar.name = "progress_bar"
 		PlayerSprite.add_child(alienbar)
 		
 
@@ -575,7 +582,7 @@ func _process(_delta):
 		alienbar.size.x = 100
 		alienbar.size.y = 10
 
-		update_progress_bar(0, "None", alienbar) # Show white at the begining
+		update_progress_bar(0, "None") # Show white at the begining
 
 		timer = Timer.new()
 		timer.wait_time = 600
