@@ -221,6 +221,10 @@ func _process(_delta):
 		var minutes = int(timer.time_left / 60)
 		var seconds = float(int(timer.time_left) % 60)
 		time_label.text = "Time Left: %s:%s" % [str(minutes), str(seconds)]
+		
+	
+	if timer.time_left == 590:
+		update_progress_bar(2,"human",alienbar)
 
 	#Place a condition here to update the progress bar
 			
