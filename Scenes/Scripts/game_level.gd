@@ -391,7 +391,17 @@ func _on_peer_lock_set(_msg: Dictionary):
 	assert(!_in_minigame())
 
 	# todo: Handle
-	############# do we actaully need to show anything on the frontend?? ###############
+	############# could implement a list of players with locked status ###############
+	pass
+	
+func _on_ship_endgame():
+	pass
+	
+func _no_flags_in_endgame():
+	pass
+	
+func _on_game_end():
+	#switch back to lobby temporarily
 	pass
 
 ## == End specific message handling ==
@@ -467,7 +477,18 @@ func _on_any_data(data):
 		"ship_peer_lock_set":
 			_on_peer_lock_set(data)
 			return
-
+			
+		"ship_no_flags_in_endgame":
+			_no_flags_in_endgame()
+			return
+		
+		"ship_endgame":
+			_on_ship_endgame()
+			return
+			
+		"ship_game_end":
+			_on_game_end()
+			return
 	# Getting here is OK if we're in a minigame, because it probably just means that the message
 	# is intended for the minigame and not us. But if we get here when we're not in a minigame,
 	# it means the server has sent us a message that we're expected to understand but that we do
@@ -631,9 +652,9 @@ func _process(_delta):
 
 	#Update the timer
 	if timer.time_left > 0:
-		var minutes = int(timer.time_left / 60)
-		var seconds = float(int(timer.time_left) % 60)
-		time_label.text = "%s:%s" % [str(minutes), str(seconds)]
+		var minutes = int(timer.time_left) / 60
+		var seconds = int(timer.time_left) % 60
+		time_label.text = "%d:%02d" % [minutes, seconds]
 
 	#Place a condition here to update the progress bar
 

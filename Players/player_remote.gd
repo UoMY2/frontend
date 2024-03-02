@@ -6,19 +6,23 @@ extends CharacterBody2D
 @export var new_position: Vector2
 @onready var animation_tree = $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
+var time_stationary = 0
 
 func _ready():
 	update_animation_parameters(starting_direction)
 	EventLib.peer_movement.connect(_update_pos)
 # Determine state of remote player.
-func _process(_delta):
+func _process(delta):
 	if new_position == position:
-		state_machine.travel("idle")
-		
+		#add delta to ensure faster frame rates dont always show idle state
+		time_stationary += delta
+		if(time_stationary>0.05):
+			state_machine.travel("idle")
 		return
-	
+	time_stationary=0
 	var moveDir = (new_position - position)
 	#print(moveDir)
+	
 	
 	animation_tree.set("parameters/walk/blend_position", moveDir)
 	animation_tree.set("parameters/idle/blend_position", moveDir)
