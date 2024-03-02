@@ -295,7 +295,7 @@ y_sort_enabled = true
 script = ExtResource("1_82tl8")
 
 [node name="TileMap" type="TileMap" parent="."]
-position = Vector2(-8, 168)
+position = Vector2(-8.48421, 168.357)
 tile_set = SubResource("TileSet_x66je")
 format = 2
 layer_0/name = "Background"
