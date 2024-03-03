@@ -200,17 +200,12 @@ func _on_welcome_back(_msg: Dictionary):
 	#spawn the local player
 	var local_player = get_node("/root/game_level/"+EventLib.client_uname)
 	local_player.position = Vector2(float(_msg["your_spawn"]["x"]),float(_msg["your_spawn"]["y"]))
-
-	# todo: Use the data in `_msg` to update what's going on in the ship scene before we remove the
-	# minigame scene.
-	#print("length:"+str(_msg["peer_positions"].size()))
-	
+	#spawn remote players
 	for key in _msg["peer_positions"]:
-		
 		var current_player = get_node("/root/game_level/"+key)
 		current_player.position = Vector2(float(_msg["peer_positions"][key]["x"]),float(_msg["peer_positions"][key]["y"]))
-		################## current_player.show() ################## might not need these
-	#update_progress_bar(2,"alien",local_player)
+		
+	#spawn flags
 	for key in _flag_minigames:
 		var flag = get_node("/root/game_level/"+key)
 		if(_msg["flag_states"].has(key)):
@@ -218,7 +213,6 @@ func _on_welcome_back(_msg: Dictionary):
 				var winning_team = _msg["flag_states"][key]["capture_team"]
 				print("has winning team")
 				var score_pb = Globalvar.flags_copy[key]["worth"]  #this is the score to add to the progress bar
-				#print("score_pb:"+str(score_pb))
 				if (winning_team == 1):
 					print("blue team")
 					print(score_pb)
@@ -226,7 +220,7 @@ func _on_welcome_back(_msg: Dictionary):
 					Globalvar.add_portal_tiles_gl.emit("blue", flag)
 					#update the progress bar
 					update_progress_bar(score_pb,"human")
-					#### add the indiviual scores for each player ###
+					############## add the indiviual scores for each player ##############
 				else:
 					print("red team")
 					print(score_pb)
@@ -305,21 +299,27 @@ func _on_tick(_msg: Dictionary):
 ## themselves) and some other minigame ends.
 func _on_other_minigame_finished(msg: Dictionary):
 	assert(!_in_minigame())
-
+	
+	#update the flag colour
 	var flagID = msg["flag_id"]
 	var portal = get_node("/root/game_level/"+flagID)
 	if (msg.has("winning_team")):
 		var winning_team = msg["winning_team"]
 		print("has winning team")
+		var score_pb = Globalvar.flags_copy[flagID]["worth"]
 		if (winning_team == 1):
 			#blue team won
 			Globalvar.add_portal_tiles_gl.emit("blue", portal)
+			update_progress_bar(score_pb,"human")
 		else:
 			#red team won
 			Globalvar.add_portal_tiles_gl.emit("red", portal)
+			update_progress_bar(score_pb,"alien")
 	else:
 		print("no winnign team")
 		Globalvar.add_portal_tiles_gl.emit("purple", portal)
+	
+	
 
 ## Called when the server reports that there are no flags in reach of the player after they try to
 ## activate one.
