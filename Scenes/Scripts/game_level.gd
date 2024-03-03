@@ -88,8 +88,10 @@ func update_progress_bar(score, team):
 
 	var blue_style_box = StyleBoxFlat.new()
 	var red_style_box = StyleBoxFlat.new()
-	blue_style_box.bg_color = Color(1, 0, 0) # Set the background color to red
-	red_style_box.bg_color = Color(0, 0, 1) # Set the border color to blue
+	#Color(0.6, 0.6, 0.6, 1)
+
+	blue_style_box.bg_color = Color("e15b66") # Set the background color to red
+	red_style_box.bg_color = Color("5b6ee1") # Set the border color to blue
 
 	# Apply the StyleBoxFlat to the ProgressBar's fill
 	alienbar.add_theme_stylebox_override("fill", blue_style_box)
@@ -265,6 +267,8 @@ func _on_peer_welcome_back(_msg: Dictionary):
 	var player_rejoin = get_node("/root/game_level/"+_msg["their_name"])
 	player_rejoin.position = Vector2(_msg["spawn"]["x"],_msg["spawn"]["y"])  #set remote player spawn
 	player_rejoin.show() #show remote player
+	
+	#update progress bar
 
 ## Called when the local player is put into a minigame.
 func _on_minigame_join(msg: Dictionary):
