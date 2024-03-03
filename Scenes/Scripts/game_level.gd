@@ -7,6 +7,7 @@ extends Node2D
 @onready var timer
 @onready var font = load("res://Fonts/VT323_font/VT323-Regular.ttf")
 
+
 var alienbar: ProgressBar
 var time_label
 var countdown_seconds = 600
@@ -48,39 +49,54 @@ func _ready():
 	EventLib.data_ready.connect(_on_any_data)
 	#var player_interaction = get_node("./Area2D")
 	#player_interaction.display_instruction_text.connect(_on_display_instruction_text)
+	alienbar = ProgressBar.new()
+	alienbar.name = "progress_bar"
+	alienbar.show_percentage = false
+	alienbar.min_value = 0 # Set the minimum value for the progress bar
+	alienbar.max_value = 0 # Set the maximum value for the progress bar
+	alienbar.value = 0 # Set the initial value for the progress bar
+
+
+	#alienbar.set("theme_override_colors/font_outline_color","000000")
+	#alienbar.set("theme_override_constants/outline_size",2)
+
+	alienbar.size.x = 100
+	alienbar.size.y = 10
+	var stylebox_flat = StyleBoxFlat.new()
+	var stylebox_flat1 = StyleBoxFlat.new()
+	stylebox_flat.bg_color = Color(1, 1, 1)
+	stylebox_flat1.bg_color = Color(1, 1, 1)
+	#stylebox_flat.bg_color = Color(225,91,102) 
+	#stylebox_flat1.bg_color = Color(91, 110, 225) 
+	alienbar.add_theme_stylebox_override("fill", stylebox_flat)
+	alienbar.add_theme_stylebox_override("background", stylebox_flat1)
+
+		
 
 func update_progress_bar(score, team):
+	alienbar.max_value += score
 	if team == "alien":
-		alienbar.max_value += score
 		alienbar.value += score
 
 	elif team == "human":
-		alienbar.max_value += score
+		pass
+	print(score)
+	print(alienbar.value)
+	print(alienbar.max_value)
+		
+	
 
-	if alienbar.max_value == 0:
-		var stylebox_flat = StyleBoxFlat.new()
-		var stylebox_flat1 = StyleBoxFlat.new()
-		stylebox_flat.bg_color = Color(1, 1, 1)
-		stylebox_flat1.bg_color = Color(1, 1, 1)
-		#stylebox_flat.bg_color = Color(225,91,102) # Set the background color to red
-		#stylebox_flat1.bg_color = Color(91, 110, 225) # Set the border color to blue
+	var blue_style_box = StyleBoxFlat.new()
+	var red_style_box = StyleBoxFlat.new()
+	blue_style_box.bg_color = Color(1, 0, 0) # Set the background color to red
+	red_style_box.bg_color = Color(0, 0, 1) # Set the border color to blue
 
-	else:
-		var stylebox_flat = StyleBoxFlat.new()
+	# Apply the StyleBoxFlat to the ProgressBar's fill
+	alienbar.add_theme_stylebox_override("fill", blue_style_box)
+	alienbar.add_theme_stylebox_override("background", red_style_box)
 
-		var stylebox_flat1 = StyleBoxFlat.new()
-		stylebox_flat.bg_color = Color(225, 91, 102) # Set the background color to red
-		stylebox_flat1.bg_color = Color(91, 110, 225) # Set the border color to blue
 
-		# Apply the StyleBoxFlat to the ProgressBar's fill
-		alienbar.add_theme_stylebox_override("fill", stylebox_flat)
 
-		alienbar.add_theme_stylebox_override("background", stylebox_flat1)
-
-		# Apply the StyleBoxFlat to the ProgressBar's fill
-		alienbar.add_theme_stylebox_override("fill", stylebox_flat)
-
-		alienbar.add_theme_stylebox_override("background", stylebox_flat1)
 
 ## == Managing minigame state ==
 
@@ -192,7 +208,7 @@ func _on_welcome_back(_msg: Dictionary):
 		var current_player = get_node("/root/game_level/"+key)
 		current_player.position = Vector2(float(_msg["peer_positions"][key]["x"]),float(_msg["peer_positions"][key]["y"]))
 		################## current_player.show() ################## might not need these
-	
+	#update_progress_bar(2,"alien",local_player)
 	for key in _flag_minigames:
 		var flag = get_node("/root/game_level/"+key)
 		if(_msg["flag_states"].has(key)):
@@ -202,12 +218,16 @@ func _on_welcome_back(_msg: Dictionary):
 				var score_pb = Globalvar.flags_copy[key]["worth"]  #this is the score to add to the progress bar
 				#print("score_pb:"+str(score_pb))
 				if (winning_team == 1):
+					print("blue team")
+					print(score_pb)
 					#blue team won
 					Globalvar.add_portal_tiles_gl.emit("blue", flag)
 					#update the progress bar
 					update_progress_bar(score_pb,"human")
 					#### add the indiviual scores for each player ###
 				else:
+					print("red team")
+					print(score_pb)
 					#red team won
 					Globalvar.add_portal_tiles_gl.emit("red", flag)
 					update_progress_bar(score_pb,"alien")
@@ -550,39 +570,26 @@ func _process(_delta):
 		var PlayerSprite = player_instance.get_node("Sprite2D")
 
 		#add progress bar for alien
-		alienbar = ProgressBar.new()
-		alienbar.name = "progress_bar"
+
 		PlayerSprite.add_child(alienbar)
-		
-
-		alienbar.show_percentage = false
-
-		var stylebox_flat = StyleBoxFlat.new()
-
-		var stylebox_flat1 = StyleBoxFlat.new()
-		stylebox_flat.bg_color = Color(1, 1, 1)
-		stylebox_flat1.bg_color = Color(1, 1, 1)
-		#stylebox_flat.bg_color = Color(225,91,102) # Set the background color to red
-		#stylebox_flat1.bg_color = Color(91, 110, 225) # Set the border color to blue
-
-		# Apply the StyleBoxFlat to the ProgressBar's fill
-		alienbar.add_theme_stylebox_override("fill", stylebox_flat)
-
-		alienbar.add_theme_stylebox_override("background", stylebox_flat1)
-
-		alienbar.min_value = 0 # Set the minimum value for the progress bar
-		alienbar.max_value = 0 # Set the maximum value for the progress bar
-		alienbar.value = 0 # Set the initial value for the progress bar
-
 		alienbar.position.y = PlayerSprite.position.y - 85
 		alienbar.position.x = PlayerSprite.position.x - 50
-		#alienbar.set("theme_override_colors/font_outline_color","000000")
-		#alienbar.set("theme_override_constants/outline_size",2)
+		#var stylebox_flat = StyleBoxFlat.new()
+#
+		#var stylebox_flat1 = StyleBoxFlat.new()
+		#stylebox_flat.bg_color = Color(1, 1, 1)
+		#stylebox_flat1.bg_color = Color(1, 1, 1)
+		#stylebox_flat.bg_color = Color(225,91,102) # Set the background color to red
+		#stylebox_flat1.bg_color = Color(91, 110, 225) # Set the border color to blue
+#
+		##Apply the StyleBoxFlat to the ProgressBar's fill
+		#alienbar.add_theme_stylebox_override("fill", stylebox_flat)
+	#
+		#alienbar.add_theme_stylebox_override("background", stylebox_flat1)
 
-		alienbar.size.x = 100
-		alienbar.size.y = 10
 
-		update_progress_bar(0, "None") # Show white at the begining
+
+
 
 		timer = Timer.new()
 		timer.wait_time = 600
@@ -656,7 +663,7 @@ func _process(_delta):
 			nameLbl.text = player_name
 
 		Globalvar.add_remote_players = false
-
+	
 	#Update the timer
 	if timer.time_left > 0:
 		var minutes = int(timer.time_left) / 60
@@ -664,6 +671,7 @@ func _process(_delta):
 		time_label.text = "%d:%02d" % [minutes, seconds]
 
 	#Place a condition here to update the progress bar
+	
 
 func _on_Timer_timeout():
 	#switch to leaderboard
