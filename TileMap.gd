@@ -95,11 +95,12 @@ func move_up(mole1,mole2):
 	moles[mole2].visible = true
 
 
-func on_welcome(duration_seconds,interval_seconds,initial_moles):
+func on_welcome(duration_seconds,interval_seconds,initial_moles,stb):
 	move_down()
 	$Timer.wait_time = int(duration_seconds)
 	$Timer.start()
 	new_moles(initial_moles)
+	$STB.text = "Score To Beat: " + str(stb)
 	
 func new_moles(newmolespositions):
 	move_down()
@@ -128,7 +129,9 @@ func on_message(data: Dictionary) -> bool:
 		"mole_welcome": on_welcome(
 		data["duration_seconds"],
 		data["interval_seconds"],
-		data["initial_moles"]) #array of 2 integers
+		data["initial_moles"],
+		data["score_to_beat"]
+		) #array of 2 integers
 		
 		"mole_timeout": new_moles(data["locations"])
 		
