@@ -8,15 +8,15 @@ func _process(delta):
 	$TimerLabel.text = "Timer: "+ ( "%s" % int($Timer.time_left))
 	
 
-func on_welcome(duration):
+func on_welcome(duration,stb):
 	$Timer.wait_time = duration +1
 	$Timer.start()
-
+	$STB.text = "Score To Beat: " + str(stb)
 
 func on_message(data: Dictionary) -> bool:
 	match data["type"]:
 		"cps_welcome": on_welcome(
-		data["duration"])
+		data["duration"],data["score_to_beat"])
 		
 		"cps_timeout":send_score()
 		# We have to return `false` if we didn't handle the message.

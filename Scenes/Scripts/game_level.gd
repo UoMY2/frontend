@@ -38,6 +38,10 @@ var _minigame_scenes: Dictionary = {
 
 	"card_match_sp": "???",
 	"whack_a_mole": "res://Scenes/moleminigame1.tscn",
+	
+	"cps_race_1v1" : "res://CookieCliker.tscn",
+	
+	"cps_race_sp" : "res://CookieClikerSp.tscn"
 }
 
 ## Maps flag IDs to the IDs for the minigames they represent.
