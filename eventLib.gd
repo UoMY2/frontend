@@ -234,7 +234,6 @@ func _handle_welcome(data):
 		#set name of portal 
 		portal_instance.name = flag
 		
-		
 
 func is_valid_message(object) -> bool:
 	return typeof(object) == TYPE_DICTIONARY&&object.has("type")

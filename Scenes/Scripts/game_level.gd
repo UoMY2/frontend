@@ -29,7 +29,7 @@ var _minigame_scenes: Dictionary = {
 	# The minigame IDs below are intentionally mapped to invalid paths so that attempting to start
 	# them will cause a crash.
 
-	"card_match_sp": "???",
+	"card_match_sp": "res://memory/memoryMain.tscn",
 	"whack_a_mole": "???",
 }
 
@@ -215,7 +215,6 @@ func _on_welcome_back(_msg: Dictionary):
 				print("has winning team")
 				var score_pb = Globalvar.flags_copy[key]["worth"]  #this is the score to add to the progress bar
 				var score_indiv = 0 
-				
 				## update individual scores ##
 				if(Globalvar.flags_copy[key]["player_count"]<=2):
 					#if 1 player, give 1 point
