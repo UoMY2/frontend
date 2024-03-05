@@ -38,12 +38,12 @@ var _minigame_scenes: Dictionary = {
 ## **This is a TEMPORARY solution ONLY. I have done this because I don't want to mess up too much
 ## frontend stuff, so I'm leaving it to someone else to decide how this mapping should be done at
 ## runtime.** - Alex
-var _flag_minigames: Dictionary = {
-	"flag0": "demo_minigame_1v1",
-	"flag1": "demo_minigame_2v2",
-	"flag2": "card_match_sp",
-	"auto_win": "demo_minigame_sp",
-}
+#var _flag_minigames: Dictionary = {
+	#"flag0": "demo_minigame_1v1",
+	#"flag1": "demo_minigame_2v2",
+	#"flag2": "card_match_sp",
+	#"auto_win": "demo_minigame_sp",
+#}
 
 func _ready():
 	EventLib.data_ready.connect(_on_any_data)
@@ -88,8 +88,10 @@ func update_progress_bar(score, team):
 
 	var blue_style_box = StyleBoxFlat.new()
 	var red_style_box = StyleBoxFlat.new()
-	blue_style_box.bg_color = Color(1, 0, 0) # Set the background color to red
-	red_style_box.bg_color = Color(0, 0, 1) # Set the border color to blue
+	#Color(0.6, 0.6, 0.6, 1)
+
+	blue_style_box.bg_color = Color("e15b66") # Set the background color to red
+	red_style_box.bg_color = Color("5b6ee1") # Set the border color to blue
 
 	# Apply the StyleBoxFlat to the ProgressBar's fill
 	alienbar.add_theme_stylebox_override("fill", blue_style_box)
@@ -131,10 +133,10 @@ func _enter_minigame_for_flag(flagID: String, peerNames: Array[String]):
 	assert(!_in_minigame())
 
 	# TEMPORARY ONLY - see comment above `_flag_minigames`.
-	var minigameID = _flag_minigames[flagID]
-
+	#var minigameID = Globalvar.flags_copy[flagID]
+	print("flags_copy:"+str(Globalvar.flags_copy))
 	# Get the path to the scene for the minigame.
-	var path = _minigame_scenes[minigameID]
+	var path = _minigame_scenes[Globalvar.flags_copy[flagID]["minigame"]]
 
 	# Load the scene and set up the minigame.
 	_current_minigame = load(path).instantiate()
@@ -198,25 +200,32 @@ func _on_welcome_back(_msg: Dictionary):
 	#spawn the local player
 	var local_player = get_node("/root/game_level/"+EventLib.client_uname)
 	local_player.position = Vector2(float(_msg["your_spawn"]["x"]),float(_msg["your_spawn"]["y"]))
-
-	# todo: Use the data in `_msg` to update what's going on in the ship scene before we remove the
-	# minigame scene.
-	#print("length:"+str(_msg["peer_positions"].size()))
-	
+	#spawn remote players
 	for key in _msg["peer_positions"]:
-		
 		var current_player = get_node("/root/game_level/"+key)
 		current_player.position = Vector2(float(_msg["peer_positions"][key]["x"]),float(_msg["peer_positions"][key]["y"]))
-		################## current_player.show() ################## might not need these
-	#update_progress_bar(2,"alien",local_player)
-	for key in _flag_minigames:
+	
+	#spawn flags
+	for key in Globalvar.flags_copy:
+	#	print("---------key:"+str(key)+"------------")
 		var flag = get_node("/root/game_level/"+key)
 		if(_msg["flag_states"].has(key)):
 			if (_msg["flag_states"][key].has("capture_team")):
 				var winning_team = _msg["flag_states"][key]["capture_team"]
 				print("has winning team")
 				var score_pb = Globalvar.flags_copy[key]["worth"]  #this is the score to add to the progress bar
-				#print("score_pb:"+str(score_pb))
+				var score_indiv = 0 
+				
+				## update individual scores ##
+				if(Globalvar.flags_copy[key]["player_count"]<=2):
+					#if 1 player, give 1 point
+					#if 2 player, it was 1v1 so give 2 points
+					score_indiv = Globalvar.flags_copy[key]["player_count"]
+				else:
+					#if 4 player, it was 2v2 so 4 points split between two teammates, 2 points each
+					#if 6 player, it was 3v3 so 6 points split between 3 teammates, 3 points each
+					score_indiv = Globalvar.flags_copy[key]["player_count"]/2
+					
 				if (winning_team == 1):
 					print("blue team")
 					print(score_pb)
@@ -224,13 +233,32 @@ func _on_welcome_back(_msg: Dictionary):
 					Globalvar.add_portal_tiles_gl.emit("blue", flag)
 					#update the progress bar
 					update_progress_bar(score_pb,"human")
-					#### add the indiviual scores for each player ###
+					## add the indiviual scores for each player in blue team ##
+					if(Globalvar.peers_in_minigame.has(key)):
+						for player in Globalvar.peers_in_minigame[key]:
+							var team = EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][1]
+							if team == 1:
+								EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][3] += score_indiv
+					
+					## update the local flag object to show who owns this flag"
+					Globalvar.flags_copy[key]["owned_by"] = 1
 				else:
 					print("red team")
 					print(score_pb)
 					#red team won
 					Globalvar.add_portal_tiles_gl.emit("red", flag)
 					update_progress_bar(score_pb,"alien")
+					# add the indiviual scores for each player in red team 
+					if(Globalvar.peers_in_minigame.has(key)):
+						for player in Globalvar.peers_in_minigame[key]:
+							var team = EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][1]
+							if team == 0:
+								EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][3] += score_indiv
+					# update the local flag object to show who owns this flag
+					Globalvar.flags_copy[key]["owned_by"] = 0
+				
+				Globalvar.peers_in_minigame[key] = []  #clear the array
+				
 				#start cooldown timer for the flag
 				var cooldown_timer = flag.get_node("Timer")
 				Globalvar.flag_cooldown_dict[key] = true  #make sure this minigame cannot be entered until cooldown has finished
@@ -255,7 +283,7 @@ func _on_welcome_back(_msg: Dictionary):
 			#no change, just spawn regular portal
 			Globalvar.add_portal_tiles_gl.emit("purple", flag)
 		
-		
+	print("**Globalvar.flags_copy:"+str(Globalvar.flags_copy))
 	_exit_minigame()
 
 ## Called when another player returns to the ship.
@@ -265,13 +293,18 @@ func _on_peer_welcome_back(_msg: Dictionary):
 	var player_rejoin = get_node("/root/game_level/"+_msg["their_name"])
 	player_rejoin.position = Vector2(_msg["spawn"]["x"],_msg["spawn"]["y"])  #set remote player spawn
 	player_rejoin.show() #show remote player
+	
+	#update progress bar
+	
 
 ## Called when the local player is put into a minigame.
 func _on_minigame_join(msg: Dictionary):
 	var peerNames: Array[String] = []
-
+	print("_on_minigame_join msg"+str(msg))
 	# Force the peer names array to an `Array[String]` (or crash if not possible).
 	peerNames.assign(msg["peers"])
+	Globalvar.peers_in_minigame[msg["flag_id"]] = peerNames       #add peer names to the player array in minigame
+	Globalvar.peers_in_minigame[msg["flag_id"]].append(EventLib.client_uname)   #add local player name to player array in minigame
 
 	_enter_minigame_for_flag(msg["flag_id"], peerNames)
 
@@ -301,21 +334,32 @@ func _on_tick(_msg: Dictionary):
 ## themselves) and some other minigame ends.
 func _on_other_minigame_finished(msg: Dictionary):
 	assert(!_in_minigame())
-
+	
+	#update the flag colour
 	var flagID = msg["flag_id"]
 	var portal = get_node("/root/game_level/"+flagID)
 	if (msg.has("winning_team")):
 		var winning_team = msg["winning_team"]
 		print("has winning team")
+		var score_pb = Globalvar.flags_copy[flagID]["worth"]
 		if (winning_team == 1):
 			#blue team won
 			Globalvar.add_portal_tiles_gl.emit("blue", portal)
+			update_progress_bar(score_pb,"human")
+			# update the local flag object to show who owns this flag 
+			Globalvar.flags_copy[flagID]["owned_by"] = 1
+			
 		else:
 			#red team won
 			Globalvar.add_portal_tiles_gl.emit("red", portal)
+			update_progress_bar(score_pb,"alien")
+			# update the local flag object to show who owns this flag 
+			Globalvar.flags_copy[flagID]["owned_by"] = 0
 	else:
 		print("no winnign team")
 		Globalvar.add_portal_tiles_gl.emit("purple", portal)
+	
+	print("**Globalvar.flags_copy:"+str(Globalvar.flags_copy))
 
 ## Called when the server reports that there are no flags in reach of the player after they try to
 ## activate one.

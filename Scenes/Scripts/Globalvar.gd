@@ -28,4 +28,6 @@ var ongoing_players = []
 var locked_players = []
 var flags_copy = {}
 
+var peers_in_minigame = {}
+
 

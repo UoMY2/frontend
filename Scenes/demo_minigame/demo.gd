@@ -140,8 +140,6 @@ func on_peer_left(theirName: String):
 
 	print("player '", theirName, "' (who was in this minigame) has disconnected")
 
-## == End required functions ==
-
 # For the following two methods, you might want to show the user a notification, because the game
 # will not necessarily end immediately. (Here we just print, because this is just the demo
 # minigame.)
@@ -151,6 +149,8 @@ func on_ship_endgame():
 
 func on_non_peer_left(theirName: String):
 	print("player '", theirName, "' (who was not in this minigame) has disconnected")
+
+## == End required functions ==
 
 # The following functions might be useful as methods on the Lobby class, but we'll just define them
 # here for now.
