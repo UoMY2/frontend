@@ -44,17 +44,6 @@ sources/1 = SubResource("TileSetAtlasSource_yun1c")
 [node name="minigame" type="Node2D"]
 script = ExtResource("1_rsvem")
 
-[node name="TimeRemaining" type="Label" parent="."]
-offset_left = -72.0
-offset_top = 24.0
-offset_right = -25.0
-offset_bottom = 47.0
-
-[node name="Timer" type="Timer" parent="."]
-process_callback = 0
-wait_time = 30.0
-autostart = true
-
 [node name="GodotMoleHouse" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -79,5 +68,16 @@ horizontal_alignment = 3
 wait_time = 1.5
 autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="TimeRemaining" type="Label" parent="TileMap"]
+offset_left = -72.0
+offset_top = 24.0
+offset_right = -25.0
+offset_bottom = 47.0
+
+[node name="Timer" type="Timer" parent="TileMap"]
+process_callback = 0
+wait_time = 30.0
+autostart = true
+
 [connection signal="timeout" from="TileMap/moletimer" to="TileMap" method="_on_moletimer_timeout"]
+[connection signal="timeout" from="TileMap/Timer" to="." method="_on_timer_timeout"]

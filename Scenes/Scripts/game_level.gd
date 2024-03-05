@@ -30,7 +30,7 @@ var _minigame_scenes: Dictionary = {
 	# them will cause a crash.
 
 	"card_match_sp": "???",
-	"whack_a_mole": "???",
+	"whack_a_mole": "res://Scenes/moleminigame1.tscn",
 }
 
 ## Maps flag IDs to the IDs for the minigames they represent.
