@@ -1,4 +1,4 @@
-extends Node
+extends MinigameBase
 
 # Declare the Timer variable
 var timer : Timer

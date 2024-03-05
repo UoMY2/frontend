@@ -8,7 +8,7 @@ var ylist=[148-115,212-115,276-115]
 var used_positions = []
 var moles = []
 var score=0
-var my_timer: Timer
+
 
 
 var positions = [
@@ -85,7 +85,7 @@ func mole_clicked(mole):
 	if mole.visible:
 		print("Mole was clicked:", mole)
 		EventLib.message_send({
-		"type": "demo_mov_position_update",
+		"type": "mole_hit",
 		"location": moles.find(mole)
 		})
 
@@ -97,8 +97,8 @@ func move_up(mole1,mole2):
 
 func on_welcome(duration_seconds,interval_seconds,initial_moles):
 	move_down()
-	my_timer.wait_time = duration_seconds
-	my_timer.start()
+	$Timer.wait_time = int(duration_seconds)
+	$Timer.start()
 	new_moles(initial_moles)
 	
 func new_moles(newmolespositions):
@@ -117,7 +117,11 @@ func valid_hit(newscore,newmolespositions):
 	new_moles(newmolespositions)
 
 
-
+func on_minigame_end():
+	# In this method you should do anything that you need to do before your minigame ends. For
+	# example, if we had something running in the background, we'd want to stop it.
+	
+	print("demo minigame is ending")
 
 func on_message(data: Dictionary) -> bool:
 	match data["type"]:
