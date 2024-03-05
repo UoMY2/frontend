@@ -80,17 +80,23 @@ func _ready():
 
 		
 
-func update_progress_bar(score, team):
-	alienbar.max_value += score
+func update_progress_bar(score, team,key):
 	if team == "alien":
-		alienbar.value += score
-
-	elif team == "human":
-		pass
-	#print(score)
-	#print(alienbar.value)
-	#print(alienbar.max_value)
+		if Globalvar.flags_copy[key]["owned_by"] ==-1:
+			alienbar.max_value += score
+			alienbar.value += score
+		elif Globalvar.flags_copy[key]["owned_by"] ==1:
+			alienbar.value+=score
 		
+	elif team == "human":
+		if Globalvar.flags_copy[key]["owned_by"] ==-1:
+			alienbar.max_value += score
+		elif Globalvar.flags_copy[key]["owned_by"] ==0:
+			alienbar.value-=score
+		
+	print(score)
+	print(alienbar.value)
+	print(alienbar.max_value)
 	
 
 	var blue_style_box = StyleBoxFlat.new()
@@ -244,7 +250,7 @@ func _on_welcome_back(_msg: Dictionary):
 					#blue team won
 					Globalvar.add_portal_tiles_gl.emit("blue", flag)
 					#update the progress bar
-					update_progress_bar(score_pb,"human")
+					update_progress_bar(score_pb,"human",key)
 					## add the indiviual scores for each player in blue team ##
 					if(Globalvar.peers_in_minigame.has(key)):
 						for player in Globalvar.peers_in_minigame[key]:
@@ -259,7 +265,7 @@ func _on_welcome_back(_msg: Dictionary):
 					print(score_pb)
 					#red team won
 					Globalvar.add_portal_tiles_gl.emit("red", flag)
-					update_progress_bar(score_pb,"alien")
+					update_progress_bar(score_pb,"alien",key)
 					# add the indiviual scores for each player in red team 
 					if(Globalvar.peers_in_minigame.has(key)):
 						for player in Globalvar.peers_in_minigame[key]:
@@ -440,14 +446,14 @@ func _on_other_minigame_finished(msg: Dictionary):
 		if (winning_team == 1):
 			#blue team won
 			Globalvar.add_portal_tiles_gl.emit("blue", portal)
-			update_progress_bar(score_pb,"human")
+			update_progress_bar(score_pb,"human",flagID)
 			# update the local flag object to show who owns this flag 
 			Globalvar.flags_copy[flagID]["owned_by"] = 1
 			
 		else:
 			#red team won
 			Globalvar.add_portal_tiles_gl.emit("red", portal)
-			update_progress_bar(score_pb,"alien")
+			update_progress_bar(score_pb,"alien",flagID)
 			# update the local flag object to show who owns this flag 
 			Globalvar.flags_copy[flagID]["owned_by"] = 0
 	else:
