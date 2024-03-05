@@ -15,7 +15,8 @@ class Lobby:
 		return - 1
 
 	func addPlayer(name, team):
-		playerTeam.append([name, team, false])
+		#player attributes: name, team , ready status and individual scores
+		playerTeam.append([name, team, false, 0])
 	func removePlayer(name): # Find player and delete it.
 		var index = search_player(name)
 		if index != - 1:
@@ -66,6 +67,7 @@ signal update_lobby_code
 signal portal_ready_to_spawn
 signal add_portal_tiles
 signal flag_cooldown_timeout(flagID)
+signal toggle_ready_btn
 
 signal data_ready(the_data) # A signal which is emited after a response is sent
 # to the server and the data has been processed
@@ -126,6 +128,12 @@ func client_team_change():
 	Server.socket.send_text(JSON.stringify({"type": "lobby_team_change", "team": new_team}))
 	# Change team on the backend side.
 	the_lobby.changeTeam(client_uname)
+	
+	# update ready status
+	for player in the_lobby.playerTeam:
+		player[2] = false
+	
+	toggle_ready_btn.emit()
 	# Change team on the frontend side.
 	update_lobby_visual()
 
@@ -161,6 +169,12 @@ func _lobby_peer_joined(data): # Peer joined so add their name to the lobby obj
 func _lobby_peer_team_change(data): # Peer joined so update their team stored in the lobby obj.
 	the_lobby.changeTeam(data["their_name"])
 	data_ready.emit(true)
+	
+	#unready all players
+	for player in the_lobby.playerTeam:
+		player[2] = false
+	
+	toggle_ready_btn.emit()
 	update_lobby_visual()
 
 func _lobby_peer_ready_change(data): # Peer changed ready so update ready in lobby obj.
@@ -198,6 +212,7 @@ func _handle_welcome(data):
 	# Now add the flags.
 	var the_ship = Ship.new(the_lobby, {})
 	Globalvar.flags_copy = data["flags"]
+	
 	for flag in data["flags"]:
 		# Create minigame object for each minigame.
 		var a_minigame = Minigame.new(data["flags"][flag]["minigame"],
@@ -212,17 +227,12 @@ func _handle_welcome(data):
 		var area_2d = portal_instance.get_node("./Area2D")
 		get_tree().get_root().get_node("game_level").add_child(portal_instance)
 		area_2d.set_script(load("res://Interactive_objects/portal_interactable.gd"))
-	
+		
+		#add a attribute to each flag to say which team owns which flag
+		Globalvar.flags_copy[flag]["owned_by"] = -1
+		
 		#set name of portal 
 		portal_instance.name = flag
-		
-		#add a cooldown timer for each portal
-		#var cooldown_timer = Timer.new()
-		#cooldown_timer.set("one_shot",true)
-		#cooldown_timer.set("autostart",false)
-		#cooldown_timer.connect("timeout", Callable(self, "_stop_cooldown"))
-		
-		#portal_instance.add_child(cooldown_timer)
 		
 		
 

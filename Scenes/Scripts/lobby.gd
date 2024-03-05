@@ -10,7 +10,7 @@ func _ready():
 	EventLib.go_to_main.connect(_on_go_to_main)
 	EventLib.update_player_tables.connect(_on_update_player_tables)
 	EventLib.update_lobby_code.connect(_on_update_lobby_code)
-
+	EventLib.toggle_ready_btn.connect(_toggle_ready_btn)
 	#var readyBtn = get_node("./ReadyBtn")
 	#readyBtn.unready_players.connect(_unready_all_players)
 
@@ -42,7 +42,7 @@ func _on_update_player_tables():
 	print("updating tables")
 	itemListBlue.clear()
 	itemListRed.clear()
-	print("")
+	
 	for n in range(len(EventLib.the_lobby.playerTeam)): # 6 is the size of the player array
 		if (EventLib.the_lobby.playerTeam[n] != []):
 			print(EventLib.the_lobby.playerTeam)
@@ -51,30 +51,24 @@ func _on_update_player_tables():
 				if (EventLib.the_lobby.playerTeam[n][2] == false):
 					#player ready
 					itemListBlue.add_item(EventLib.the_lobby.playerTeam[n][0], null, false)
+					#ready_btn.set_text("Ready")
 				else:
 					#player ready
 					itemListBlue.add_item(EventLib.the_lobby.playerTeam[n][0] + "(ready)", null, false)
+					#ready_btn.set_text("Unready")
 			else:
 				if (EventLib.the_lobby.playerTeam[n][2] == false):
 					#player ready
 					itemListRed.add_item(EventLib.the_lobby.playerTeam[n][0], null, false)
+					#ready_btn.set_text("Ready")
 				else:
 					#player ready
 					itemListRed.add_item(EventLib.the_lobby.playerTeam[n][0] + "(ready)", null, false)
+					
 
-func _unready_all_players():
-	itemListBlue.clear()
-	itemListRed.clear()
-	for n in range(len(EventLib.the_lobby.playerTeam)): # 6 is the size of the player array
-		if (EventLib.the_lobby.playerTeam[n] != []):
-			print(EventLib.the_lobby.playerTeam)
-			if (EventLib.the_lobby.playerTeam[n][1] == 0):
-				#on blue team
-				#player ready
-				itemListBlue.add_item(EventLib.the_lobby.playerTeam[n][0], null, false)
-			else:
-				#player ready
-				itemListRed.add_item(EventLib.the_lobby.playerTeam[n][0], null, false)
+func _toggle_ready_btn():
+	var ready_btn = get_node("ReadyBtn")
+	ready_btn.set_text("Ready")
 
 ## Called when the lobby code label detects input.
 func _on_game_code_gui_input(event: InputEvent):
