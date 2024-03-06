@@ -12,6 +12,7 @@ func _process(_delta):
 func _on_pressed():
 	print("joining lobby")
 	
+	
 	#switch scenes to enter a code
 	get_tree().change_scene_to_file("res://Scenes/join_lobby.tscn")
 	

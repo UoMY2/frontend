@@ -8,9 +8,9 @@ var socket = WebSocketPeer.new()
 @export var ip_address = "127.0.0.1"
 @export var port = "8080"
 
-func _ready(): 
-	print("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port}))
-	socket.connect_to_url("ws://{ip}:{port}/ws".format({"ip":ip_address, "port":port})) # Connect to WS server.
+func _ready():
+	print("ws://{ip}:{port}/ws".format({"ip": ip_address, "port": port}))
+	socket.connect_to_url("ws://{ip}:{port}/ws".format({"ip": ip_address, "port": port})) # Connect to WS server.
 
 func _process(_delta):
 	socket.poll() # Poll the socket.
@@ -25,5 +25,5 @@ func _process(_delta):
 	elif state == WebSocketPeer.STATE_CLOSED:
 		var code = socket.get_close_code()
 		var reason = socket.get_close_reason()
-		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
+		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != - 1])
 		set_process(false) # Stop processing.
