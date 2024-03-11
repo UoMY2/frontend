@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dce7rvp7fojc0"]
 
-[ext_resource type="Script" path="res://scripts/MultiplayerControl.gd" id="1_lxx0a"]
+[ext_resource type="Script" path="res://shooter/scripts/MultiplayerControl.gd" id="1_lxx0a"]
 
 [node name="Control" type="Control"]
 layout_mode = 3

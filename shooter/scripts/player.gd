@@ -11,6 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	
 func _physics_process(delta):
 	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		if dead == false:
@@ -41,6 +42,17 @@ func _physics_process(delta):
 				velocity.x = direction * SPEED
 			else:
 				velocity.x = move_toward(velocity.x, 0, SPEED)
+			if Input.is_action_pressed("right"):
+				$Icon.flip_h = false
+			elif Input.is_action_pressed("left"):
+				$Icon.flip_h = true
+			
+			if get_global_mouse_position().x >= $Icon.global_position.x:
+				print($GunRotation/gun.position.x)
+				$GunRotation/gun.flip_v = false
+			else:
+				$GunRotation/gun.flip_v = true
+				
 
 			move_and_slide()
 

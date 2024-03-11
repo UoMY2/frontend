@@ -13,6 +13,7 @@ func _ready():
 			if spawn.name == str(index):
 				currentplayer.global_position = spawn.global_position
 		index += 1
+	
 
 #func _process(delta):
 	#if len(GameManager.death) > 0:
