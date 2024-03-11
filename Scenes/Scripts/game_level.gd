@@ -20,6 +20,7 @@ var time_label
 var countdown_seconds = 600
 var minutes
 var seconds
+var player_game_dict = {}
 
 ## The current minigame scene, if there is one.
 var _current_minigame: MinigameBase = null
@@ -44,17 +45,7 @@ var _minigame_scenes: Dictionary = {
 	"cps_race_sp" : "res://CookieClikerSp.tscn"
 }
 
-## Maps flag IDs to the IDs for the minigames they represent.
-##
-## **This is a TEMPORARY solution ONLY. I have done this because I don't want to mess up too much
-## frontend stuff, so I'm leaving it to someone else to decide how this mapping should be done at
-## runtime.** - Alex
-#var _flag_minigames: Dictionary = {
-	#"flag0": "demo_minigame_1v1",
-	#"flag1": "demo_minigame_2v2",
-	#"flag2": "card_match_sp",
-	#"auto_win": "demo_minigame_sp",
-#}
+
 
 func _ready():
 	EventLib.data_ready.connect(_on_any_data)
@@ -98,9 +89,7 @@ func update_progress_bar(score, team,key):
 		elif Globalvar.flags_copy[key]["owned_by"] ==0:
 			alienbar.value-=score
 		
-	print(score)
-	print(alienbar.value)
-	print(alienbar.max_value)
+	
 	
 
 	var blue_style_box = StyleBoxFlat.new()
@@ -218,12 +207,13 @@ func _on_welcome_back(_msg: Dictionary):
 	var local_player = get_node("/root/game_level/"+EventLib.client_uname)
 	local_player.position = Vector2(float(_msg["your_spawn"]["x"]),float(_msg["your_spawn"]["y"]))
 	
-	print(EventLib.client_uname+" msg :"+str(_msg))
+	#print(EventLib.client_uname+" msg :"+str(_msg))
 	#spawn remote players
 	for key in _msg["peer_positions"]:
 		var current_player = get_node("/root/game_level/"+key)
 		current_player.position = Vector2(float(_msg["peer_positions"][key]["x"]),float(_msg["peer_positions"][key]["y"]))
 		current_player.new_position = current_player.position
+		
 	#print("Globalvar.flags_copy:"+str(Globalvar.flags_copy))
 	var has_ongoing_players = false
 	var has_locked_players = false
@@ -247,7 +237,7 @@ func _on_welcome_back(_msg: Dictionary):
 					#if 4 player, it was 2v2 so 4 points split between two teammates, 2 points each
 					#if 6 player, it was 3v3 so 6 points split between 3 teammates, 3 points each
 					score_indiv = Globalvar.flags_copy[key]["player_count"]/2
-					
+				print(str(EventLib.client_uname)+"score_indiv:"+str(score_indiv))
 				if (winning_team == 1):
 					print("blue team")
 					print(score_pb)
@@ -278,7 +268,7 @@ func _on_welcome_back(_msg: Dictionary):
 								EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][3] += score_indiv
 					# update the local flag object to show who owns this flag
 					Globalvar.flags_copy[key]["owned_by"] = 0
-				
+				print(str(EventLib.client_uname) + " player team:" + str(EventLib.the_lobby.playerTeam))
 				Globalvar.peers_in_minigame[key] = []  #clear the array
 				
 				#start cooldown timer for the flag
@@ -302,7 +292,7 @@ func _on_welcome_back(_msg: Dictionary):
 				Globalvar.locked_players = (_msg["flag_states"][key]["locked_players"])
 				has_locked_players = true
 				############### store capture team?? ####################
-		
+			
 		else:
 			#no change, just spawn regular portal
 			Globalvar.add_portal_tiles_gl.emit("purple", flag)
@@ -345,7 +335,7 @@ func update_locked_list():
 			
 ## Called when another player returns to the ship.
 func _on_peer_welcome_back(_msg: Dictionary):
-	print("WELCOME BACK PEER:"+str(_msg["their_name"]))
+	#print("WELCOME BACK PEER:"+str(_msg["their_name"]))
 	assert(!_in_minigame())
 
 	var player_rejoin = get_node("/root/game_level/"+_msg["their_name"])
@@ -360,23 +350,42 @@ func _on_peer_welcome_back(_msg: Dictionary):
 		if(Globalvar.ongoing_players[i]!=str(_msg["their_name"])):
 			new_ongoing_players.append(Globalvar.ongoing_players[i])
 	Globalvar.ongoing_players = new_ongoing_players
-	print("ongoing playuers:"+str(Globalvar.ongoing_players))
+	#print("ongoing playuers:"+str(Globalvar.ongoing_players))
 	
 	var new_locked_players = []
 	for i in range(len(Globalvar.locked_players)):
 		if(Globalvar.locked_players[i]!=str(_msg["their_name"])):
 			new_locked_players.append(Globalvar.locked_players[i])
 	Globalvar.locked_players = new_locked_players
-	print("locked players:"+str(Globalvar.locked_players))
+	#print("locked players:"+str(Globalvar.locked_players))
 	
 	#update list
 	update_locked_list()
-	
+	print(str(EventLib.client_uname) + "RUNNNING ON PEER WELCOME BACK")
+	print(str(EventLib.client_uname)+" player_game_dict:"+str(player_game_dict))
+	if(player_game_dict[_msg["their_name"]][1]==true):
+		print("peer won")
+		#update individual score
+		var minigame_worth = Globalvar.flags_copy[player_game_dict[_msg["their_name"]][0]]["worth"]
+		## update individual scores ##
+		var score_indiv
+		if(Globalvar.flags_copy[player_game_dict[_msg["their_name"]][0]]["player_count"]<=2):
+			#if 1 player, give 1 point
+			#if 2 player, it was 1v1 so give 2 points
+			score_indiv = Globalvar.flags_copy[player_game_dict[_msg["their_name"]][0]]["player_count"]
+		else:
+			#if 4 player, it was 2v2 so 4 points split between two teammates, 2 points each
+			#if 6 player, it was 3v3 so 6 points split between 3 teammates, 3 points each
+			score_indiv = Globalvar.flags_copy[player_game_dict[_msg["their_name"]]]["player_count"]/2
+		#print(str(_msg["their_name"])+"score_indiv:"+str(score_indiv))
+		EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(_msg["their_name"])][3] += score_indiv
+	print(str(EventLib.client_uname) + " EventLib.the_lobby.playerTeam:" + str(EventLib.the_lobby.playerTeam))
+		
 
 ## Called when the local player is put into a minigame.
 func _on_minigame_join(msg: Dictionary):
 	var peerNames: Array[String] = []
-	print("_on_minigame_join msg"+str(msg))
+	#print("_on_minigame_join msg"+str(msg))
 	# Force the peer names array to an `Array[String]` (or crash if not possible).
 	peerNames.assign(msg["peers"])
 	
@@ -386,34 +395,37 @@ func _on_minigame_join(msg: Dictionary):
 	
 	#update list
 	print("---------------on_minigame_join:"+EventLib.client_uname+"---------------")
-	print("Globalvar.ongoing_players:"+str(Globalvar.ongoing_players))
+	#print("Globalvar.ongoing_players:"+str(Globalvar.ongoing_players))
 	Globalvar.ongoing_players.append(EventLib.client_uname)
 	for i in range(len(peerNames)):
-		print("peerNames[i]:"+peerNames[i])
+	#	print("peerNames[i]:"+peerNames[i])
 		Globalvar.ongoing_players.append(peerNames[i])
-	print("ongoing_players:"+str(Globalvar.ongoing_players))
+	#print("ongoing_players:"+str(Globalvar.ongoing_players))
 	
 	var new_locked_players = []
 	for i in range(len(Globalvar.locked_players)):
 		if(Globalvar.locked_players[i]!=str(EventLib.client_uname)):
 			new_locked_players.append(Globalvar.locked_players[i])
 	Globalvar.locked_players = new_locked_players
-	print("locked_players:"+str(Globalvar.locked_players))
+	#print("locked_players:"+str(Globalvar.locked_players))
 	update_locked_list()
+	
+	for pname in peerNames:
+		#add the players to a dictionary to record what game they are currently in
+		player_game_dict[pname] = [msg["flag_id"],false]
 
 ## Called when another player enters a minigame.
 func _on_peer_minigame_join(_msg: Dictionary):
 	assert(!_in_minigame())
-
+	print(str(EventLib.client_uname)+" RUNNING _on_peer_minigame_join")
 	# hide the player which just joined a minigame
-	print(_msg["their_name"])
 	var player = get_node("/root/game_level/"+_msg["their_name"])
 	player.hide()
 	
 	print("---------------on_peer_minigame_join:"+EventLib.client_uname+"---------------")
 	#update list
 	Globalvar.ongoing_players.append(_msg["their_name"])
-	print("ongoing_players:"+str(Globalvar.ongoing_players))
+	#print("ongoing_players:"+str(Globalvar.ongoing_players))
 	
 	var new_locked_players = []
 	for i in range(len(Globalvar.locked_players)):
@@ -421,8 +433,13 @@ func _on_peer_minigame_join(_msg: Dictionary):
 			new_locked_players.append(Globalvar.locked_players[i])
 			
 	Globalvar.locked_players = new_locked_players
-	print("locked_players:"+str(Globalvar.locked_players))
+	#print("locked_players:"+str(Globalvar.locked_players))
 	update_locked_list()
+	
+	#add the players to a dictionary to record what game they are currently in
+	#[flag_id, if they won or not]
+	player_game_dict[_msg["their_name"]] = [_msg["flag_id"],false]
+	print(str(EventLib.client_uname) +" player_game_dict: "+str(player_game_dict))
 	pass
 
 ## Called when the server sends a message telling us how many seconds are left in the ship.
@@ -439,7 +456,7 @@ func _on_tick(_msg: Dictionary):
 ## themselves) and some other minigame ends.
 func _on_other_minigame_finished(msg: Dictionary):
 	assert(!_in_minigame())
-	
+	print(str(EventLib.client_uname) + "RUNNNING ON OTHER MINIGAME FINISH")
 	#update the flag colour
 	var flagID = msg["flag_id"]
 	var portal = get_node("/root/game_level/"+flagID)
@@ -465,6 +482,12 @@ func _on_other_minigame_finished(msg: Dictionary):
 		Globalvar.add_portal_tiles_gl.emit("purple", portal)
 	
 	#print("**Globalvar.flags_copy:"+str(Globalvar.flags_copy))
+	for player in player_game_dict:
+		print("player_game_dict[player][0]: "+str(player_game_dict[player][0]))
+		print("flagID: "+str(flagID))
+		if player_game_dict[player][0] == flagID:
+			player_game_dict[player][1] = true
+	print(str(EventLib.client_uname)+" player_game_dict:"+str(player_game_dict))
 	
 
 ## Called when the server reports that there are no flags in reach of the player after they try to
@@ -708,8 +731,7 @@ func _process(_delta):
 	var player_instance = null
 
 	if (Globalvar.add_player):
-		EventLib.portal_ready_to_spawn.emit() # Portals need to spawn AFTER
-		# the scene is added.
+		EventLib.portal_ready_to_spawn.emit() 
 		var json = JSON.new()
 		var err = json.parse(str(Globalvar.ship_init_data)) # Parse and validate JSON
 		if err == OK: # If JSON is valid...
@@ -851,7 +873,6 @@ func _process(_delta):
 		var seconds = int(timer.time_left) % 60
 		time_label.text = "%d:%02d" % [minutes, seconds]
 
-	#Place a condition here to update the progress bar
 	
 
 func _on_Timer_timeout():

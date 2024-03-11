@@ -24,8 +24,8 @@ func interact(user: Node2D):
 	#code for a stop interaction  --- temporarily not in use as we figure out game logic
 
 func _add_portal_tiles(colour, portal):
-	print(portal.name)
-	print(get_parent().name)
+	#portal.name)
+	#print(get_parent().name)
 	if (portal.name != get_parent().name):
 		return
 
