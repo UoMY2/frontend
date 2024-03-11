@@ -1,18 +1,27 @@
 extends Button
 
+@onready var not_found_lbl = get_node("/root/JoinLobby/no_lobby_found_lbl")
+@onready var full_lbl = get_node("/root/JoinLobby/lobby_full_lbl")
+@onready var show_no_lobby_lbl = false
+@onready var animation_count = 0
+
+@onready var show_full_lobby_lbl = false
+
 func _on_pressed():
 	#get code from line edit node
 	var tf = get_node("/root/JoinLobby/BackBtn/CodeTF")
 	print(tf.text)
 	
 	var lobby_data = await EventLib.join_lobby(tf.text)
-	
+	#handle error messages
 	if(str(lobby_data)=="lobby_not_found"):
 		print("lobby not found so don't do anything")
-	if(str(lobby_data)=="lobby_full"):
+		show_no_lobby_lbl=true
+		
+	elif(str(lobby_data)=="lobby_full"):
 		print("lobby is full")
-		#NEED TO ADD LABEL
-	
+		show_full_lobby_lbl=true
+		
 	
 	else:
 		#used for updating
@@ -36,6 +45,27 @@ func _on_pressed():
 		
 	pass # Replace with function body.
 
+func _process(_delta):
+	#animate the error messages
+	if(show_no_lobby_lbl and (animation_count<120)):
+		show_full_lobby_lbl=false  #hide the other label if they manage to try a new server too fast
+		not_found_lbl.show()
+		not_found_lbl.position.y += 0.1
+		animation_count+=1
+	elif(show_full_lobby_lbl and (animation_count<120)):
+		show_no_lobby_lbl=false  #hide the other label if they manage to try a new server too fast
+		full_lbl.show()
+		full_lbl.position.y += 0.1
+		animation_count+=1
+	else:
+		full_lbl.position.y = 348
+		not_found_lbl.position.y = 348
+		show_full_lobby_lbl=false
+		show_no_lobby_lbl=false
+		animation_count=0
+		full_lbl.hide()
+		not_found_lbl.hide()
+	
 func find_index(player_arr):
 	var index = 0
 	for i in range(len(player_arr)):

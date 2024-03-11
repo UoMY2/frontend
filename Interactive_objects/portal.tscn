@@ -100,9 +100,11 @@ transitions = ["Start", "purple_portal_idle", SubResource("AnimationNodeStateMac
 radius = 23.19
 
 [node name="Portal" type="Node2D"]
+z_index = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_88ic3")
+offset = Vector2(0, -15)
 hframes = 3
 vframes = 2
 
@@ -123,18 +125,22 @@ unique_name_in_owner = true
 script = ExtResource("2_7pkay")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, 5)
+position = Vector2(-1, -15)
 shape = SubResource("CircleShape2D_w1gfy")
 
 [node name="nameLbl" type="Label" parent="."]
-offset_left = -26.0
-offset_top = -27.0
-offset_right = 494.0
-offset_bottom = 63.0
-scale = Vector2(0.1, 0.1)
+offset_left = -21.0
+offset_top = -47.0
+offset_right = 499.0
+offset_bottom = 43.0
+scale = Vector2(0.08, 0.08)
+theme_override_colors/font_color = Color(0.705882, 0.705882, 0.721569, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_odfyb")
 theme_override_font_sizes/font_size = 90
 text = "name"
 horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
