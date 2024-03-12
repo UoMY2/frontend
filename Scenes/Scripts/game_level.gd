@@ -25,6 +25,8 @@ var player_game_dict = {}
 ## The current minigame scene, if there is one.
 var _current_minigame: MinigameBase = null
 
+
+
 ## Maps each minigame ID to the path for the scene that implements the minigame.
 ##
 ## This should be treated as a constant.
@@ -625,7 +627,10 @@ func _no_flags_in_endgame():
 	pass
 	
 func _on_game_end():
-	#switch back to lobby temporarily to produce a full timeline in the game
+	#switch to leaderboard
+	get_tree().change_scene_to_file("res://Scenes/leaderboard.tscn")
+	#get_tree().change_scene_to_file("res://Scenes/lobby.tscn")
+	#Globalvar.populate_leaderboard.emit()
 	pass
 
 ## == End specific message handling ==
