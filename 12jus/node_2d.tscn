@@ -1,11 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://vlcig5csjdnd"]
+[gd_scene load_steps=16 format=3 uid="uid://vlcig5csjdnd"]
 
 [ext_resource type="Script" path="res://12jus/mainn.gd" id="1_xbluu"]
-[ext_resource type="Texture2D" uid="uid://bg6nvii5gy8a1" path="res://12jus/icon.svg" id="2_fvpah"]
-[ext_resource type="Texture2D" uid="uid://bliupwjo54myd" path="res://12jus/rock.png" id="3_84gv8"]
-[ext_resource type="Texture2D" uid="uid://ceqatkd4w8oof" path="res://12jus/scissors.png" id="4_84xbi"]
-[ext_resource type="Texture2D" uid="uid://oqx86mx0fvb8" path="res://12jus/paper.png" id="5_7iss5"]
-[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://12jus/VT323_font - Copy/VT323-Regular.ttf" id="6_x6cqm"]
+[ext_resource type="Texture2D" uid="uid://c1ewk0ie81bxc" path="res://12jus/rock.png" id="3_84gv8"]
+[ext_resource type="Texture2D" uid="uid://grgbxnw683oy" path="res://12jus/scissors.png" id="4_84xbi"]
+[ext_resource type="Texture2D" uid="uid://bheupm0avqjp4" path="res://12jus/paper.png" id="5_7iss5"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://12jus/VT323_font - Copy/VT323-Regular.ttf" id="6_ww8df"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="6_x6cqm"]
+[ext_resource type="Texture2D" uid="uid://4ihisg2xbqfl" path="res://12jus/space.png" id="7_k7x6q"]
 
 [sub_resource type="Animation" id="Animation_6kts7"]
 resource_name = "paper"
@@ -114,16 +115,13 @@ _data = {
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_xbluu")
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(56, 60)
-scale = Vector2(0.625, 0.648438)
-texture = ExtResource("2_fvpah")
-
 [node name="rock" type="Button" parent="."]
 offset_left = 80.0
 offset_top = 585.0
 offset_right = 426.0
 offset_bottom = 744.0
+theme_override_fonts/font = ExtResource("6_ww8df")
+theme_override_font_sizes/font_size = 100
 text = "Rock
 "
 
@@ -132,6 +130,8 @@ offset_left = 510.0
 offset_top = 585.0
 offset_right = 856.0
 offset_bottom = 744.0
+theme_override_fonts/font = ExtResource("6_ww8df")
+theme_override_font_sizes/font_size = 100
 text = "Paper"
 
 [node name="scissors" type="Button" parent="."]
@@ -139,6 +139,8 @@ offset_left = 933.0
 offset_top = 585.0
 offset_right = 1279.0
 offset_bottom = 744.0
+theme_override_fonts/font = ExtResource("6_ww8df")
+theme_override_font_sizes/font_size = 100
 text = "Scissors
 "
 
@@ -170,7 +172,7 @@ zoom = Vector2(0.25, 0.25)
 position = Vector2(-200, 345)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 5.5
+wait_time = 3.0
 one_shot = true
 
 [node name="spawn2" type="Node2D" parent="."]
@@ -188,7 +190,7 @@ texture = ExtResource("3_84gv8")
 
 [node name="Scissors2" type="Sprite2D" parent="."]
 position = Vector2(1516, 345)
-scale = Vector2(0.0867142, 0.0762614)
+scale = Vector2(0.085, 0.074)
 texture = ExtResource("4_84xbi")
 
 [node name="Paper2" type="Sprite2D" parent="."]
@@ -223,6 +225,38 @@ offset_right = 1346.0
 offset_bottom = 491.0
 theme_override_fonts/font = ExtResource("6_x6cqm")
 theme_override_font_sizes/font_size = 250
+horizontal_alignment = 1
+
+[node name="round" type="Label" parent="."]
+offset_left = 475.0
+offset_top = 150.0
+offset_right = 879.0
+offset_bottom = 250.0
+theme_override_fonts/font = ExtResource("6_ww8df")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+
+[node name="Space" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(683, 384)
+texture = ExtResource("7_k7x6q")
+
+[node name="player1" type="Label" parent="."]
+offset_left = 5.0
+offset_top = 10.0
+offset_right = 555.0
+offset_bottom = 110.0
+theme_override_fonts/font = ExtResource("6_ww8df")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+
+[node name="player2" type="Label" parent="."]
+offset_left = 814.0
+offset_top = 9.0
+offset_right = 1364.0
+offset_bottom = 109.0
+theme_override_fonts/font = ExtResource("6_ww8df")
+theme_override_font_sizes/font_size = 100
 horizontal_alignment = 1
 
 [connection signal="pressed" from="rock" to="." method="_on_rock_pressed"]

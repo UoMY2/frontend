@@ -31,6 +31,7 @@ var _minigame_scenes: Dictionary = {
 
 	"card_match_sp": "???",
 	"whack_a_mole": "???",
+	"rps_1v1": "res://12jus/node_2d.tscn"
 }
 
 ## Maps flag IDs to the IDs for the minigames they represent.
