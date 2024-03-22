@@ -17,7 +17,7 @@ extends Node2D
 
 var alienbar: ProgressBar
 var time_label
-var countdown_seconds = 600
+var countdown_seconds = 120
 var minutes
 var seconds
 var player_game_dict = {}
@@ -587,7 +587,7 @@ func _no_flags_in_endgame():
 	
 func _on_game_end(msg):
 	#switch to leaderboard
-	get_tree().change_scene_to_file("res://Scenes/leaderboard.tscn")
+	#get_tree().change_scene_to_file("res://Scenes/leaderboard.tscn")
 	#get_tree().change_scene_to_file("res://Scenes/lobby.tscn")
 	#Globalvar.populate_leaderboard.emit()
 	print("eng_game msg:"+str(msg))
@@ -595,6 +595,16 @@ func _on_game_end(msg):
 		var p_index = EventLib.the_lobby.search_player(player_name)
 		EventLib.the_lobby.playerTeam[p_index][3] = msg["individual_scores"][player_name]
 	pass
+	
+	if(msg["team_scores"][0]==msg["team_scores"][1]):
+		#draw
+		get_tree().change_scene_to_file("res://Scenes/winner_draw.tscn")
+	elif(msg["team_scores"][0]<msg["team_scores"][1]):
+		#team 1, astronaughts won
+		get_tree().change_scene_to_file("res://Scenes/winner_blue.tscn")
+	else:
+		#otherwise team 0 won
+		get_tree().change_scene_to_file("res://Scenes/winner_red.tscn")
 
 ## == End specific message handling ==
 
@@ -742,14 +752,14 @@ func _process(_delta):
 		alienbar.position.x = PlayerSprite.position.x - 50
 
 		timer = Timer.new()
-		timer.wait_time = 600
+		timer.wait_time = 120
 		timer.connect("timeout", Callable(self, "_on_Timer_timeout"))
 		timer.autostart = true
 		timer.name = "game_timer"
 		PlayerSprite.add_child(timer)
 
 		time_label = Label.new()
-		time_label.text = "600" # Initial displa"y for 10 minutes
+		time_label.text = "120" # Initial displa"y for 10 minutes
 		time_label.set("theme_override_fonts/font", font)
 		time_label.set("theme_override_colors/font_outline_color", "000000")
 		time_label.set("theme_override_colors/font_shadow_color", "000000")
