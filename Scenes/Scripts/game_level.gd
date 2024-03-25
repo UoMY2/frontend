@@ -17,7 +17,7 @@ extends Node2D
 
 var alienbar: ProgressBar
 var time_label
-var countdown_seconds = 600
+var countdown_seconds = 120
 var minutes
 var seconds
 var player_game_dict = {}
@@ -44,9 +44,7 @@ var _minigame_scenes: Dictionary = {
 	
 	"cps_race_1v1" : "res://CookieCliker.tscn",
 	
-	"cps_race_sp" : "res://CookieClikerSp.tscn",
-	
-	"race_sp"  : "res://car_map.tscn"
+	"cps_race_sp" : "res://CookieClikerSp.tscn"
 }
 
 
@@ -230,18 +228,7 @@ func _on_welcome_back(_msg: Dictionary):
 				var winning_team = _msg["flag_states"][key]["capture_team"]
 				print("has winning team")
 				var score_pb = Globalvar.flags_copy[key]["worth"]  #this is the score to add to the progress bar
-				var score_indiv = 0 
 				
-				## update individual scores ##
-				if(Globalvar.flags_copy[key]["player_count"]<=2):
-					#if 1 player, give 1 point
-					#if 2 player, it was 1v1 so give 2 points
-					score_indiv = Globalvar.flags_copy[key]["player_count"]
-				else:
-					#if 4 player, it was 2v2 so 4 points split between two teammates, 2 points each
-					#if 6 player, it was 3v3 so 6 points split between 3 teammates, 3 points each
-					score_indiv = Globalvar.flags_copy[key]["player_count"]/2
-				print(str(EventLib.client_uname)+"score_indiv:"+str(score_indiv))
 				if (winning_team == 1):
 					print("blue team")
 					print(score_pb)
@@ -249,12 +236,6 @@ func _on_welcome_back(_msg: Dictionary):
 					Globalvar.add_portal_tiles_gl.emit("blue", flag)
 					#update the progress bar
 					update_progress_bar(score_pb,"human",key)
-					## add the indiviual scores for each player in blue team ##
-					if(Globalvar.peers_in_minigame.has(key)):
-						for player in Globalvar.peers_in_minigame[key]:
-							var team = EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][1]
-							if team == 1:
-								EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][3] += score_indiv
 					
 					## update the local flag object to show who owns this flag"
 					Globalvar.flags_copy[key]["owned_by"] = 1
@@ -264,15 +245,10 @@ func _on_welcome_back(_msg: Dictionary):
 					#red team won
 					Globalvar.add_portal_tiles_gl.emit("red", flag)
 					update_progress_bar(score_pb,"alien",key)
-					# add the indiviual scores for each player in red team 
-					if(Globalvar.peers_in_minigame.has(key)):
-						for player in Globalvar.peers_in_minigame[key]:
-							var team = EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][1]
-							if team == 0:
-								EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(player)][3] += score_indiv
+					
 					# update the local flag object to show who owns this flag
 					Globalvar.flags_copy[key]["owned_by"] = 0
-				print(str(EventLib.client_uname) + " player team:" + str(EventLib.the_lobby.playerTeam))
+				
 				Globalvar.peers_in_minigame[key] = []  #clear the array
 				
 				#start cooldown timer for the flag
@@ -365,26 +341,7 @@ func _on_peer_welcome_back(_msg: Dictionary):
 	
 	#update list
 	update_locked_list()
-	print(str(EventLib.client_uname) + "RUNNNING ON PEER WELCOME BACK")
-	print(str(EventLib.client_uname)+" player_game_dict:"+str(player_game_dict))
-	if(player_game_dict[_msg["their_name"]][1]==true):
-		print("peer won")
-		#update individual score
-		var minigame_worth = Globalvar.flags_copy[player_game_dict[_msg["their_name"]][0]]["worth"]
-		## update individual scores ##
-		var score_indiv
-		if(Globalvar.flags_copy[player_game_dict[_msg["their_name"]][0]]["player_count"]<=2):
-			#if 1 player, give 1 point
-			#if 2 player, it was 1v1 so give 2 points
-			score_indiv = Globalvar.flags_copy[player_game_dict[_msg["their_name"]][0]]["player_count"]
-		else:
-			#if 4 player, it was 2v2 so 4 points split between two teammates, 2 points each
-			#if 6 player, it was 3v3 so 6 points split between 3 teammates, 3 points each
-			score_indiv = Globalvar.flags_copy[player_game_dict[_msg["their_name"]]]["player_count"]/2
-		#print(str(_msg["their_name"])+"score_indiv:"+str(score_indiv))
-		EventLib.the_lobby.playerTeam[EventLib.the_lobby.search_player(_msg["their_name"])][3] += score_indiv
-	print(str(EventLib.client_uname) + " EventLib.the_lobby.playerTeam:" + str(EventLib.the_lobby.playerTeam))
-		
+	
 
 ## Called when the local player is put into a minigame.
 func _on_minigame_join(msg: Dictionary):
@@ -628,12 +585,26 @@ func _no_flags_in_endgame():
 	#is displayed if players try to enter a minigame after the game has ended
 	pass
 	
-func _on_game_end():
+func _on_game_end(msg):
 	#switch to leaderboard
-	get_tree().change_scene_to_file("res://Scenes/leaderboard.tscn")
+	#get_tree().change_scene_to_file("res://Scenes/leaderboard.tscn")
 	#get_tree().change_scene_to_file("res://Scenes/lobby.tscn")
 	#Globalvar.populate_leaderboard.emit()
+	print("eng_game msg:"+str(msg))
+	for player_name in msg["individual_scores"]:
+		var p_index = EventLib.the_lobby.search_player(player_name)
+		EventLib.the_lobby.playerTeam[p_index][3] = msg["individual_scores"][player_name]
 	pass
+	
+	if(msg["team_scores"][0]==msg["team_scores"][1]):
+		#draw
+		get_tree().change_scene_to_file("res://Scenes/winner_draw.tscn")
+	elif(msg["team_scores"][0]<msg["team_scores"][1]):
+		#team 1, astronaughts won
+		get_tree().change_scene_to_file("res://Scenes/winner_blue.tscn")
+	else:
+		#otherwise team 0 won
+		get_tree().change_scene_to_file("res://Scenes/winner_red.tscn")
 
 ## == End specific message handling ==
 
@@ -718,7 +689,7 @@ func _on_any_data(data):
 			return
 			
 		"ship_game_end":
-			_on_game_end()
+			_on_game_end(data)
 			return
 	# Getting here is OK if we're in a minigame, because it probably just means that the message
 	# is intended for the minigame and not us. But if we get here when we're not in a minigame,
@@ -781,14 +752,14 @@ func _process(_delta):
 		alienbar.position.x = PlayerSprite.position.x - 50
 
 		timer = Timer.new()
-		timer.wait_time = 600
+		timer.wait_time = 120
 		timer.connect("timeout", Callable(self, "_on_Timer_timeout"))
 		timer.autostart = true
 		timer.name = "game_timer"
 		PlayerSprite.add_child(timer)
 
 		time_label = Label.new()
-		time_label.text = "600" # Initial displa"y for 10 minutes
+		time_label.text = "120" # Initial displa"y for 10 minutes
 		time_label.set("theme_override_fonts/font", font)
 		time_label.set("theme_override_colors/font_outline_color", "000000")
 		time_label.set("theme_override_colors/font_shadow_color", "000000")
