@@ -13,15 +13,15 @@ func _process(delta):
 	var velocity = Vector2()
 	if stop==false:
 		# Handling left and right movement
-		if Input.is_action_pressed("ui_right"):
+		if Input.is_action_pressed("right"):
 			velocity.x += horizontal_speed
-		if Input.is_action_pressed("ui_left"):
+		if Input.is_action_pressed("left"):
 			velocity.x -= horizontal_speed
 
 		# Handling up and down movement
-		if Input.is_action_pressed("ui_down"):
+		if Input.is_action_pressed("down"):
 			velocity.y += vertical_speed
-		if Input.is_action_pressed("ui_up"):
+		if Input.is_action_pressed("up"):
 			velocity.y -= vertical_speed
 
 		# Apply the movement using move_and_collide

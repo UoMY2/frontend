@@ -44,7 +44,9 @@ var _minigame_scenes: Dictionary = {
 	
 	"cps_race_1v1" : "res://CookieCliker.tscn",
 	
-	"cps_race_sp" : "res://CookieClikerSp.tscn"
+	"cps_race_sp" : "res://CookieClikerSp.tscn",
+	
+	"race_sp"  : "res://car_map.tscn"
 }
 
 
