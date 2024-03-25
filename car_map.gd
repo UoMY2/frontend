@@ -19,6 +19,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	print(car.position)
 	lap =  car.get_child(2)
 	lap.text = "Lap Count: " +str(lapCount) + str("/3") + "\nTime To Beat: " + str(score_to_beat) + "\nTimer: " + str(149 - int($Timer.time_left))
 
