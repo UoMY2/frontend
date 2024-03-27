@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ciyovlqyenwt7"]
+[gd_scene load_steps=8 format=3 uid="uid://dqxsg2e20xvep"]
 
-[ext_resource type="Script" path="res://car_map_mp.gd" id="1_c04n8"]
-[ext_resource type="Texture2D" uid="uid://bjj060aqq4em3" path="res://art/Screenshot 2024-03-13 at 8.49.11 PM.png" id="2_gbos5"]
-[ext_resource type="Texture2D" uid="uid://b02qpom37010v" path="res://art/out_of_space/spaceship_tilemap3.png" id="3_eill7"]
+[ext_resource type="Script" path="res://car_map_mp_3v3.gd" id="1_irl8k"]
+[ext_resource type="Texture2D" uid="uid://bjj060aqq4em3" path="res://art/Screenshot 2024-03-13 at 8.49.11 PM.png" id="2_ahga7"]
+[ext_resource type="Texture2D" uid="uid://b02qpom37010v" path="res://art/out_of_space/spaceship_tilemap3.png" id="3_3c365"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c0m8e"]
 size = Vector2(518.893, 146.134)
@@ -10,7 +10,7 @@ size = Vector2(518.893, 146.134)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sjuyu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lpy1o"]
-texture = ExtResource("3_eill7")
+texture = ExtResource("3_3c365")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -89,7 +89,7 @@ physics_layer_0/physics_material = SubResource("PhysicsMaterial_sjuyu")
 sources/0 = SubResource("TileSetAtlasSource_lpy1o")
 
 [node name="CarMap" type="Node2D"]
-script = ExtResource("1_c04n8")
+script = ExtResource("1_irl8k")
 
 [node name="StartCheckpoint" type="Area2D" parent="."]
 position = Vector2(446, 868)
@@ -102,7 +102,7 @@ shape = SubResource("RectangleShape2D_c0m8e")
 [node name="Screenshot2024-03-13At8_49_11 pm" type="Sprite2D" parent="StartCheckpoint/CollisionShape2D"]
 position = Vector2(-6.55393, -1.14146)
 scale = Vector2(1.12088, 1.05)
-texture = ExtResource("2_gbos5")
+texture = ExtResource("2_ahga7")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_ff7xh")
@@ -113,7 +113,7 @@ layer_0/tile_data = PackedInt32Array(2031635, 327680, 3, 1900564, 327680, 3, 196
 visible = false
 position = Vector2(888, 311)
 scale = Vector2(0.0921053, 0.0821169)
-texture = ExtResource("2_gbos5")
+texture = ExtResource("2_ahga7")
 
 [node name="StartCheckpoint2" type="Area2D" parent="."]
 position = Vector2(1148, 833)
@@ -127,7 +127,7 @@ shape = SubResource("RectangleShape2D_c0m8e")
 visible = false
 position = Vector2(4.30353, -1.14146)
 scale = Vector2(1.07692, 1.05)
-texture = ExtResource("2_gbos5")
+texture = ExtResource("2_ahga7")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 150.0

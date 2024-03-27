@@ -39,7 +39,7 @@ var _minigame_scenes: Dictionary = {
 	# The minigame IDs below are intentionally mapped to invalid paths so that attempting to start
 	# them will cause a crash.
 
-	"card_match_sp": "???",
+	#"card_match_sp": "???",
 	"whack_a_mole": "res://Scenes/moleminigame1.tscn",
 	
 	"cps_race_1v1" : "res://CookieCliker.tscn",
@@ -48,7 +48,9 @@ var _minigame_scenes: Dictionary = {
 	
 	"race_sp"  : "res://car_map.tscn",
 	
-	"race_1v1" : "res://car_map_mp.tscn"
+	"race_1v1" : "res://car_map_mp.tscn",
+	
+	"race_2v2" : "res://car_map_mp.tscn"
 }
 
 
