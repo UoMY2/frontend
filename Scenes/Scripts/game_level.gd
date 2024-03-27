@@ -46,7 +46,9 @@ var _minigame_scenes: Dictionary = {
 	
 	"cps_race_sp" : "res://CookieClikerSp.tscn",
 	
-	"race_sp"  : "res://car_map.tscn"
+	"race_sp"  : "res://car_map.tscn",
+	
+	"race_1v1" : "res://car_map_mp.tscn"
 }
 
 
@@ -703,7 +705,7 @@ func _on_any_data(data):
 
 	# We know the ship doesn't understand the message, so if the minigame didn't either then we've
 	# got a serious issue.
-	assert(handled, "minigame did not handle " + str(data))
+	assert(handled, "mwinigame did not handle " + str(data))
 
 func _process(_delta):
 	var yourPos = null
