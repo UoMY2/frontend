@@ -17,7 +17,7 @@ extends Node2D
 
 var alienbar: ProgressBar
 var time_label
-var countdown_seconds = 120
+var countdown_seconds = 600
 var minutes
 var seconds
 var player_game_dict = {}
@@ -758,7 +758,7 @@ func _process(_delta):
 		alienbar.position.x = PlayerSprite.position.x - 50
 
 		timer = Timer.new()
-		timer.wait_time = 120
+		timer.wait_time = 600
 		timer.connect("timeout", Callable(self, "_on_Timer_timeout"))
 		timer.autostart = true
 		timer.name = "game_timer"
