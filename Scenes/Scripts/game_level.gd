@@ -50,7 +50,17 @@ var _minigame_scenes: Dictionary = {
 	
 	"race_1v1" : "res://car_map_mp.tscn",
 	
-	"race_2v2" : "res://car_map_mp.tscn"
+	"race_2v2" : "res://car_map_mp.tscn",
+	
+	"shooter_1v1": "res://shooter/scene/main.tscn",
+	
+	"shooter_2v2": "res://shooter/scene/main2v2.tscn",
+	
+	"shooter_3v3": "res://shooter/scene/main3v3.tscn",
+	
+	"card_match_sp": "res://memory/memoryMain.tscn",
+	
+	"rps_1v1": "res://12jus/node_2d.tscn"
 }
 
 
