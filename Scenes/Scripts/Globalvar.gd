@@ -1,6 +1,7 @@
 extends Node
 
 signal add_portal_tiles_gl
+signal populate_leaderboard
 
 var go_main_game = false
 
