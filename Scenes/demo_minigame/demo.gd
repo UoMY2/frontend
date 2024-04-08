@@ -131,25 +131,27 @@ func on_minigame_end():
 	# In this method you should do anything that you need to do before your minigame ends. For
 	# example, if we had something running in the background, we'd want to stop it.
 
-	print("demo minigame is ending")
-
+	#print("demo minigame is ending")
+	pass
+	
 func on_peer_left(theirName: String):
 	# Most minigames won't need to implement this method beyond `pass`, because the server will
 	# automatically end the minigame when one of its participants leaves. (So there won't be much
 	# time to tell the player what's happened before they get removed from the minigame anyway.)
 
-	print("player '", theirName, "' (who was in this minigame) has disconnected")
-
+	#print("player '", theirName, "' (who was in this minigame) has disconnected")
+	pass
 # For the following two methods, you might want to show the user a notification, because the game
 # will not necessarily end immediately. (Here we just print, because this is just the demo
 # minigame.)
 
 func on_ship_endgame():
-	print("ship is entering endgame state")
-
+	#print("ship is entering endgame state")
+	pass
+	
 func on_non_peer_left(theirName: String):
-	print("player '", theirName, "' (who was not in this minigame) has disconnected")
-
+	#print("player '", theirName, "' (who was not in this minigame) has disconnected")
+	pass
 ## == End required functions ==
 
 # The following functions might be useful as methods on the Lobby class, but we'll just define them

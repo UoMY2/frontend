@@ -36,7 +36,7 @@ func _on_pressed(force_remove=false):
 	if((itemListRed.get_item_count()>0 && itemListBlue.get_item_count()>0) || force_remove==true):    #for testing purposes so 2 players can start game
 		#ready or unready up the player
 		find_player_pos()
-		print("player index:"+str(player_item_index))
+		#print("player index:"+str(player_item_index))
 		var player_name = EventLib.the_lobby.playerTeam[player_position][0]
 		if(EventLib.the_lobby.playerTeam[player_position][2] == false):
 			#change the text of the ready button to unready or vice versa
@@ -70,12 +70,12 @@ func find_player_pos():
 	for i in range(len(EventLib.the_lobby.playerTeam)):    #FOR TESTING ONLY SO 2 PLAYERS CAN PLAY
 		if(EventLib.the_lobby.playerTeam[i]!=[]):
 			if(EventLib.the_lobby.playerTeam[i][0]==EventLib.client_uname):
-				print("chaning position")
+				#print("chaning position")
 				player_position = i
 		if(EventLib.the_lobby.playerTeam[i]!=[]):
-			print("i ========== "+ str(i))
+			#print("i ========== "+ str(i))
 			#check blue item list
-			print("itemListBlue.get_item_count:"+str(itemListBlue.get_item_count()))
+			#print("itemListBlue.get_item_count:"+str(itemListBlue.get_item_count()))
 			if(itemListBlue.get_item_count()>0 && i<itemListBlue.get_item_count()):
 				print("itemListBlue.get_item_text(i):"+itemListBlue.get_item_text(i))
 				if(EventLib.client_uname==itemListBlue.get_item_text(i)):

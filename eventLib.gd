@@ -208,6 +208,7 @@ func _peer_position_update(data):
 # ---------------- SHIP METHODS --------------------------------#
 func _handle_welcome(data):
 	go_to_main.emit(data) # Switch scene
+	print(data)
 	await portal_ready_to_spawn # Wait for the scene to be created.
 	# Now add the flags.
 	var the_ship = Ship.new(the_lobby, {})
