@@ -31,6 +31,9 @@ var _minigame_scenes: Dictionary = {
 
 	"card_match_sp": "???",
 	"whack_a_mole": "???",
+	"shooter_1v1": "res://shooter/scene/main.tscn",
+	"shooter_2v2": "res://shooter/scene/main2v2.tscn",
+	"shooter_3v3": "res://shooter/scene/main3v3.tscn"
 }
 
 ## Maps flag IDs to the IDs for the minigames they represent.

@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://dqg7fn03jolvy"]
 
 [ext_resource type="Script" path="res://shooter/scripts/player.gd" id="1_1wmwq"]
-[ext_resource type="PackedScene" uid="uid://c3niokt1xkdub" path="res://shooter/scene/bullet.tscn" id="2_elhfg"]
 [ext_resource type="Texture2D" uid="uid://11nq7ddmy36q" path="res://shooter/img/alien.png" id="3_orggh"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="4_ei5b6"]
 [ext_resource type="Texture2D" uid="uid://bud2fga67j0tm" path="res://shooter/img/gun.png" id="4_idvrg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ha6k5"]
@@ -37,7 +37,6 @@ properties/6/replication_mode = 1
 [node name="player" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_1wmwq")
-bullet = ExtResource("2_elhfg")
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(3.8147e-06, 3.8147e-06)
@@ -78,5 +77,18 @@ max_value = 5.0
 step = 1.0
 value = 5.0
 show_percentage = false
+
+[node name="player_name" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -335.0
+offset_right = 75.0
+offset_bottom = -235.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_ei5b6")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
