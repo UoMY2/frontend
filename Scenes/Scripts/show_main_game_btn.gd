@@ -10,7 +10,7 @@ func _process(_delta):
 
 #runs when the button is pressed   ---this method can be used after all players ready up
 func _on_pressed():
-	print("going to main game")
+	#print("going to main game")
 	
 	# Transition to the game scene
 	get_tree().change_scene_to_file("res://Scenes/game_level.tscn")

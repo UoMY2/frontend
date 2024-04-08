@@ -1,7 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://deka0bf45cue2"]
+[gd_scene load_steps=31 format=3 uid="uid://deka0bf45cue2"]
 
 [ext_resource type="Texture2D" uid="uid://ccpla11sab7jp" path="res://art/out_of_space/alien_spritesheet.png" id="1_uf5c5"]
+[ext_resource type="Texture2D" uid="uid://dlnr5o6fcmpwf" path="res://art/out_of_space/alien_icon.png" id="3_nxtjy"]
 [ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="4_7tw2i"]
+[ext_resource type="Texture2D" uid="uid://c0aa1gvpymhkk" path="res://art/out_of_space/alien_icon_locked.png" id="4_e774w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jl0oo"]
 size = Vector2(10, 6)
@@ -315,3 +317,26 @@ theme_override_fonts/font = ExtResource("4_7tw2i")
 theme_override_font_sizes/font_size = 90
 text = "You've been queued up to play: "
 autowrap_mode = 3
+
+[node name="ItemList" type="ItemList" parent="."]
+visible = false
+offset_left = 69.0
+offset_top = -35.0
+offset_right = 699.0
+offset_bottom = 273.0
+scale = Vector2(0.1, 0.1)
+theme_override_constants/v_separation = 30
+theme_override_constants/icon_margin = 70
+theme_override_fonts/font = ExtResource("4_7tw2i")
+theme_override_font_sizes/font_size = 90
+max_text_lines = 10
+auto_height = true
+item_count = 2
+max_columns = 2
+icon_scale = 8.0
+item_0/text = "clsd"
+item_0/icon = ExtResource("3_nxtjy")
+item_0/selectable = false
+item_1/text = "adss"
+item_1/icon = ExtResource("4_e774w")
+item_1/selectable = false
