@@ -5,12 +5,12 @@ var socket = WebSocketPeer.new()
 
 # y2.squ1dd13.ink   <-- our server
 # 127.0.0.1         <-- your computer
-@export var ip_address = "127.0.0.1"
-@export var port = "8080"
+@export var ip_address = "y2.squ1dd13.ink"
+@export var port = "443"
 
 func _ready():
-	print("ws://{ip}:{port}/ws".format({"ip": ip_address, "port": port}))
-	socket.connect_to_url("ws://{ip}:{port}/ws".format({"ip": ip_address, "port": port})) # Connect to WS server.
+	print("wss://{ip}:{port}/ws".format({"ip": ip_address, "port": port}))
+	socket.connect_to_url("wss://{ip}:{port}/ws".format({"ip": ip_address, "port": port})) # Connect to WS server.
 
 func _process(_delta):
 	socket.poll() # Poll the socket.
