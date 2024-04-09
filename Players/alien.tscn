@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ccpla11sab7jp" path="res://art/out_of_space/alien_spritesheet.png" id="1_uf5c5"]
 [ext_resource type="Texture2D" uid="uid://dlnr5o6fcmpwf" path="res://art/out_of_space/alien_icon.png" id="3_nxtjy"]
-[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="4_7tw2i"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://12jus/VT323_font - Copy/VT323-Regular.ttf" id="4_7tw2i"]
 [ext_resource type="Texture2D" uid="uid://c0aa1gvpymhkk" path="res://art/out_of_space/alien_icon_locked.png" id="4_e774w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jl0oo"]
