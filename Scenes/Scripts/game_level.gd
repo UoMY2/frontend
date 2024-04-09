@@ -707,17 +707,21 @@ func _on_any_data(data):
 		"ship_game_end":
 			_on_game_end(data)
 			return
-	# Getting here is OK if we're in a minigame, because it probably just means that the message
-	# is intended for the minigame and not us. But if we get here when we're not in a minigame,
-	# it means the server has sent us a message that we're expected to understand but that we do
-	# not. That's a fatal error.
-	assert(_in_minigame(), "ship has no explicit handler for message " + str(data))
+
+	if not _in_minigame():
+		# Getting here is OK if we're in a minigame, because it probably just means that the message
+		# is intended for the minigame and not us. But if we get here when we're not in a minigame,
+		# it means the server has sent us a message that we're expected to understand but that we do
+		# not. Ideally this would be a fatal error.
+		print("ship has no explicit handler for message " + str(data))
+		return
 
 	var handled = _current_minigame.on_message(data)
 
 	# We know the ship doesn't understand the message, so if the minigame didn't either then we've
 	# got a serious issue.
-	assert(handled, "mwinigame did not handle " + str(data))
+	if not handled:
+		print("minigame did not handle " + str(data))
 
 func _process(_delta):
 	var yourPos = null
@@ -775,7 +779,7 @@ func _process(_delta):
 		PlayerSprite.add_child(timer)
 
 		time_label = Label.new()
-		time_label.text = "120" # Initial displa"y for 10 minutes
+		time_label.text = "600" # Initial displa"y for 10 minutes
 		time_label.set("theme_override_fonts/font", font)
 		time_label.set("theme_override_colors/font_outline_color", "000000")
 		time_label.set("theme_override_colors/font_shadow_color", "000000")

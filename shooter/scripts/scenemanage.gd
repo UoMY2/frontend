@@ -4,7 +4,7 @@ extends MinigameBase
 var humans = preload("res://shooter/scene/humantscn.tscn")
 var peer_script = preload("res://shooter/scripts/not_player.gd")
 var bullet = preload("res://shooter/scene/bullet.tscn")
-var duration
+var duration : int
 var end = false
 var human_team = []
 var alien_team = []
@@ -15,7 +15,8 @@ var alien_team = []
 func on_minigame_end():
 	# In this method you should do anything that you need to do before your minigame ends. For
 	# example, if we had something running in the background, we'd want to stop it.
-	await get_tree().create_timer(0.5).timeout
+	for i in get_tree().get_nodes_in_group("bullet"):
+		i.queue_free()
 	print("demo minigame is ending")
 
 func on_peer_left(theirName: String):
@@ -201,9 +202,7 @@ func _process(delta):
 	if wiped == true:
 		end = true
 	
-	if end:
-		for i in get_tree().get_nodes_in_group("bullet"):
-			i.queue_free()
+	
 
 	#await get_tree().create_timer(2).timeout
 	#if _localPlayer == null:
@@ -221,6 +220,6 @@ func _process(delta):
 
 
 func _on_timer_timeout():
-	duration -= 0.05
+	duration -= 1
 	
 	pass # Replace with function body.
