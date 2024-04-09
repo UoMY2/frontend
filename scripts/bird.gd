@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-class_name Bird
+class_name Bird69
 
 signal score_changed(score: int)
 signal bird_died

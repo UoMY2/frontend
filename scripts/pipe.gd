@@ -5,7 +5,7 @@ const SPEED: int = 500
 @onready var score_area = %scorearea
 @onready var timer = $Timer
 
-var bird: Bird
+var bird: Bird69
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -3,7 +3,7 @@ extends Node
 const SAVE_PATH = "user://save_game.dat"
 @export var end_screen_scene: PackedScene
 
-var bird: Bird
+var bird: Bird69
 # Called when the node enters the scene tree for the first time.
 func _process(delta):
 	if get_tree().get_first_node_in_group("bird") != null:

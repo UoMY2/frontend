@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scenes/flappy_bird.gd" id="1_1wmsj"]
 [ext_resource type="Texture2D" uid="uid://b78bgksvwvkdl" path="res://FlappyBirdAssets/img/bg.jpg" id="5_8s83e"]
-[ext_resource type="PackedScene" uid="uid://dfjv22j4j8hxs" path="res://scenes/pipemanager.tscn" id="6_06cct"]
+[ext_resource type="PackedScene" uid="uid://dfjv22j4j8hxs" path="res://Scenes/pipemanager.tscn" id="6_06cct"]
 [ext_resource type="Texture2D" uid="uid://dcexcwnxfqn70" path="res://FlappyBirdAssets/img/back.png" id="7_7uwqg"]
 [ext_resource type="Script" path="res://scripts/floor.gd" id="8_ujlpj"]
 [ext_resource type="Script" path="res://scripts/gamemanager.gd" id="10_wpnul"]
-[ext_resource type="PackedScene" uid="uid://bfwotwoqbbmi2" path="res://scenes/scorescreen.tscn" id="11_in0gi"]
+[ext_resource type="PackedScene" uid="uid://bfwotwoqbbmi2" path="res://Scenes/scorescreen.tscn" id="11_in0gi"]
 [ext_resource type="Script" path="res://scripts/countdown_timer.gd" id="12_35ens"]
 
 [node name="game" type="Node2D"]

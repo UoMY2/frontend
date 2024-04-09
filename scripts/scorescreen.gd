@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @onready var label = $Label
 
-var bird: Bird
+var bird: Bird69
 
 # Called when the node enters the scene tree for the first time.
 func _process(float) :

@@ -73,6 +73,7 @@ text = "Create lobby"
 script = ExtResource("6_xrncv")
 
 [node name="rulesBtn" type="Button" parent="."]
+layout_mode = 0
 offset_left = 662.0
 offset_top = 424.0
 offset_right = 1102.0
