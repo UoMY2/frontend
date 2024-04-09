@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjrno7byihmlh"]
+
+[ext_resource type="Texture2D" uid="uid://b78bgksvwvkdl" path="res://FlappyBirdAssets/img/bg.jpg" id="1_clvhw"]
+
+[node name="game" type="Node"]
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(357, 667)
+texture = ExtResource("1_clvhw")
