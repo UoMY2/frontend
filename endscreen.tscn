@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1od537juoipo"]
+
+[ext_resource type="Script" path="res://scenes/endscreen.gd" id="1_cglir"]
+
+[node name="endscreen" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_cglir")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(180, 50)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -44.0
+offset_right = 96.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "game over
+"
+horizontal_alignment = 1
+
+[node name="exit" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+"
+horizontal_alignment = 1
+
+[node name="exitbutton" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 10)
+layout_mode = 2
+text = "exit
+"

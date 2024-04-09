@@ -1,0 +1,56 @@
+[gd_scene load_steps=12 format=3 uid="uid://dnvfuc6t06au8"]
+
+[ext_resource type="Texture2D" uid="uid://b78bgksvwvkdl" path="res://assets/FlappyBirdAssets/img/bg.jpg" id="1_rgny8"]
+[ext_resource type="PackedScene" uid="uid://df8ms446peysp" path="res://scenes/pipemanager.tscn" id="2_c6iyt"]
+[ext_resource type="Script" path="res://scenes/gamenamager.gd" id="2_xoqas"]
+[ext_resource type="Script" path="res://scenes/bird1.gd" id="2_xpkyw"]
+[ext_resource type="Texture2D" uid="uid://bxqqietjn1818" path="res://assets/flappybird/flappybirdimage/bird1_2.png" id="3_tma86"]
+[ext_resource type="Script" path="res://scenes/bird2.gd" id="4_voq1n"]
+[ext_resource type="Texture2D" uid="uid://ck0dlaf8sowiy" path="res://assets/flappybird/flappybirdimage/bird0_1.png" id="5_tv3cj"]
+[ext_resource type="PackedScene" uid="uid://da0rd0rdgi3bg" path="res://scenes/pipe.tscn" id="6_uogy8"]
+[ext_resource type="PackedScene" uid="uid://d1od537juoipo" path="res://scenes/endscreen.tscn" id="8_l1jiv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jmmo4"]
+radius = 32.249
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4g1bn"]
+radius = 33.0
+
+[node name="main" type="Node"]
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(676, 119)
+scale = Vector2(3.59259, 3.43203)
+texture = ExtResource("1_rgny8")
+
+[node name="gamenamager" type="Node" parent="."]
+script = ExtResource("2_xoqas")
+endscreen = ExtResource("8_l1jiv")
+
+[node name="pipemanager" parent="." instance=ExtResource("2_c6iyt")]
+
+[node name="bird1" type="RigidBody2D" parent="." groups=["bird1"]]
+script = ExtResource("2_xpkyw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bird1"]
+position = Vector2(92, 140)
+shape = SubResource("CircleShape2D_jmmo4")
+
+[node name="Sprite2D" type="Sprite2D" parent="bird1"]
+position = Vector2(94, 136)
+scale = Vector2(1.76042, 2.04687)
+texture = ExtResource("3_tma86")
+
+[node name="bird2" type="RigidBody2D" parent="." groups=["bird2"]]
+script = ExtResource("4_voq1n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bird2"]
+position = Vector2(226, 341)
+shape = SubResource("CircleShape2D_4g1bn")
+
+[node name="Sprite2D" type="Sprite2D" parent="bird2/CollisionShape2D"]
+position = Vector2(1, -1)
+scale = Vector2(1.76042, 2.04687)
+texture = ExtResource("5_tv3cj")
+
+[node name="pipe" parent="." instance=ExtResource("6_uogy8")]
