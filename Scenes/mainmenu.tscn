@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://csp5adyh2hcur" path="res://art/Main_menu/red_planet_e.png" id="5_abwcs"]
 [ext_resource type="Script" path="res://Scenes/Scripts/create_lobby_btn.gd" id="6_xrncv"]
 [ext_resource type="Script" path="res://Scenes/Scripts/join_lobby_btn.gd" id="7_8tp62"]
+[ext_resource type="Script" path="res://Scenes/rulesBtn.gd" id="7_yet3k"]
 [ext_resource type="Script" path="res://Scenes/Scripts/mainmenu.gd" id="8_f4exh"]
-[ext_resource type="Script" path="res://Scenes/Scripts/show_main_game_btn.gd" id="8_jmhlt"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -63,39 +63,38 @@ position = Vector2(684, 386)
 [node name="CreateLobbyBtn" type="Button" parent="."]
 layout_mode = 0
 offset_left = 662.0
-offset_top = 410.0
+offset_top = 384.0
 offset_right = 1102.0
-offset_bottom = 508.0
+offset_bottom = 482.0
 scale = Vector2(0.1, 0.1)
 theme_override_fonts/font = ExtResource("2_1e66p")
 theme_override_font_sizes/font_size = 90
 text = "Create lobby"
 script = ExtResource("6_xrncv")
 
+[node name="rulesBtn" type="Button" parent="."]
+offset_left = 662.0
+offset_top = 424.0
+offset_right = 1102.0
+offset_bottom = 522.0
+scale = Vector2(0.1, 0.1)
+theme_override_fonts/font = ExtResource("2_1e66p")
+theme_override_font_sizes/font_size = 90
+text = "Rules"
+script = ExtResource("7_yet3k")
+
 [node name="JoinLobbyBtn" type="Button" parent="."]
 layout_mode = 0
 offset_left = 662.0
-offset_top = 430.0
+offset_top = 404.0
 offset_right = 1102.0
-offset_bottom = 528.0
+offset_bottom = 502.0
 scale = Vector2(0.1, 0.1)
 theme_override_fonts/font = ExtResource("2_1e66p")
 theme_override_font_sizes/font_size = 90
 text = "Join lobby"
 script = ExtResource("7_8tp62")
 
-[node name="MainGameBtn" type="Button" parent="."]
-layout_mode = 0
-offset_left = 640.0
-offset_top = 390.0
-offset_right = 1548.0
-offset_bottom = 488.0
-scale = Vector2(0.1, 0.1)
-theme_override_fonts/font = ExtResource("2_1e66p")
-theme_override_font_sizes/font_size = 90
-text = "Show main game (dev only)"
-script = ExtResource("8_jmhlt")
-
 [connection signal="pressed" from="CreateLobbyBtn" to="CreateLobbyBtn" method="_on_pressed"]
+[connection signal="pressed" from="rulesBtn" to="rulesBtn" method="_on_pressed"]
 [connection signal="pressed" from="JoinLobbyBtn" to="JoinLobbyBtn" method="_on_pressed"]
-[connection signal="pressed" from="MainGameBtn" to="MainGameBtn" method="_on_pressed"]
