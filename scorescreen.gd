@@ -5,11 +5,10 @@ extends CanvasLayer
 var bird: Bird
 
 # Called when the node enters the scene tree for the first time.
-func _process(float) :
-	if get_tree().get_first_node_in_group("bird") !=null:
-		bird = get_tree().get_first_node_in_group("bird")
-		bird.score_changed.connect(_on_score_changed)
-		label.text = "0"
+func _ready():
+	bird = get_tree().get_first_node_in_group("bird")
+	bird.score_changed.connect(_on_score_changed)
+	label.text = "0"
 	pass # Replace with function body.
 
 

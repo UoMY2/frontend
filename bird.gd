@@ -7,7 +7,6 @@ signal bird_died
 
 var current_score = 0
 var highest_score = 0
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -15,7 +14,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	print(linear_velocity)
 	if Input.is_mouse_button_pressed(1):
 		linear_velocity = Vector2.UP*500
 		angular_velocity = -3.0
@@ -28,13 +26,7 @@ func _physics_process(delta):
 		if rotation_degrees > 50:
 			rotation_degrees = 50
 			angular_velocity = 0
-	
-	print(self.position.y)
-	if self.position.y > 600 or self.position.y < -500:
-		EventLib.message_send({
-			"type": "bird_end",
-			"score": self.current_score
-			})
+	pass
 
 func add_score():
 	current_score += 1
@@ -43,3 +35,4 @@ func add_score():
 
 func died():
 	bird_died.emit()
+	
