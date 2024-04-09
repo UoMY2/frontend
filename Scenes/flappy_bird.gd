@@ -13,7 +13,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if bird.current_score != null:
-		$currentscore.text = "Score to Beat: "+ str(beat) +"\nCurrent Score: " + str(bird.current_score)
+		$currentscore.text = "Score to Beat: "+ str(beat) +"\nCurrent Score: " + str(bird.current_score)+ "\nTimer:" + str($countdown_timer.time_left)
 	
 func assign_top_score(msg):
 	top_score = msg["top_score"]
