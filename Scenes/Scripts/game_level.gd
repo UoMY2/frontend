@@ -60,7 +60,9 @@ var _minigame_scenes: Dictionary = {
 	
 	"card_match_sp": "res://memory/memoryMain.tscn",
 	
-	"rps_1v1": "res://12jus/node_2d.tscn"
+	"rps_1v1": "res://12jus/node_2d.tscn",
+	
+	"fb_sp": "res://Scenes/singlegame.tscn"
 }
 
 

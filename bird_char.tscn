@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://bksnjg4rf0sqf"]
+
+[ext_resource type="Script" path="res://scripts/bird.gd" id="1_bhxyf"]
+[ext_resource type="Texture2D" uid="uid://c7qu1jvph21x5" path="res://FlappyBirdAssets/img/bird.png" id="2_6ga0g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fkd21"]
+radius = 19.177
+
+[sub_resource type="Animation" id="Animation_8yoec"]
+resource_name = "DIE"
+length = 0.10001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("bird1Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_3l4cg"]
+resource_name = "FLY"
+length = 0.30001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("bird1Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_xpvcc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("bird1Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iogk4"]
+_data = {
+"DIE": SubResource("Animation_8yoec"),
+"FLY": SubResource("Animation_3l4cg"),
+"RESET": SubResource("Animation_xpvcc")
+}
+
+[node name="bird" type="RigidBody2D" groups=["bird"]]
+position = Vector2(86, 71)
+rotation = -0.0323291
+gravity_scale = 2.0
+script = ExtResource("1_bhxyf")
+
+[node name="bird1CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(41.9556, 112.495)
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_fkd21")
+
+[node name="bird1Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(35.9399, 108.779)
+scale = Vector2(1.58277, 2.06929)
+texture = ExtResource("2_6ga0g")
+hframes = 3
+
+[node name="bird1AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_iogk4")
+}
+autoplay = "FLY"

@@ -5,20 +5,24 @@ const SAVE_PATH = "user://save_game.dat"
 
 var bird: Bird
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	bird = get_tree().get_first_node_in_group("bird")
-	bird.bird_died.connect(add_end_screen)
-	bird.bird_died.connect(_on_bird_died)
+func _process(delta):
+	if get_tree().get_first_node_in_group("bird") != null:
+		bird = get_tree().get_first_node_in_group("bird")
+		bird.bird_died.connect(add_end_screen)
+		bird.bird_died.connect(_on_bird_died)
+		
+	
 	pass # Replace with function body.
 
 
 func _on_bird_died():
-	add_end_screen()
-	save_score(bird.current_score)
+	EventLib.message_send({
+		"type": "bird_end",
+		"score": bird.current_score
+		})
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func add_end_screen():
-	var end_screen_instance = end_screen_scene.instantiate()
-	add_child(end_screen_instance)
+	print("end")
 	pass
 
 func save_score(score: int):

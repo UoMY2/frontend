@@ -19,8 +19,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	position.x -= SPEED * delta
-	if position.x < -300:
-		queue_free()
 	pass
 
 func _on_pipe_area_entered(body: Node2D):

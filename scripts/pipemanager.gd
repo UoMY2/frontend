@@ -1,6 +1,6 @@
 extends Node
 
-const INIT_POSITION:int = 1000
+const INIT_POSITION:int = 1500
 @export var pipe: PackedScene
 @onready var timer = $Timer
 
@@ -16,5 +16,5 @@ func _on_timer_timeout():
 	var pipe_instance = pipe.instantiate() as Node2D
 	add_child(pipe_instance)
 	pipe_instance.position.x = INIT_POSITION 
-	pipe_instance.position.y = randf_range(-150, 150)
+	pipe_instance.position.y = randf_range(8000, 8300)
 	pass
