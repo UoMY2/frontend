@@ -180,7 +180,7 @@ func _process(delta):
 		$Label.text = str("%02d" %duration)
 	else:
 		$Label.text = str("%01d" %duration)
-	if duration <= 0.2:
+	if duration <= 0:
 		end = true
 		
 	var wiped = false
@@ -200,6 +200,10 @@ func _process(delta):
 		
 	if wiped == true:
 		end = true
+	
+	if end:
+		for i in get_tree().get_nodes_in_group("bullet"):
+			i.queue_free()
 
 	#await get_tree().create_timer(2).timeout
 	#if _localPlayer == null:

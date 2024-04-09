@@ -1,12 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://vlcig5csjdnd"]
+[gd_scene load_steps=15 format=3 uid="uid://vlcig5csjdnd"]
 
 [ext_resource type="Script" path="res://12jus/mainn.gd" id="1_xbluu"]
-[ext_resource type="Texture2D" uid="uid://c1ewk0ie81bxc" path="res://12jus/rock.png" id="3_84gv8"]
-[ext_resource type="Texture2D" uid="uid://grgbxnw683oy" path="res://12jus/scissors.png" id="4_84xbi"]
-[ext_resource type="Texture2D" uid="uid://bheupm0avqjp4" path="res://12jus/paper.png" id="5_7iss5"]
-[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://12jus/VT323_font - Copy/VT323-Regular.ttf" id="6_ww8df"]
-[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="6_x6cqm"]
-[ext_resource type="Texture2D" uid="uid://4ihisg2xbqfl" path="res://12jus/space.png" id="7_k7x6q"]
+[ext_resource type="Texture2D" uid="uid://csuq1pmqdnjwx" path="res://12jus/rock.png" id="3_84gv8"]
+[ext_resource type="Texture2D" uid="uid://dm2u4wf47nj3q" path="res://12jus/scissors.png" id="4_84xbi"]
+[ext_resource type="Texture2D" uid="uid://53c48fqygc12" path="res://12jus/paper.png" id="5_7iss5"]
+[ext_resource type="FontFile" uid="uid://d4dc84pifcc58" path="res://Fonts/VT323_font/VT323-Regular.ttf" id="6_ww8df"]
+[ext_resource type="Texture2D" uid="uid://b7mbbdg6ubpco" path="res://12jus/space.png" id="7_k7x6q"]
 
 [sub_resource type="Animation" id="Animation_6kts7"]
 resource_name = "paper"
@@ -203,7 +202,7 @@ offset_left = 652.0
 offset_top = 259.0
 offset_right = 837.0
 offset_bottom = 411.0
-theme_override_fonts/font = ExtResource("6_x6cqm")
+theme_override_fonts/font = ExtResource("6_ww8df")
 theme_override_font_sizes/font_size = 150
 
 [node name="score" type="Label" parent="."]
@@ -211,7 +210,7 @@ offset_left = 549.0
 offset_top = 8.0
 offset_right = 872.0
 offset_bottom = 140.0
-theme_override_fonts/font = ExtResource("6_x6cqm")
+theme_override_fonts/font = ExtResource("6_ww8df")
 theme_override_font_sizes/font_size = 130
 
 [node name="aniTimer" type="Timer" parent="."]
@@ -223,7 +222,7 @@ offset_left = 26.0
 offset_top = 191.0
 offset_right = 1346.0
 offset_bottom = 491.0
-theme_override_fonts/font = ExtResource("6_x6cqm")
+theme_override_fonts/font = ExtResource("6_ww8df")
 theme_override_font_sizes/font_size = 250
 horizontal_alignment = 1
 
