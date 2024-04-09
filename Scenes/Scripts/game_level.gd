@@ -775,7 +775,7 @@ func _process(_delta):
 		PlayerSprite.add_child(timer)
 
 		time_label = Label.new()
-		time_label.text = "120" # Initial displa"y for 10 minutes
+		time_label.text = "600" # Initial displa"y for 10 minutes
 		time_label.set("theme_override_fonts/font", font)
 		time_label.set("theme_override_colors/font_outline_color", "000000")
 		time_label.set("theme_override_colors/font_shadow_color", "000000")
