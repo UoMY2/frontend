@@ -8,9 +8,11 @@ var bird: Bird69
 func _process(delta):
 	if get_tree().get_first_node_in_group("bird") != null:
 		bird = get_tree().get_first_node_in_group("bird")
-		bird.bird_died.connect(add_end_screen)
-		bird.bird_died.connect(_on_bird_died)
-		
+		if !bird.bird_died.is_connected(add_end_screen):
+			bird.bird_died.connect(add_end_screen)
+		if !bird.bird_died.is_connected(_on_bird_died):
+			bird.bird_died.connect(_on_bird_died)
+
 	
 	pass # Replace with function body.
 

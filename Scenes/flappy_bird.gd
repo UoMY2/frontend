@@ -29,7 +29,7 @@ func on_message(data: Dictionary) -> bool:
 func on_minigame_end():
 	# In this method you should do anything that you need to do before your minigame ends. For
 	# example, if we had something running in the background, we'd want to stop it.
-	
+	bird.queue_free()
 	print("Cookie Cliker ending")
 	
 func welcome(to_beat):
