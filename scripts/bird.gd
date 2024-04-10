@@ -15,7 +15,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	print(linear_velocity)
 	if Input.is_mouse_button_pressed(1):
 		linear_velocity = Vector2.UP*500
 		angular_velocity = -3.0
@@ -29,7 +28,7 @@ func _physics_process(delta):
 			rotation_degrees = 50
 			angular_velocity = 0
 	
-	print(self.position.y)
+
 	if self.position.y > 600 or self.position.y < -500:
 		EventLib.message_send({
 			"type": "bird_end",
